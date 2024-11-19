@@ -7,7 +7,7 @@ function HeroSection1() {
         <div className="text-5xl font-semibold">
           Generate Stunning thumbnails for your videos
         </div>
-        <div>
+        <div className="font-thin text-lg">
           <div>
             Elevate your content with our powerful AI-driven thumbnail generator
           </div>
