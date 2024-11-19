@@ -1,5 +1,11 @@
+import ThumbnailNavbar from "@/components/ThumbnailPageComponents/ThumbnailNavbar";
+
 function ThumbailPage() {
-  return <div>ThumbailPage</div>;
+  return (
+    <div>
+      <ThumbnailNavbar />
+    </div>
+  );
 }
 
 export default ThumbailPage;
