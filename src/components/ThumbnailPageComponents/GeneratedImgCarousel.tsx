@@ -7,16 +7,24 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-export function GeneratedImgCarousel() {
+interface GeneratedImgCarouselProps {
+  images: string[];
+}
+
+export function GeneratedImgCarousel({ images }: GeneratedImgCarouselProps) {
   return (
     <Carousel className="w-full max-w-xs">
       <CarouselContent>
-        {Array.from({ length: 5 }).map((_, index) => (
+        {images.map((image, index) => (
           <CarouselItem key={index}>
             <div className="p-1">
               <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-4xl font-semibold">{index + 1}</span>
+                  <img
+                    src={image}
+                    alt={`Generated Image ${index + 1}`}
+                    className="object-contain w-full h-full"
+                  />
                 </CardContent>
               </Card>
             </div>
