@@ -65,11 +65,11 @@ function GeneratorSection() {
   };
 
   return (
-    <div className="h-96 flex bg-slate-100 mx-10 mb-8 rounded-2xl">
-      <div className="w-1/3 flex justify-center items-center">
-        <div className="space-y-6 ">
+    <div className="h-96  flex bg-slate-100 mx-10 mb-8 rounded-2xl">
+      <div className="w-full flex justify-center items-center">
+        <div className="space-y-6 w-full ">
           <div>YouTube Script Generator</div>
-          <div className="flex justify-center items-center space-x-6">
+          <div className="flex justify-center items-center space-x-6 w-full ">
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-4">
                 {points.map((point, index) => (

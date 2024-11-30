@@ -13,7 +13,7 @@ export function ScriptGeneratedCarousel({
   script,
 }: GeneratedScriptProps) {
   return (
-    <div>
+    <div className="w-full ">
       {error && (
         <Alert variant="destructive" className="mb-6">
           <AlertDescription>{error}</AlertDescription>
@@ -21,7 +21,7 @@ export function ScriptGeneratedCarousel({
       )}
 
       {script && (
-        <Card className="p-6">
+        <Card className="p-6 w-full ">
           <h2 className="text-xl font-semibold mb-4">Generated Script</h2>
           <Textarea
             value={script}
