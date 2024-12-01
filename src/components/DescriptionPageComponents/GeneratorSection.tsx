@@ -9,6 +9,7 @@ function GeneratorSection() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+
   const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -46,45 +47,47 @@ function GeneratorSection() {
   };
 
   return (
-    <div className="h-96 flex bg-slate-100 mx-10 mb-8 rounded-2xl">
-      <div className="w-1/3 flex justify-center items-center">
-        <div className="space-y-6 ">
-          <div>YouTube Descripition Generator</div>
-          <div className="flex justify-center items-center space-x-6">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <label htmlFor="script" className="text-sm font-medium">
-                  Video Script
-                </label>
-                <Textarea
-                  id="script"
-                  value={script}
-                  onChange={(e) => setScript(e.target.value)}
-                  placeholder="Paste your video script here..."
-                  className="h-48 resize-none"
-                  required
-                />
-              </div>
-
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  "Generate Description"
-                )}
-              </Button>
-            </form>
-            <DescriptionGeneratedCarousel
-              error={error}
-              description={description}
+    <div className="flex flex-col md:flex-row bg-slate-100 mx-4 md:mx-10 mb-8 rounded-2xl p-6 gap-6">
+      {/* Left Section */}
+      <div className="w-full md:w-1/3 flex flex-col justify-center items-center space-y-4">
+        <h2 className="text-lg md:text-xl font-semibold text-center">
+          YouTube Description Generator
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-4 w-full">
+          <div className="space-y-2">
+            <label htmlFor="script" className="text-sm font-medium">
+              Video Script
+            </label>
+            <Textarea
+              id="script"
+              value={script}
+              onChange={(e) => setScript(e.target.value)}
+              placeholder="Paste your video script here..."
+              className="h-48 resize-none w-full border rounded-xl p-3"
+              required
             />
           </div>
-        </div>
+
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              "Generate Description"
+            )}
+          </Button>
+        </form>
       </div>
-      <div className="w-2/3 flex justify-center items-center"></div>
+
+      {/* Right Section */}
+      <div className="w-full md:w-2/3 flex justify-center items-center">
+        <DescriptionGeneratedCarousel
+          error={error}
+          description={description}
+        />
+      </div>
     </div>
   );
 }
