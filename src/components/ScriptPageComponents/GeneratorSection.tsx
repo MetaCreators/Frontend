@@ -6,6 +6,9 @@ import { PlusCircle, Trash2, Loader } from "lucide-react";
 
 function GeneratorSection() {
   const [points, setPoints] = useState<string[]>([""]);
+  const [length, setLength] = useState<string>("10 minutes");
+  const [style, setStyle] = useState<string>("Informative");
+  const [targetAudience, setTargetAudience] = useState<string>("Teens (13-18)");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
   const [script, setScript] = useState<string>("");
@@ -47,6 +50,9 @@ function GeneratorSection() {
         },
         body: JSON.stringify({
           points: validPoints,
+          length,
+          style,
+          targetAudience,
         }),
       });
 
@@ -92,6 +98,34 @@ function GeneratorSection() {
                     )}
                   </div>
                 ))}
+              </div>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm">Length</label>
+                  <Input
+                    value={length}
+                    onChange={(e) => setLength(e.target.value)}
+                    placeholder="e.g., 10 minutes"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm">Style</label>
+                  <Input
+                    value={style}
+                    onChange={(e) => setStyle(e.target.value)}
+                    placeholder="e.g., Informative"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm">Target Audience</label>
+                  <Input
+                    value={targetAudience}
+                    onChange={(e) => setTargetAudience(e.target.value)}
+                    placeholder="e.g., Teens (13-18)"
+                  />
+                </div>
               </div>
 
               <div className="flex justify-between">
