@@ -4,6 +4,8 @@ import { GeneratedImgCarousel } from "./GeneratedImgCarousel";
 
 function GeneratorSection() {
   const [idea, setIdea] = useState("");
+  const [userStyle, setUserStyle] = useState("");
+  const [targetAudience, setTargetAudience] = useState("");
   const [images, setImages] = useState([]);
   const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -14,7 +16,11 @@ function GeneratorSection() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userIdea: idea }),
+        body: JSON.stringify({
+          userIdea: idea,
+          userStyle: userStyle,
+          targetAudience: targetAudience,
+        }),
       });
 
       if (!response.ok) {
@@ -43,12 +49,28 @@ function GeneratorSection() {
           Make Your Content Click-Worthy!
         </h2>
         <div className="flex flex-col md:flex-row items-center w-full gap-4">
-          <input
-            placeholder="Type in your idea here"
-            className="border rounded-xl p-3 h-10 w-full md:w-3/4 border-slate-400"
-            onChange={(e) => setIdea(e.target.value)}
-          />
-          <Button onClick={() => generateImages(idea)} className="w-full md:w-auto">
+          <div className="flex flex-col w-full space-y-3">
+            <input
+              placeholder="Type in your idea here"
+              className="border rounded-xl p-3 h-10 w-full md:w-3/4 border-slate-400"
+              onChange={(e) => setIdea(e.target.value)}
+            />
+            <input
+              placeholder="Type in your style here"
+              className="border rounded-xl p-3 h-10 w-full md:w-3/4 border-slate-400"
+              onChange={(e) => setUserStyle(e.target.value)}
+            />
+            <input
+              placeholder="Type in your target audience here"
+              className="border rounded-xl p-3 h-10 w-full md:w-3/4 border-slate-400"
+              onChange={(e) => setTargetAudience(e.target.value)}
+            />
+          </div>
+
+          <Button
+            onClick={() => generateImages(idea)}
+            className="w-full md:w-auto"
+          >
             Generate
           </Button>
         </div>
