@@ -36,21 +36,26 @@ function GeneratorSection() {
   }
 
   return (
-    <div className="h-96 flex bg-slate-100 mx-10 mb-8 rounded-2xl">
-      <div className="w-1/3 flex justify-center items-center">
-        <div className="space-y-6 ">
-          <div>Make Your Content Click-Worthy!</div>
-          <div className="flex justify-center items-center space-x-6">
-            <input
-              placeholder="Type in your idea here"
-              className="border rounded-xl p-3 h-10 w-3/4  border-slate-400"
-              onChange={(e) => setIdea(e.target.value)}
-            />
-            <Button onClick={() => generateImages(idea)}>Generate</Button>
-          </div>
+    <div className="flex flex-col md:flex-row bg-slate-100 mx-4 md:mx-10 mb-8 rounded-2xl p-6 gap-6">
+      {/* Left Section */}
+      <div className="w-full md:w-1/3 flex flex-col justify-center items-center space-y-4">
+        <h2 className="text-lg md:text-xl font-semibold text-center">
+          Make Your Content Click-Worthy!
+        </h2>
+        <div className="flex flex-col md:flex-row items-center w-full gap-4">
+          <input
+            placeholder="Type in your idea here"
+            className="border rounded-xl p-3 h-10 w-full md:w-3/4 border-slate-400"
+            onChange={(e) => setIdea(e.target.value)}
+          />
+          <Button onClick={() => generateImages(idea)} className="w-full md:w-auto">
+            Generate
+          </Button>
         </div>
       </div>
-      <div className="w-2/3 flex justify-center items-center">
+
+      {/* Right Section */}
+      <div className="w-full md:w-2/3 flex justify-center items-center">
         <GeneratedImgCarousel images={images} />
       </div>
     </div>
