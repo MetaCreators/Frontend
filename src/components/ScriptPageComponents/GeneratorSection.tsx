@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { ScriptGeneratedCarousel } from "./ScriptGeneratedCarousel";
 import { Input } from "@/components/ui/input";
 import { PlusCircle, Trash2, Loader } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 function GeneratorSection() {
   const [points, setPoints] = useState<string[]>([""]);
@@ -43,10 +44,19 @@ function GeneratorSection() {
     }
 
     try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error("Not authenticated");
+      }
+
       const response = await fetch(`${VITE_BACKEND_URL}/api/script`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
           points: validPoints,
