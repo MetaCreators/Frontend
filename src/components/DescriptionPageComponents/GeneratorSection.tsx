@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { DescriptionGeneratedCarousel } from "./DescriptionGeneratedCarousel";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 function GeneratorSection() {
   const [script, setScript] = useState("");
@@ -24,10 +25,19 @@ function GeneratorSection() {
     }
 
     try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error("Not authentication");
+      }
+
       const response = await fetch(`${VITE_BACKEND_URL}/api/description`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({ script }),
       });
@@ -83,10 +93,7 @@ function GeneratorSection() {
 
       {/* Right Section */}
       <div className="w-full md:w-2/3 flex justify-center items-center">
-        <DescriptionGeneratedCarousel
-          error={error}
-          description={description}
-        />
+        <DescriptionGeneratedCarousel error={error} description={description} />
       </div>
     </div>
   );

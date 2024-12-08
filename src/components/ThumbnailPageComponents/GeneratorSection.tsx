@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { GeneratedImgCarousel } from "./GeneratedImgCarousel";
+import { supabase } from "@/lib/supabase";
 
 function GeneratorSection() {
   const [idea, setIdea] = useState("");
@@ -11,10 +12,19 @@ function GeneratorSection() {
 
   async function generateImages(idea: string) {
     try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error("Not authentication");
+      }
+
       const response = await fetch(`${VITE_BACKEND_URL}/thumbnail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({
           userIdea: idea,
