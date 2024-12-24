@@ -3,12 +3,12 @@ import GeneratorSection from "@/components/DescriptionPageComponents/GeneratorSe
 import HeroSection1 from "@/components/DescriptionPageComponents/HeroSection1";
 import HeroSection2 from "@/components/DescriptionPageComponents/HeroSection2";
 import HeroSection3 from "@/components/DescriptionPageComponents/HeroSection3";
-import DescriptionNavbar from "@/components/DescriptionPageComponents/DescriptionNavbar";
+import Navbar from "@/components/common/Navbar";
 
 function DescripitionPage() {
   return (
     <div>
-      <DescriptionNavbar />
+      <Navbar />
       <HeroSection1 />
       <GeneratorSection />
       <HeroSection2 />

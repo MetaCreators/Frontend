@@ -4,6 +4,8 @@ import { ScriptGeneratedCarousel } from "./ScriptGeneratedCarousel";
 import { Input } from "@/components/ui/input";
 import { PlusCircle, Trash2, Loader } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { showToast } from "../common/ToastComponent";
+import { useNavigate } from "react-router-dom";
 
 function GeneratorSection() {
   const [points, setPoints] = useState<string[]>([""]);
@@ -14,6 +16,7 @@ function GeneratorSection() {
   const [error, setError] = useState<string>("");
   const [script, setScript] = useState<string>("");
   const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const navigate = useNavigate();
 
   const addPoint = () => {
     setPoints([...points, ""]);
@@ -73,6 +76,13 @@ function GeneratorSection() {
       }
 
       setScript(data.content);
+      showToast(
+        "Script",
+        () => navigate("/thumbnail"),
+        () => navigate("/description"),
+        "Thumbnail",
+        "Description"
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
