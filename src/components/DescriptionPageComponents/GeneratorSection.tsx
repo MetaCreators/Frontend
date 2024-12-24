@@ -4,12 +4,15 @@ import { DescriptionGeneratedCarousel } from "./DescriptionGeneratedCarousel";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { showToast } from "../common/ToastComponent";
+import { useNavigate } from "react-router-dom";
 
 function GeneratorSection() {
   const [script, setScript] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+  const navigate = useNavigate();
 
   const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -49,6 +52,13 @@ function GeneratorSection() {
       }
 
       setDescription(data.description);
+      showToast(
+        "Description",
+        () => navigate("/thumbnail"),
+        () => navigate("/script"),
+        "Thumbnail",
+        "Script"
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -58,7 +68,6 @@ function GeneratorSection() {
 
   return (
     <div className="flex flex-col md:flex-row bg-slate-100 mx-4 md:mx-10 mb-8 rounded-2xl p-6 gap-6">
-      {/* Left Section */}
       <div className="w-full md:w-1/3 flex flex-col justify-center items-center space-y-4">
         <h2 className="text-lg md:text-xl font-semibold text-center">
           YouTube Description Generator
@@ -90,8 +99,6 @@ function GeneratorSection() {
           </Button>
         </form>
       </div>
-
-      {/* Right Section */}
       <div className="w-full md:w-2/3 flex justify-center items-center">
         <DescriptionGeneratedCarousel error={error} description={description} />
       </div>

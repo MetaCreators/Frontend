@@ -52,9 +52,11 @@ function GeneratorSection() {
         setLoading(false);
         setImages(data.images);
         showToast(
-          "Images",
-          () => navigate("/thumbnail"),
-          () => navigate("/script")
+          "Thumbnail",
+          () => navigate("/script"),
+          () => navigate("/description"),
+          "Script",
+          "Description"
         );
       } else {
         throw new Error("Unexpected response format from the server.");

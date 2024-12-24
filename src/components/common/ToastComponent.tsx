@@ -4,16 +4,18 @@ import { Button } from "@/components/ui/button";
 export const showToast = (
   item: string,
   onThumbnailClick: () => void,
-  onScriptClick: () => void
+  onScriptClick: () => void,
+  other1: string,
+  other2: string
 ) => {
   toast.custom(
     (t) => (
       <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg">
         <h2 className="text-lg font-semibold mb-2">
-          {item} Generated Successfully!
+          Your {item} is ready for review!
         </h2>
         <p className="text-gray-600 dark:text-gray-300 mb-4">
-          Your thumbnails are ready for review.
+          Do you want try our other tools?
         </p>
         <div className="flex gap-2">
           <Button
@@ -24,7 +26,7 @@ export const showToast = (
               toast.dismiss(t);
             }}
           >
-            View Thumbnails
+            View {other1} Generator
           </Button>
           <Button
             size="sm"
@@ -34,7 +36,7 @@ export const showToast = (
               toast.dismiss(t);
             }}
           >
-            Go to Script
+            Go to {other2} Generator
           </Button>
         </div>
       </div>
