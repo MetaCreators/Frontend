@@ -3,7 +3,8 @@ import { Button } from "../ui/button";
 import { GeneratedImgCarousel } from "./GeneratedImgCarousel";
 import { supabase } from "@/lib/supabase";
 import { Loader } from "lucide-react";
-import { ToastComponent } from "../common/ToastComponent";
+import { showToast } from "../common/ToastComponent";
+import { useNavigate } from "react-router-dom";
 
 function GeneratorSection() {
   const [idea, setIdea] = useState("");
@@ -12,6 +13,7 @@ function GeneratorSection() {
   const [images, setImages] = useState([]);
   const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function generateImages(idea: string) {
     try {
@@ -49,6 +51,11 @@ function GeneratorSection() {
         console.log(data.images);
         setLoading(false);
         setImages(data.images);
+        showToast(
+          "Images",
+          () => navigate("/thumbnail"),
+          () => navigate("/script")
+        );
       } else {
         throw new Error("Unexpected response format from the server.");
       }
@@ -59,7 +66,6 @@ function GeneratorSection() {
 
   return (
     <div className="flex flex-col md:flex-row bg-slate-100 mx-4 md:mx-10 mb-8 rounded-2xl p-6 gap-6">
-      {/* Left Section */}
       <div className="w-full md:w-1/3 flex flex-col justify-center items-center space-y-4">
         <h2 className="text-lg md:text-xl font-semibold text-center">
           Make Your Content Click-Worthy!
@@ -97,11 +103,8 @@ function GeneratorSection() {
               "Generate Script"
             )}
           </Button>
-          <ToastComponent />
         </div>
       </div>
-
-      {/* Right Section */}
       <div className="w-full md:w-2/3 flex justify-center items-center">
         <GeneratedImgCarousel images={images} />
       </div>
