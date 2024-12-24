@@ -13,6 +13,7 @@ import SignUp from "./pages/SignUp/SignUp.tsx";
 import EmailConfirmation from "./pages/EmailConfirmation/EmailConfirmation.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
+import { Toaster } from "./components/ui/sonner.tsx";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -29,7 +30,7 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   }, [user, loading, navigate]);
 
   if (loading) {
-    return <div>Loading...</div>; // Or your loading component
+    return <div>Loading...</div>;
   }
 
   return user ? <>{children}</> : null;
@@ -90,6 +91,7 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>
       <RouterProvider router={router} />
+      <Toaster />
     </AuthProvider>
   </StrictMode>
 );

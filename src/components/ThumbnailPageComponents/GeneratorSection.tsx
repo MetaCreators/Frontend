@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { GeneratedImgCarousel } from "./GeneratedImgCarousel";
 import { supabase } from "@/lib/supabase";
 import { Loader } from "lucide-react";
+import { ToastComponent } from "../common/ToastComponent";
 
 function GeneratorSection() {
   const [idea, setIdea] = useState("");
@@ -96,6 +97,7 @@ function GeneratorSection() {
               "Generate Script"
             )}
           </Button>
+          <ToastComponent />
         </div>
       </div>
 
