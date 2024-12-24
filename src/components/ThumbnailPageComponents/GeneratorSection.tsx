@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { GeneratedImgCarousel } from "./GeneratedImgCarousel";
 import { supabase } from "@/lib/supabase";
+import { Loader } from "lucide-react";
 
 function GeneratorSection() {
   const [idea, setIdea] = useState("");
@@ -9,6 +10,7 @@ function GeneratorSection() {
   const [targetAudience, setTargetAudience] = useState("");
   const [images, setImages] = useState([]);
   const VITE_BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const [loading, setLoading] = useState(false);
 
   async function generateImages(idea: string) {
     try {
@@ -19,6 +21,8 @@ function GeneratorSection() {
       if (!session) {
         throw new Error("Not authentication");
       }
+
+      setLoading(true);
 
       const response = await fetch(`${VITE_BACKEND_URL}/thumbnail`, {
         method: "POST",
@@ -42,6 +46,7 @@ function GeneratorSection() {
 
       if (data.success) {
         console.log(data.images);
+        setLoading(false);
         setImages(data.images);
       } else {
         throw new Error("Unexpected response format from the server.");
@@ -80,8 +85,16 @@ function GeneratorSection() {
           <Button
             onClick={() => generateImages(idea)}
             className="w-full md:w-auto"
+            disabled={loading}
           >
-            Generate
+            {loading ? (
+              <>
+                <Loader className="mr-2 h-4 w-4 animate-spin" />
+                Generating...
+              </>
+            ) : (
+              "Generate Script"
+            )}
           </Button>
         </div>
       </div>
