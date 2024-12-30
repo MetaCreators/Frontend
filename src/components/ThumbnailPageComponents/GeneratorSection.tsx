@@ -102,7 +102,7 @@ function GeneratorSection() {
                 Generating...
               </>
             ) : (
-              "Generate Script"
+              "Generate Thumbnail"
             )}
           </Button>
         </div>
