@@ -14,6 +14,7 @@ import EmailConfirmation from "./pages/EmailConfirmation/EmailConfirmation.tsx";
 import Dashboard from "./pages/Dashboard/Dashboard.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
+import FineTuneImage from "./pages/FineTuneImage/FineTuneImage.tsx";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -82,6 +83,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <DescriptionPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/finetune",
+    element: (
+      <ProtectedRoute>
+        <FineTuneImage />
       </ProtectedRoute>
     ),
   },
