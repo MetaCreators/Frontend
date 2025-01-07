@@ -18,6 +18,7 @@ export default function ImageUploader() {
   const handleUpload = useCallback(async () => {
     setIsTraining(true);
     // Simulating API call to train AI
+    //api call to /api/imagefinetune endpoint
     await new Promise((resolve) => setTimeout(resolve, 3000));
     setIsTraining(false);
     alert("AI training completed!");

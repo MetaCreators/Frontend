@@ -13,6 +13,7 @@ export default function ImageGenerator() {
   const handleGenerate = useCallback(async () => {
     setIsGenerating(true);
     // Simulating API call to generate image
+    //api call to /api/genpersonimage endpoint
     await new Promise((resolve) => setTimeout(resolve, 2000));
     setGeneratedImage("/placeholder.svg?height=300&width=300");
     setIsGenerating(false);
