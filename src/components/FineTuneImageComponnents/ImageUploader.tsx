@@ -17,11 +17,30 @@ export default function ImageUploader() {
 
   const handleUpload = useCallback(async () => {
     setIsTraining(true);
-    // Simulating API call to train AI
-    //api call to /api/imagefinetune endpoint
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    setIsTraining(false);
-    alert("AI training completed!");
+    try {
+      const response = await fetch("http://localhost:3000/api/imagefinetune", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: "23r45",
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Server error: ${response.status} ${response.statusText}`
+        );
+      }
+      const data = await response.json();
+      alert(data.message);
+    } catch (error: any) {
+      console.error("Error during upload:", error);
+      alert(error.message || "An error occurred during training.");
+    } finally {
+      setIsTraining(false);
+    }
   }, []);
 
   return (

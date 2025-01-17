@@ -32,6 +32,12 @@ export default function Dashboard() {
       icon: "🖼️",
       path: "/thumbnail",
     },
+    {
+      title: "Personalized Thumbnail Generator",
+      description: "Design eye-catching video thumbnails",
+      icon: "🖼️",
+      path: "/imagefinetune",
+    },
   ];
 
   return (
