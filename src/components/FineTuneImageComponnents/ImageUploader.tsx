@@ -18,15 +18,18 @@ export default function ImageUploader() {
   const handleUpload = useCallback(async () => {
     setIsTraining(true);
     try {
-      const response = await fetch("http://localhost:3000/api/imagefinetune", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userid: "23r45",
-        }),
-      });
+      const response = await fetch(
+        process.env.VITE_BACKEND_URL + "/api/imagefinetune",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userid: "23r45",
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error(
