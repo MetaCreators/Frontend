@@ -25,7 +25,7 @@ export default function SignUp() {
         email,
         password,
         options: {
-          emailRedirectTo: redirectUrl,
+          emailRedirectTo: `${import.meta.env.VITE_FRONTEND_URL}/dashboard`,
         },
       });
 
