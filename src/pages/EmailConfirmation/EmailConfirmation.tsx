@@ -1,10 +1,49 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { Alert } from "@/components/ui/alert";
 
 export default function EmailConfirmation() {
   const location = useLocation();
   const navigate = useNavigate();
   const email = location.state?.email;
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resendMessage, setResendMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const handleResendEmail = async () => {
+    if (!email) {
+      setError("Email address not found. Please try signing up again.");
+      return;
+    }
+
+    setResendLoading(true);
+    setResendMessage("");
+    setError("");
+
+    try {
+      const { error } = await supabase.auth.resend({
+        type: "signup",
+        email: email,
+        options: {
+          emailRedirectTo: `${window.location.origin}/dashboard`,
+        },
+      });
+
+      if (error) throw error;
+
+      setResendMessage("Confirmation email resent successfully!");
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Failed to resend confirmation email"
+      );
+    } finally {
+      setResendLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -23,14 +62,19 @@ export default function EmailConfirmation() {
           expire in 24 hours.
         </p>
 
-        <div className="space-y-4">
-          {/* <Button
-            onClick={() => navigate("/login")}
-            className="w-full h-12 bg-[#ef5350] hover:bg-[#e53935] text-white"
-          >
-            Back to Login
-          </Button> */}
+        {error && (
+          <Alert variant="destructive" className="mb-4">
+            {error}
+          </Alert>
+        )}
 
+        {resendMessage && (
+          <Alert className="mb-4 bg-green-50 text-green-700 border-green-200">
+            {resendMessage}
+          </Alert>
+        )}
+
+        <div className="space-y-4">
           <Button
             onClick={() => navigate("/signup")}
             variant="outline"
@@ -43,12 +87,11 @@ export default function EmailConfirmation() {
         <div className="mt-8 text-center text-sm text-gray-500">
           Didn't receive the email?{" "}
           <button
-            className="text-[#1a237e] hover:underline font-medium"
-            onClick={() => {
-              // Add resend email functionality here if needed
-            }}
+            className="text-[#1a237e] hover:underline font-medium disabled:opacity-50"
+            onClick={handleResendEmail}
+            disabled={resendLoading}
           >
-            Click to resend
+            {resendLoading ? "Resending..." : "Click to resend"}
           </button>
         </div>
       </div>
