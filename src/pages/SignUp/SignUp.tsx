@@ -23,7 +23,7 @@ export default function SignUp() {
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
+          emailRedirectTo: `${import.meta.env.VITE_FRONTEND_URL}/dashboard`,
         },
       });
 
