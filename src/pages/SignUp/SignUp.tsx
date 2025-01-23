@@ -18,8 +18,6 @@ export default function SignUp() {
     setError("");
     setLoading(true);
 
-    const redirectUrl = import.meta.env.VITE_APP_URL + "/dashboard";
-
     try {
       const { error: signUpError, data } = await supabase.auth.signUp({
         email,
