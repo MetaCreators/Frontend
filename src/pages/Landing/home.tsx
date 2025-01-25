@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Calendar, Linkedin, Twitter, Youtube } from "lucide-react";
 
 function Home() {
   return (
@@ -136,6 +137,18 @@ function Home() {
               </div>
             </div>
           </div>
+        </div>
+        <div className="border border-black w-full h-80 bg-gradient-to-r from-white from-50% via-slate-500 to-black to-80% flex items-center space-x-6 px-9">
+          <div className="border border-black w-1/2 h-1/2 flex justify-center items-center bg-white"></div>
+          <div className="w-1/2 h-1/2 flex justify-center items-center text-white space-x-11">
+            <Linkedin />
+            <Twitter />
+            <Youtube />
+            <Calendar />
+          </div>
+        </div>
+        <div className="border border-black w-full h-40 flex justify-center bg-slate-950 items-center space-x-6 px-9 text-white">
+          @2025 Lithouse in. All rights reserved
         </div>
       </div>
     </div>
