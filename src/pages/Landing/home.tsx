@@ -109,6 +109,10 @@ function Home() {
             </div>
           </div>
         </div>
+        <div className="w-full h-96 flex justify-evenly items-center px-6">
+          <div>hi</div>
+          <div>hi</div>
+        </div>
       </div>
     </div>
   );
