@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import mtn from "../../assets/mtn.jpg";
-import Imageslider from '../../components/ThumbnailPageComponents/ImageComparisonSlider';
+import Imageslider from "../../components/ThumbnailPageComponents/ImageComparisonSlider";
 import JSZip from "jszip";
 
 interface Model {
@@ -18,8 +18,8 @@ const ThumbnailPage: React.FC = () => {
   const [inputText3, setInputText3] = useState<string>("");
   const [generatedImage, setGeneratedImage] = useState<string>(mtn);
   const [uploaded_image, setuploaded_image] = useState<string>("");
-  const [after_image, setafter_image] = useState(mtn);
-  const [image_uploaded_identifier, setimage_uploaded_identifier] = useState(false);
+  const [image_uploaded_identifier, setimage_uploaded_identifier] =
+    useState(false);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -112,16 +112,36 @@ const ThumbnailPage: React.FC = () => {
           }}
         >
           <div style={{ flex: 1, textAlign: "left" }}>
-            <h1 style={{ fontSize: "3.0rem", fontWeight: "bold", marginBottom: "10px" }}>
+            <h1
+              style={{
+                fontSize: "3.0rem",
+                fontWeight: "bold",
+                marginBottom: "10px",
+              }}
+            >
               Generate Thumbnail
             </h1>
             <p style={{ fontSize: "1rem", color: "#555", lineHeight: "1.5" }}>
-              Dream it up, then add it to your design. Watch your words and phrases transform into beautiful images with
-              the best AI image generators available at your fingertips. Stand out with an image perfect for your
-              project.
+              Dream it up, then add it to your design. Watch your words and
+              phrases transform into beautiful images with the best AI image
+              generators available at your fingertips. Stand out with an image
+              perfect for your project.
             </p>
-            <div style={{ marginTop: "20px", display: "flex", alignItems: "center", gap: "10px" }}>
-              <div style={{ position: "relative", width: "100%", maxWidth: "300px" }}>
+            <div
+              style={{
+                marginTop: "20px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  maxWidth: "300px",
+                }}
+              >
                 <input
                   type="text"
                   placeholder="Text 1 "
@@ -181,7 +201,15 @@ const ThumbnailPage: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div
+            style={{
+              flex: 1,
+              position: "relative",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             {image_uploaded_identifier ? (
               <Imageslider defaultImage={mtn} generatedImage={uploaded_image} />
             ) : (
@@ -233,7 +261,9 @@ const ThumbnailPage: React.FC = () => {
               }}
             >
               <h3>{model.name}</h3>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}></div>
+              <div
+                style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}
+              ></div>
             </div>
           ))}
         </div>
@@ -288,7 +318,9 @@ const ThumbnailPage: React.FC = () => {
                 marginBottom: "15px",
               }}
             >
-              <p style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Start from a photo</p>
+              <p style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+                Start from a photo
+              </p>
               <label
                 htmlFor="file-upload"
                 style={{
@@ -312,7 +344,9 @@ const ThumbnailPage: React.FC = () => {
                 onChange={handleImageUpload}
                 style={{ display: "none" }}
               />
-              <p style={{ fontSize: "0.9rem", color: "#666" }}>{`${uploadedImages.length} file(s) selected`}</p>
+              <p
+                style={{ fontSize: "0.9rem", color: "#666" }}
+              >{`${uploadedImages.length} file(s) selected`}</p>
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>
