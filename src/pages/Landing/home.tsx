@@ -133,13 +133,21 @@ function Home() {
           </div>
         </div>
         <div className="w-full h-96 flex justify-evenly items-center px-6 space-x-6">
-          <div className="border border-black w-full h-full flex justify-center items-center bg-teal-100">
-            <div className="border border-black w-1/2 h-1/2 flex justify-center items-center bg-white"></div>
-          </div>
-          <div className="border border-black w-full h-full flex flex-col justify-center items-center">
-            <div>
-              <div>AI Script Generator</div>
+          <div className="w-full h-full flex justify-center items-center bg-teal-100 border rounded-2xl">
+            <div className="w-1/2 h-1/2 flex justify-center items-center bg-white">
               <div>
+                <div>AI Script Generator</div>
+                <div>
+                  Create customized, high-quality scripts in seconds using our
+                  AI Script Generator
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-full h-full flex flex-col justify-center items-center">
+            <div>
+              <div className="text-4xl font-semibold">AI Script Generator</div>
+              <div className="text-lg">
                 Create customized, high-quality scripts in seconds using our AI
                 Script Generator
               </div>
@@ -147,13 +155,23 @@ function Home() {
           </div>
         </div>
         <div className="w-full h-96 flex justify-evenly items-center px-6 space-x-6 my-14">
-          <div className="border border-black w-full h-full flex justify-center items-center bg-teal-100">
-            <div className="border border-black w-1/2 h-1/2 flex justify-center items-center bg-white"></div>
-          </div>
-          <div className="border border-black w-full h-full flex flex-col justify-center items-center">
-            <div>
-              <div className="flex">AI Youtube Video Description Generator</div>
+          <div className=" w-full h-full flex justify-center items-center bg-teal-100">
+            <div className=" w-1/2 h-1/2 flex justify-center items-center bg-white">
               <div>
+                <div>AI Script Generator</div>
+                <div>
+                  Create customized, high-quality scripts in seconds using our
+                  AI Script Generator
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className=" w-full h-full flex flex-col justify-center items-center">
+            <div>
+              <div className="flex text-4xl font-semibold">
+                AI Youtube Video Description Generator
+              </div>
+              <div className="text-lg">
                 Craft engaging, tailored YouTube video descriptions effortlessly
                 with our AI-powered generator.
               </div>
