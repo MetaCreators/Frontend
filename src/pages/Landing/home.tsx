@@ -5,14 +5,14 @@ function Home() {
   return (
     <div className="bg-gray-200 min-h-screen">
       <div className="w-full flex flex-col justify-center items-center">
-        <div className="border w-1/2 border-black rounded-xl mt-2 flex justify-between px-2 py-1 items-center">
+        <div className="w-1/2 border-black border-[1] shadow-md rounded-full mt-4 flex justify-between px-6 py-4 items-center">
           <div>logo</div>
-          <div className="flex space-x-3">
-            <div>feature</div>
-            <div>about us</div>
+          <div className="flex space-x-3 text-slate-500 font-bold">
+            <div>Products</div>
+            <div>About us</div>
           </div>
-          <div className="border border-black p-1 px-2 rounded-sm">
-            book a call
+          <div className="border-2 border-slate-400 shadow-md p-1 px-2 rounded-sm text-black font-bold">
+            Book a call
           </div>
         </div>
         <div className="w-full h-96 flex flex-col justify-center items-center">
