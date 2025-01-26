@@ -29,11 +29,13 @@ function Home() {
           </div>
           <div className="space-x-2">
             <Button>Create Account</Button>
-            <Button className="bg-white text-black">Book a call</Button>
+            <Button className="bg-white text-black hover:bg-black hover:text-white">
+              Book a call
+            </Button>
           </div>
         </div>
-        <div className="w-full h-96 flex justify-evenly items-center px-6">
-          <div className="flex flex-col justify-start items-center">
+        <div className="w-full h-96 flex border border-black justify-evenly items-center px-6 py-6 space-x-4">
+          <div className="flex flex-col justify-start items-center w-1/2 border border-black">
             <div className="text-left w-full">AI Thumbnail Generator</div>
             <div className="text-left w-full">
               Create stunning, customized thumbnails effortlessly with our
@@ -43,35 +45,10 @@ function Home() {
               <Button className="w-1/2">Try now</Button>
             </div>
           </div>
-          <div className="flex flex-col justify-start items-center">
-            <div className="text-left w-full">AI Thumbnail Generator</div>
-            <div className="text-left w-full">
-              Create stunning, customized thumbnails effortlessly with our
-              AI-powered thumbnail generator.
-            </div>
-            <div className="text-left w-full">
-              <Button className="w-1/2">Try now</Button>
-            </div>
-          </div>
-          <div className="flex flex-col justify-start items-center">
-            <div className="text-left w-full">AI Thumbnail Generator</div>
-            <div className="text-left w-full">
-              Create stunning, customized thumbnails effortlessly with our
-              AI-powered thumbnail generator.
-            </div>
-            <div className="text-left w-full">
-              <Button className="w-1/2">Try now</Button>
-            </div>
-          </div>
-          <div className="flex flex-col justify-start items-center">
-            <div className="text-left w-full">AI Thumbnail Generator</div>
-            <div className="text-left w-full">
-              Create stunning, customized thumbnails effortlessly with our
-              AI-powered thumbnail generator.
-            </div>
-            <div className="text-left w-full">
-              <Button className="w-1/2">Try now</Button>
-            </div>
+
+          <div className="flex justify-center border-8 border-violet-600 items-center w-1/2 h-full">
+            <div className="w-1/2 h-full border-r-4 border-black"></div>
+            <div className="w-1/2 h-full border-r-4 border-black"></div>
           </div>
         </div>
         <div className="w-full h-96 flex justify-evenly items-center px-6">
