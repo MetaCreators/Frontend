@@ -15,9 +15,15 @@ function Home() {
             Book a call
           </div>
         </div>
-        <div className="w-full h-96 flex flex-col justify-center items-center">
-          <div>Create Better. Create Faster. Create More.</div>
-          <div>
+        <div className="w-full h-96 flex flex-col space-y-8 justify-center items-center">
+          <div className="flex space-x-4 text-7xl font-semibold">
+            <div className=" text-gray-600 ">
+              Create Better. Create Faster. Create
+            </div>
+            <div className="text-black">More.</div>
+          </div>
+
+          <div className="text-zinc-500 text-xl font-semibold">
             With our state of the art ,cutting edge, platform, you can create
             content faster than you can imagine
           </div>
