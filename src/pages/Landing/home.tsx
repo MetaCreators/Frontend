@@ -5,15 +5,19 @@ function Home() {
   return (
     <div className="bg-gray-200 min-h-screen">
       <div className="w-full flex flex-col justify-center items-center">
-        <div className="w-1/2 border-black border-[1] shadow-md rounded-full mt-4 flex justify-between px-6 py-4 items-center">
-          <div>logo</div>
+        <div className="w-1/3 border-black border-[1] shadow-md rounded-full mt-4 flex justify-between px-6 py-2 items-center">
+          <img src="/logo.png" alt="logo" className="h-12 w-12" />
           <div className="flex space-x-3 text-slate-500 font-bold">
-            <div>Products</div>
-            <div>About us</div>
+            <Button className="bg-inherit shadow-none hover:bg-inherit hover:text-slate-500 text-slate-500">
+              Products
+            </Button>
+            <Button className="bg-inherit shadow-none hover:bg-inherit hover:text-slate-500 text-slate-500">
+              About us
+            </Button>
           </div>
-          <div className="border-2 border-slate-400 shadow-md p-1 px-2 rounded-sm text-black font-bold">
+          <Button className="border-2 border-slate-400 bg-inherit hover:bg-inherit shadow-md p-1 px-2 rounded-sm text-black font-bold">
             Book a call
-          </div>
+          </Button>
         </div>
         <div className="w-full h-96 flex flex-col space-y-8 justify-center items-center">
           <div className="flex space-x-4 text-7xl font-semibold">
