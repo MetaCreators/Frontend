@@ -49,7 +49,7 @@ function Home() {
           <div className="flex justify-center border-8 border-violet-600 items-center w-2/3 h-full">
             <div className="w-1/2 h-full border-r-8 border-white relative bg-red-500 justify-center flex">
               <img
-                src="/public/Shikhar_7.jpg"
+                src="/Shikhar_7.jpg"
                 alt="shikhar_before"
                 className="w-full h-full"
               />
@@ -66,7 +66,7 @@ function Home() {
             </div>
             <div className="w-1/2 h-full border-l-8 border-white relative bg-red-500 justify-center flex">
               <img
-                src="/public/Shikhar_AI.png"
+                src="/Shikhar_AI.png"
                 alt="shikhar_before"
                 className="w-full h-full"
               />
@@ -98,7 +98,7 @@ function Home() {
           <div className="flex justify-center border-8 border-violet-600 items-center w-2/3 h-full">
             <div className="w-1/2 h-full border-r-8 border-white relative bg-red-500 justify-center flex">
               <img
-                src="/public/Shikhar_7.jpg"
+                src="/Shikhar_7.jpg"
                 alt="shikhar_before"
                 className="w-full h-full"
               />
@@ -115,7 +115,7 @@ function Home() {
             </div>
             <div className="w-1/2 h-full border-l-8 border-white relative bg-red-500 justify-center flex">
               <img
-                src="/public/Shikhar_AI.png"
+                src="/Shikhar_AI.png"
                 alt="shikhar_before"
                 className="w-full h-full"
               />
@@ -132,9 +132,9 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="w-full h-96 flex justify-evenly items-center px-6 space-x-6">
+        <div className="w-full h-96 flex justify-evenly items-center px-24 space-x-6">
           <div className="w-full h-full flex justify-center items-center bg-teal-100 border rounded-2xl">
-            <div className="w-1/2 h-1/2 flex justify-center items-center bg-white">
+            <div className="w-1/2 h-1/2 flex justify-center items-center bg-white px-3 rounded-lg shadow">
               <div>
                 <div>AI Script Generator</div>
                 <div>
@@ -154,9 +154,9 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="w-full h-96 flex justify-evenly items-center px-6 space-x-6 my-14">
+        <div className="w-full h-96 flex justify-evenly items-center px-24 space-x-6 my-14">
           <div className=" w-full h-full flex justify-center items-center bg-teal-100">
-            <div className=" w-1/2 h-1/2 flex justify-center items-center bg-white">
+            <div className=" w-1/2 h-1/2 flex justify-center items-center bg-white px-3 rounded-lg shadow">
               <div>
                 <div>AI Script Generator</div>
                 <div>
@@ -178,8 +178,17 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="border border-black w-full h-80 bg-gradient-to-r from-white from-50% via-slate-500 to-black to-80% flex items-center space-x-6 px-9">
-          <div className="border border-black w-1/2 h-1/2 flex justify-center items-center bg-white"></div>
+        <div className="w-full h-52 bg-gradient-to-r from-white from-50% via-slate-500 to-black to-80% flex items-center space-x-6 px-9">
+          <div className="w-1/2 h-1/2 flex justify-start items-center bg-white flex-col px-8 py-5">
+            <div className="flex space-x-3 w-full">
+              <div>logo</div>
+              <div>Lithouse</div>
+            </div>
+            <div className="w-full">
+              Simplifies content creation with AI tools and a virtual space for
+              collaboration, connecting creators and professionals seamlessly.
+            </div>
+          </div>
           <div className="w-1/2 h-1/2 flex justify-center items-center text-white space-x-11">
             <Linkedin />
             <Twitter />
