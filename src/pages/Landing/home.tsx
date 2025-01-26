@@ -83,8 +83,8 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className="w-full h-96 flex justify-evenly items-center px-6">
-          <div className="flex flex-col justify-start items-center">
+        <div className="w-full h-96 flex justify-evenly items-center px-6 py-6 space-x-4">
+          <div className="flex flex-col justify-start items-center w-1/3">
             <div className="text-left w-full">AI Thumbnail Generator</div>
             <div className="text-left w-full">
               Create stunning, customized thumbnails effortlessly with our
@@ -94,34 +94,41 @@ function Home() {
               <Button className="w-1/2">Try now</Button>
             </div>
           </div>
-          <div className="flex flex-col justify-start items-center">
-            <div className="text-left w-full">AI Thumbnail Generator</div>
-            <div className="text-left w-full">
-              Create stunning, customized thumbnails effortlessly with our
-              AI-powered thumbnail generator.
+
+          <div className="flex justify-center border-8 border-violet-600 items-center w-2/3 h-full">
+            <div className="w-1/2 h-full border-r-8 border-white relative bg-red-500 justify-center flex">
+              <img
+                src="/public/Shikhar_7.jpg"
+                alt="shikhar_before"
+                className="w-full h-full"
+              />
+              <div className="absolute">
+                <img
+                  src="https://s2.svgbox.net/pen-brushes.svg?ic=brush-1"
+                  alt="Brush"
+                  className="h-16 w-40 fill-slate-600 relative"
+                />
+                <div className="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold">
+                  ORIGINAL
+                </div>
+              </div>
             </div>
-            <div className="text-left w-full">
-              <Button className="w-1/2">Try now</Button>
-            </div>
-          </div>
-          <div className="flex flex-col justify-start items-center">
-            <div className="text-left w-full">AI Thumbnail Generator</div>
-            <div className="text-left w-full">
-              Create stunning, customized thumbnails effortlessly with our
-              AI-powered thumbnail generator.
-            </div>
-            <div className="text-left w-full">
-              <Button className="w-1/2">Try now</Button>
-            </div>
-          </div>
-          <div className="flex flex-col justify-start items-center">
-            <div className="text-left w-full">AI Thumbnail Generator</div>
-            <div className="text-left w-full">
-              Create stunning, customized thumbnails effortlessly with our
-              AI-powered thumbnail generator.
-            </div>
-            <div className="text-left w-full">
-              <Button className="w-1/2">Try now</Button>
+            <div className="w-1/2 h-full border-l-8 border-white relative bg-red-500 justify-center flex">
+              <img
+                src="/public/Shikhar_AI.png"
+                alt="shikhar_before"
+                className="w-full h-full"
+              />
+              <div className="absolute">
+                <img
+                  src="https://s2.svgbox.net/pen-brushes.svg?ic=brush-1"
+                  alt="Brush"
+                  className="h-16 w-52 fill-slate-600 relative"
+                />
+                <div className="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold">
+                  AI GENERATED
+                </div>
+              </div>
             </div>
           </div>
         </div>
