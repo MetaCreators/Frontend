@@ -19,15 +19,20 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signUp({
+      const { error: signUpError, data } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
+          emailRedirectTo: `${import.meta.env.VITE_FRONTEND_URL}/dashboard`,
         },
       });
 
-      if (error) throw error;
+      if (signUpError) throw signUpError;
+
+      if (data?.user && data.user.identities?.length === 0) {
+        setError("This email is already registered. Please log in instead.");
+        return;
+      }
 
       navigate("/email-confirmation", {
         state: { email },
@@ -139,4 +144,30 @@ export default function SignUp() {
       </div>
     </div>
   );
+}
+
+{
+  /* <div className="w-1/2 bg-[#0F172A] p-12 flex flex-col">
+        <div className="flex-grow flex items-center justify-center">
+          <div className="text-center text-white">
+            <h2 className="text-3xl font-bold mb-4">
+              Simplifying Content Creation
+            </h2>
+            <p className="text-xl text-gray-300">
+              Unleash your creativity with our suite of AI-powered tools.
+            </p>
+          </div>
+        </div>
+
+        
+        <div className="flex justify-center gap-4 text-gray-500 text-sm">
+          <a href="#" className="hover:text-gray-700">
+            Terms of use
+          </a>
+          <span>|</span>
+          <a href="#" className="hover:text-gray-700">
+            Privacy policy
+          </a>
+        </div>
+      </div> */
 }
