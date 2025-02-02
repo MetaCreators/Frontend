@@ -16,6 +16,7 @@ import { AuthProvider } from "./context/AuthContext.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
 import FineTuneImage from "./pages/FineTuneImage/FineTuneImage.tsx";
 import AuthCallback from "./pages/SignUp/AuthCallback.tsx";
+import Pricing from "./pages/Payment/Pricing.tsx";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -58,9 +59,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      <ProtectedRoute>
-        <Dashboard />
-      </ProtectedRoute>
+      // <ProtectedRoute>
+      //   <Dashboard />
+      // </ProtectedRoute>
+      <Dashboard />
     ),
   },
   {
@@ -92,6 +94,14 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <FineTuneImage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/payment",
+    element: (
+      <ProtectedRoute>
+        <Pricing />
       </ProtectedRoute>
     ),
   },
