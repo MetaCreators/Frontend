@@ -16,6 +16,7 @@ import { AuthProvider } from "./context/AuthContext.tsx";
 import { Toaster } from "./components/ui/sonner.tsx";
 import FineTuneImage from "./pages/FineTuneImage/FineTuneImage.tsx";
 import AuthCallback from "./pages/SignUp/AuthCallback.tsx";
+import Home from "./pages/Landing/home.tsx";
 import Pricing from "./pages/Payment/Pricing.tsx";
 
 interface ProtectedRouteProps {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+  },
+  {
+    path: "/home",
+    element: <Home />,
   },
   {
     path: "/login",
