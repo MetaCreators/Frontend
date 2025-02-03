@@ -1,5 +1,3 @@
-//import { Button } from "@/components/ui/button";
-//import { cn } from "@/lib/utils";
 import PricingCard from "@/components/pricing/PricingCard";
 import { useState } from "react";
 import Navbar from "@/components/common/Navbar";
@@ -77,12 +75,6 @@ const Pricing = () => {
               >
                 Monthly
               </AnimatedButton>
-              {/* <AnimatedButton
-                selected={billingPeriod === "yearly"}
-                onClick={() => setBillingPeriod("yearly")}
-              >
-                Yearly
-              </AnimatedButton> */}
             </div>
           </div>
 

@@ -40,19 +40,6 @@ const PricingCard = ({
       >
         Best Value
       </Badge>
-
-      //   <div
-      //     className="absolute top-[30px] lg:top-5 right-[-39%] md:right-[-38%] lg:right-[-37.5%] w-10/12
-      //                 rotate-45 text-center text-white font-semibold
-      //                 bg-gradient-to-r from-transparent via-blue-700 to-transparent
-      //                 py-2 transform"
-      //   >
-      //     Best Value
-      //   </div>
-
-      //   <div className="absolute -top-0 -right-5 bg-blue-600 text-white text-sm px-4 py-1 rounded-lg rotate-45">
-      //     Best Value
-      //   </div>
     )}
     <CardHeader>
       <CardTitle className="flex flex-col gap-2">
