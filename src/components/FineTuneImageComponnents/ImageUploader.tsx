@@ -19,7 +19,7 @@ export default function ImageUploader() {
     setIsTraining(true);
     try {
       const response = await fetch(
-        process.env.VITE_BACKEND_URL + "/api/imagefinetune",
+        process.env.VITE_BACKEND_URL + "api/imagefinetune",
         {
           method: "POST",
           headers: {

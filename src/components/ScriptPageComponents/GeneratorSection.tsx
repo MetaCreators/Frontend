@@ -55,7 +55,7 @@ function GeneratorSection() {
         throw new Error("Not authenticated");
       }
 
-      const response = await fetch(`${VITE_BACKEND_URL}/api/script`, {
+      const response = await fetch(`${VITE_BACKEND_URL}api/script`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
