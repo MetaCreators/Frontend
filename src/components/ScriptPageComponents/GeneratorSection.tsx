@@ -55,6 +55,8 @@ function GeneratorSection() {
         throw new Error("Not authenticated");
       }
 
+      console.log("user session access token", session.access_token);
+
       const response = await fetch(`${VITE_BACKEND_URL}api/script`, {
         method: "POST",
         headers: {
