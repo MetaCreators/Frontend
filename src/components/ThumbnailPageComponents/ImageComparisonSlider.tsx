@@ -43,7 +43,7 @@ const ImageComparisonSlider: React.FC<ImageSliderProps> = ({
       ref={containerRef}
       style={{
         position: "relative",
-        width: "600px",
+        width: "100%",
         height: "400px",
         overflow: "hidden",
         borderRadius: "12px",
