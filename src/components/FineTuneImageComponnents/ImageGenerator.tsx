@@ -56,7 +56,7 @@ export default function ImageGenerator() {
         return;
       }
 
-      const response = await fetch(`${VITE_BACKEND_URL}/api/genpersonimage`, {
+      const response = await fetch(`${VITE_BACKEND_URL}api/genpersonimage`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

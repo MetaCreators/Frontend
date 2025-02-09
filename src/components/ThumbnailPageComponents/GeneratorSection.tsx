@@ -27,7 +27,7 @@ function GeneratorSection() {
 
       setLoading(true);
 
-      const response = await fetch(`${VITE_BACKEND_URL}/thumbnail`, {
+      const response = await fetch(`${VITE_BACKEND_URL}thumbnail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -54,8 +54,10 @@ function GeneratorSection() {
       if (!session) {
         throw new Error("Not authenticated");
       }
+      //
+      console.log("user session access token", session.access_token);
 
-      const response = await fetch(`${VITE_BACKEND_URL}/api/script`, {
+      const response = await fetch(`${VITE_BACKEND_URL}api/script`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +74,10 @@ function GeneratorSection() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to generate script");
+        throw new Error(
+          "response not ok for script gen " + data.message ||
+            "Failed to generate script"
+        );
       }
 
       setScript(data.content);
@@ -84,7 +89,11 @@ function GeneratorSection() {
         "Description"
       );
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      setError(
+        err instanceof Error
+          ? "could not generate script: " + err.message
+          : "An error occurred"
+      );
     } finally {
       setLoading(false);
     }

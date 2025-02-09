@@ -126,9 +126,9 @@ const ThumbnailPage: React.FC = () => {
             </h1>
             <p style={{ fontSize: "1.2rem", color: "#555", lineHeight: "1.0" }}>
               Dream it up, then add it to your design. Watch your words and
-              phrases transform into beautiful thumbnails with the best AI image
+              phrases transform into beautiful images with the best AI image
               generators available at your fingertips. Stand out with an image
-              perfect for your videos.
+              perfect for your project.
             </p>
             <div
               style={{
@@ -259,6 +259,7 @@ const ThumbnailPage: React.FC = () => {
                     padding: "10px",
                     border: "1px solid #ccc",
                     borderRadius: "9999px",
+                    //borderRadius: "8px",
                     background: "#f5f5f5",
                     width: "auto",
                   }}

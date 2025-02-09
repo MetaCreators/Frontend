@@ -37,7 +37,7 @@ export default function SignUp() {
         email,
         password,
         options: {
-          emailRedirectTo: "http://localhost:5173/dashboard",
+          emailRedirectTo: `${import.meta.env.VITE_FRONTEND_URL}/dashboard`,
         },
       });
 
@@ -67,7 +67,7 @@ export default function SignUp() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: "http://localhost:5173/dashboard",
+          redirectTo: `${import.meta.env.VITE_FRONTEND_URL}/dashboard`,
         },
       });
 

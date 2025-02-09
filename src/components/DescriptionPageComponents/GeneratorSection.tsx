@@ -36,7 +36,7 @@ function GeneratorSection() {
         throw new Error("Not authentication");
       }
 
-      const response = await fetch(`${VITE_BACKEND_URL}/api/description`, {
+      const response = await fetch(`${VITE_BACKEND_URL}api/description`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
