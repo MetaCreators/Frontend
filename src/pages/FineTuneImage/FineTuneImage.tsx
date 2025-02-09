@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import mtn from "../../assets/mtn.jpg";
-import Imageslider from '../../components/ThumbnailPageComponents/ImageComparisonSlider';
+import Imageslider from "../../components/ThumbnailPageComponents/ImageComparisonSlider";
 import JSZip from "jszip";
+import Navbar from "@/components/common/Navbar";
 
 interface Model {
   name: string;
@@ -19,7 +20,8 @@ const ThumbnailPage: React.FC = () => {
   const [generatedImage, setGeneratedImage] = useState<string>(mtn);
   const [uploaded_image, setuploaded_image] = useState<string>("");
   const [after_image, setafter_image] = useState(mtn);
-  const [image_uploaded_identifier, setimage_uploaded_identifier] = useState(false);
+  const [image_uploaded_identifier, setimage_uploaded_identifier] =
+    useState(false);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -88,6 +90,7 @@ const ThumbnailPage: React.FC = () => {
 
   return (
     <>
+      <Navbar />
       <div
         style={{
           display: "flex",
@@ -96,7 +99,7 @@ const ThumbnailPage: React.FC = () => {
           justifyContent: "center",
           padding: "40px",
           gap: "20px",
-          maxWidth: "auto",   //// did  "1200px" too "auto" 
+          maxWidth: "auto", //// did  "1200px" too "auto"
           margin: "0 auto",
           fontFamily: "Montserrat, sans-serif",
         }}
@@ -112,16 +115,36 @@ const ThumbnailPage: React.FC = () => {
           }}
         >
           <div style={{ flex: 1, textAlign: "left" }}>
-            <h1 style={{ fontSize: "4.0rem", fontWeight: "bold", marginBottom: "10px" }}>
+            <h1
+              style={{
+                fontSize: "4.0rem",
+                fontWeight: "bold",
+                marginBottom: "10px",
+              }}
+            >
               Generate Thumbnail
             </h1>
             <p style={{ fontSize: "1.2rem", color: "#555", lineHeight: "1.0" }}>
-              Dream it up, then add it to your design. Watch your words and phrases transform into beautiful images with
-              the best AI image generators available at your fingertips. Stand out with an image perfect for your
-              project.
+              Dream it up, then add it to your design. Watch your words and
+              phrases transform into beautiful thumbnails with the best AI image
+              generators available at your fingertips. Stand out with an image
+              perfect for your videos.
             </p>
-            <div style={{ marginTop: "20px", display: "flex", alignItems: "center", gap: "10px" }}>
-              <div style={{ position: "relative", width: "100%", maxWidth: "300px" }}>
+            <div
+              style={{
+                marginTop: "20px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <div
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  maxWidth: "300px",
+                }}
+              >
                 <input
                   type="text"
                   placeholder="Text 1 "
@@ -168,10 +191,10 @@ const ThumbnailPage: React.FC = () => {
                 onClick={handleGenerateImage}
                 style={{
                   padding: "10px 20px",
-                  background: "rgb(102,51,153)",
+                  background: "rgb(239 83 80 / var(--tw-bg-opacity, 1))",
                   color: "#fff",
                   fontSize: "1rem",
-                  borderRadius: "8px",
+                  borderRadius: "9999px",
                   border: "none",
                   cursor: "pointer",
                 }}
@@ -181,11 +204,17 @@ const ThumbnailPage: React.FC = () => {
             </div>
           </div>
 
+          {/* right side wala */}
 
-
-{/* right side wala */}
-
-          <div style={{ flex: 1, position: "relative", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          <div
+            style={{
+              flex: 1,
+              position: "relative",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             {image_uploaded_identifier ? (
               <Imageslider defaultImage={mtn} generatedImage={uploaded_image} />
             ) : (
@@ -197,7 +226,6 @@ const ThumbnailPage: React.FC = () => {
                   borderRadius: "12px",
                   boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                 }}
-                
               />
             )}
             {/* hello */}
@@ -206,10 +234,10 @@ const ThumbnailPage: React.FC = () => {
               style={{
                 marginTop: "20px",
                 padding: "10px 20px",
-                background: "rgb(102,51,153)",
+                background: "rgb(239 83 80 / var(--tw-bg-opacity, 1))",
                 color: "#fff",
                 fontSize: "1rem",
-                borderRadius: "8px",
+                borderRadius: "9999px",
                 border: "none",
                 cursor: "pointer",
               }}
@@ -217,33 +245,32 @@ const ThumbnailPage: React.FC = () => {
               Create New Model
             </button>
             <div
-          style={{
-            marginTop: "30px",
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "10px",
-          }}
-        >
-          {models.map((model, index) => (
-            <button
-              key={index}
               style={{
-                padding: "10px",
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                background: "#f5f5f5",
-                width: "auto",
+                marginTop: "30px",
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "10px",
               }}
             >
-              <h3>{model.name}</h3>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}></div>
-            </button>
-          ))}
-        </div>
+              {models.map((model, index) => (
+                <button
+                  key={index}
+                  style={{
+                    padding: "10px",
+                    border: "1px solid #ccc",
+                    borderRadius: "9999px",
+                    background: "#f5f5f5",
+                    width: "auto",
+                  }}
+                >
+                  <h3>{model.name}</h3>
+                  <div
+                    style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}
+                  ></div>
+                </button>
+              ))}
+            </div>
           </div>
-
-
-          
         </div>
 
         {/* <div
@@ -321,7 +348,9 @@ const ThumbnailPage: React.FC = () => {
                 marginBottom: "15px",
               }}
             >
-              <p style={{ fontSize: "1.1rem", fontWeight: "bold" }}>Start from a photo</p>
+              <p style={{ fontSize: "1.1rem", fontWeight: "bold" }}>
+                Start from a photo
+              </p>
               <label
                 htmlFor="file-upload"
                 style={{
@@ -345,7 +374,9 @@ const ThumbnailPage: React.FC = () => {
                 onChange={handleImageUpload}
                 style={{ display: "none" }}
               />
-              <p style={{ fontSize: "0.9rem", color: "#666" }}>{`${uploadedImages.length} file(s) selected`}</p>
+              <p
+                style={{ fontSize: "0.9rem", color: "#666" }}
+              >{`${uploadedImages.length} file(s) selected`}</p>
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between" }}>

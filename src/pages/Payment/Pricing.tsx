@@ -75,7 +75,7 @@ const Pricing = () => {
                 selected={billingPeriod === "monthly"}
                 onClick={() => setBillingPeriod("monthly")}
               >
-                Monthly
+                One-Time
               </AnimatedButton>
               {/* <AnimatedButton
                 selected={billingPeriod === "yearly"}
