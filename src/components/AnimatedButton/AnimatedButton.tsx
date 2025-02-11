@@ -25,7 +25,7 @@ const AnimatedButton = ({
                 width: 20%;
                 height: 337%;
                 background: linear-gradient(#1E88E5, #ef5350);
-                animation: animate 3s linear infinite;
+                animation: animate 5s linear infinite;
               }
 
               @keyframes animate {

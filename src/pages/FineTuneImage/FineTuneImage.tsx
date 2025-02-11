@@ -19,7 +19,7 @@ const ThumbnailPage: React.FC = () => {
   const [inputText3, setInputText3] = useState<string>("");
   const [generatedImage, setGeneratedImage] = useState<string>(mtn);
   const [uploaded_image, setuploaded_image] = useState<string>("");
-  const [after_image, setafter_image] = useState(mtn);
+  //const [after_image, setafter_image] = useState(mtn);
   const [image_uploaded_identifier, setimage_uploaded_identifier] =
     useState(false);
 
