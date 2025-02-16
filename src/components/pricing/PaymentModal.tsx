@@ -46,12 +46,12 @@ const PaymentModal = ({
     return `${currencies[selectedCurrency].symbol}${price}`;
   };
   const [isAnimating, setIsAnimating] = useState(false);
-  const [bgColor, setBgColor] = useState("#ef5350");
+  //const [bgColor, setBgColor] = useState("#ef5350");
 
   const handlePaymentClick = () => {
     setIsAnimating(true);
     setTimeout(() => {
-      setBgColor("#3b82f6");
+      //setBgColor("#3b82f6");
       setIsAnimating(false);
       onPaymentClick(selectedCurrency, getPrice());
     }, 500);

@@ -4,6 +4,7 @@ import Navbar from "@/components/common/Navbar";
 import AnimatedButton from "@/components/AnimatedButton/AnimatedButton";
 import PaymentModal from "@/components/pricing/PaymentModal";
 import { PlanDetails } from "@/components/pricing/PaymentModal";
+import BankDetailsModal from "@/components/pricing/BankDetailsModal";
 
 const Pricing = () => {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(
@@ -12,6 +13,7 @@ const Pricing = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PlanDetails | null>(null);
+  const [isBankDetailsModalOpen, setIsBankDetailsModalOpen] = useState(false);
 
   const pricingData = {
     plus: {
@@ -98,6 +100,9 @@ const Pricing = () => {
           default:
             console.error("Unknown plan tier");
         }
+      } else if (selectedPlan && currency === "USD") {
+        setIsModalOpen(false);
+        setIsBankDetailsModalOpen(true);
       }
 
       setIsModalOpen(false);
@@ -149,6 +154,10 @@ const Pricing = () => {
         onClose={() => setIsModalOpen(false)}
         planDetails={selectedPlan}
         onPaymentClick={handlePaymentClick}
+      />
+      <BankDetailsModal
+        isOpen={isBankDetailsModalOpen}
+        onClose={() => setIsBankDetailsModalOpen(false)}
       />
     </div>
   );
