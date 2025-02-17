@@ -35,7 +35,7 @@ const ThumbnailPage: React.FC = () => {
   };
 
   const handleAddModel = async () => {
-    if (newModelName.trim() && uploadedImages.length > 15) {
+    if (newModelName.trim() && uploadedImages.length >=15) {
       const imageUrls = uploadedImages.map((file) => URL.createObjectURL(file));
       
       console.log(imageUrls,"imageURLs")
@@ -77,6 +77,7 @@ const ThumbnailPage: React.FC = () => {
       alert("Please provide a model name and upload at least 15 image.");
     }
     handleCloseModal();
+    setimage_uploaded_identifier(true);
   };
 
   const handleGenerateImage = () => {
@@ -93,14 +94,26 @@ const ThumbnailPage: React.FC = () => {
       setUploadedImages(filesArray);
       const uploadedImg = URL.createObjectURL(event.target.files[0]);
       setuploaded_image(uploadedImg);
-      setimage_uploaded_identifier(true);
+      // setimage_uploaded_identifier(true);
       
     }
   };
 
   useEffect(() => {
     console.log(uploadedImages, "uploaded images Array");
-  }, [uploadedImages]);
+  
+  
+    let timeoutId: ReturnType<typeof setTimeout>;
+    if (image_uploaded_identifier) {
+      timeoutId = setTimeout(() => {
+        setimage_uploaded_identifier(true);
+      }, 4000); // 4 seconds
+    } 
+  }, [image_uploaded_identifier]);
+
+
+
+
 
   return (
     <>
@@ -269,132 +282,131 @@ const ThumbnailPage: React.FC = () => {
       {/* <Modalcontainer /> */}
 
       {isModalOpen && (
-        <div
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1000,
+    }}
+    onClick={handleCloseModal} // 🔴 This closes modal on clicking backdrop
+  >
+    <div
+      onClick={(e) => e.stopPropagation()} // 🟢 Prevents modal from closing on clicking inside
+      style={{
+        background: "#fff",
+        padding: "20px",
+        borderRadius: "12px",
+        width: "400px",
+        boxShadow: "0px 4px 10px rgba(46, 43, 43, 0.2)",
+        textAlign: "center",
+        position: "relative", // For positioning the close button relative to the modal
+      }}
+    >
+      {/* ❌ Close Button at Modal Corner */}
+      <button
+        onClick={handleCloseModal}
         style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          position: "absolute",
+          top: "-10px", // Slightly above the modal
+          right: "-10px", // Slightly outside the modal's right edge
+          background: "#fff",
+          border: "2px solid #FF4C4C",
+          borderRadius: "50%",
+          width: "28px",
+          height: "28px",
+          fontSize: "16px",
+          fontWeight: "bold",
+          cursor: "pointer",
+          color: "#FF4C4C",
           display: "flex",
-          justifyContent: "center",
           alignItems: "center",
-          zIndex: 1000,
+          justifyContent: "center",
+          boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
         }}
       >
-        <div
+        ❌
+      </button>
+
+      {/* 🔲 Dashed Border for Inputs and Create Button */}
+      <div
+        style={{
+          border: "2px dashed #ccc",
+          borderRadius: "12px",
+          padding: "20px",
+          textAlign: "center",
+          marginBottom: "15px",
+        }}
+      >
+        {/* 📋 Model Name Input */}
+        <input
+          type="text"
+          placeholder="Enter Model Name"
+          value={newModelName}
+          onChange={(e) => setNewModelName(e.target.value)}
           style={{
-            background: "#fff",
-            padding: "20px",
-            borderRadius: "12px",
-            width: "400px",
-            boxShadow: "0px 4px 10px rgba(46, 43, 43, 0.2)",
-            textAlign: "center",
-            position: "relative", // For positioning the close button relative to the modal
+            width: "100%",
+            padding: "10px",
+            marginBottom: "15px",
+            borderRadius: "8px",
+            border: "1px solid #ccc",
+          }}
+        />
+
+        {/* 📤 File Upload */}
+        <label
+          htmlFor="file-upload"
+          style={{
+            display: "inline-block",
+            padding: "10px 20px",
+            backgroundColor: "rgb(102,51,153)",
+            color: "#fff",
+            borderRadius: "50px",
+            cursor: "pointer",
+            margin: "10px 0",
+            fontSize: "1rem",
           }}
         >
-          {/* ❌ Close Button at Modal Corner */}
-          <button
-            onClick={handleCloseModal}
-            style={{
-              position: "absolute",
-              top: "-10px", // Slightly above the modal
-              right: "-10px", // Slightly outside the modal's right edge
-              background: "#fff",
-              border: "2px solid #FF4C4C",
-              borderRadius: "50%",
-              width: "28px",
-              height: "28px",
-              fontSize: "16px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              color: "#FF4C4C",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-            }}
-          >
-            ❌
-          </button>
-      
-          {/* 🔲 Dashed Border for Inputs and Create Button */}
-          <div
-            style={{
-              border: "2px dashed #ccc",
-              borderRadius: "12px",
-              padding: "20px",
-              textAlign: "center",
-              marginBottom: "15px",
-            }}
-          >
-            {/* 📋 Model Name Input */}
-            <input
-              type="text"
-              placeholder="Enter Model Name"
-              value={newModelName}
-              onChange={(e) => setNewModelName(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "10px",
-                marginBottom: "15px",
-                borderRadius: "8px",
-                border: "1px solid #ccc",
-              }}
-            />
-      
-            {/* 📤 File Upload */}
-            <label
-              htmlFor="file-upload"
-              style={{
-                display: "inline-block",
-                padding: "10px 20px",
-                backgroundColor: "rgb(102,51,153)",
-                color: "#fff",
-                borderRadius: "50px",
-                cursor: "pointer",
-                margin: "10px 0",
-                fontSize: "1rem",
-              }}
-            >
-              📤 Browse files
-            </label>
-            <input
-              id="file-upload"
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={handleImageUpload}
-              style={{ display: "none" }}
-            />
-            <p style={{ fontSize: "0.9rem", color: "#666" }}>
-              {`${uploadedImages.length} file(s) selected`}
-            </p>
-      
-            {/* ✅ Create Button Inside Dashed Border */}
-            <button
-              onClick={handleAddModel}
-              style={{
-                padding: "10px 20px",
-                background: "green",
-                color: "#fff",
-                borderRadius: "50px",
-                border: "none",
-                cursor: "pointer",
-                marginTop: "15px",
-              }}
-            >
-              Create
-            </button>
-          </div>
-        </div>
+          📤 Browse files
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={handleImageUpload}
+          style={{ display: "none" }}
+        />
+        <p style={{ fontSize: "0.9rem", color: "#666" }}>
+          {`${uploadedImages.length} file(s) selected`}
+        </p>
+
+        {/* ✅ Create Button Inside Dashed Border */}
+        <button
+          onClick={handleAddModel}
+          style={{
+            padding: "10px 20px",
+            background: "green",
+            color: "#fff",
+            borderRadius: "50px",
+            border: "none",
+            cursor: "pointer",
+            marginTop: "15px",
+          }}
+        >
+          Create
+        </button>
       </div>
-      
-      
-      
-      
-      )}
+    </div>
+  </div>
+)}
+
     </>
   );
 };
