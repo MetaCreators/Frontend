@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import mtn from "../../assets/mtn.jpg";
 import Imageslider from "../../components/ThumbnailPageComponents/ImageComparisonSlider";
 import JSZip from "jszip";
+import Navbar from "@/components/common/Navbar";
 
 interface Model {
   name: string;
@@ -18,6 +19,7 @@ const ThumbnailPage: React.FC = () => {
   const [inputText3, setInputText3] = useState<string>("");
   const [generatedImage, setGeneratedImage] = useState<string>(mtn);
   const [uploaded_image, setuploaded_image] = useState<string>("");
+  //const [after_image, setafter_image] = useState(mtn);
   const [image_uploaded_identifier, setimage_uploaded_identifier] =
     useState(false);
 
@@ -88,6 +90,7 @@ const ThumbnailPage: React.FC = () => {
 
   return (
     <>
+      <Navbar />
       <div
         style={{
           display: "flex",
@@ -188,10 +191,10 @@ const ThumbnailPage: React.FC = () => {
                 onClick={handleGenerateImage}
                 style={{
                   padding: "10px 20px",
-                  background: "rgb(102,51,153)",
+                  background: "rgb(239 83 80 / var(--tw-bg-opacity, 1))",
                   color: "#fff",
                   fontSize: "1rem",
-                  borderRadius: "8px",
+                  borderRadius: "9999px",
                   border: "none",
                   cursor: "pointer",
                 }}
@@ -231,10 +234,10 @@ const ThumbnailPage: React.FC = () => {
               style={{
                 marginTop: "20px",
                 padding: "10px 20px",
-                background: "rgb(102,51,153)",
+                background: "rgb(239 83 80 / var(--tw-bg-opacity, 1))",
                 color: "#fff",
                 fontSize: "1rem",
-                borderRadius: "8px",
+                borderRadius: "9999px",
                 border: "none",
                 cursor: "pointer",
               }}
@@ -255,7 +258,8 @@ const ThumbnailPage: React.FC = () => {
                   style={{
                     padding: "10px",
                     border: "1px solid #ccc",
-                    borderRadius: "8px",
+                    borderRadius: "9999px",
+                    //borderRadius: "8px",
                     background: "#f5f5f5",
                     width: "auto",
                   }}

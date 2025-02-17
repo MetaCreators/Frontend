@@ -64,7 +64,7 @@ export default function Dashboard() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {options.map((option) => (
               <Card
                 key={option.path}
@@ -79,7 +79,7 @@ export default function Dashboard() {
                     {option.title}
                   </h3>
                   <p className="text-gray-600">{option.description}</p>
-                  <Button className="w-full rounded-full bg-[#ef5350] hover:bg-[#0F172A]">
+                  <Button className="w-full rounded-full bg-[#ef5350] hover:bg-blue-500">
                     Get Started
                   </Button>
                 </div>
