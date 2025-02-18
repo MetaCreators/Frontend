@@ -4,6 +4,8 @@ import Imageslider from "../../components/ThumbnailPageComponents/ImageCompariso
 import JSZip from "jszip";
 import Modalcontainer from "@/components/ThumbnailPageComponents/Modalcontainer";
 import useCounterStore from "../../store/counterstore";
+import { Button } from "@/components/ui/button";
+import { SearchIcon } from "lucide-react";
 
 interface Model {
   name: string;
@@ -20,10 +22,12 @@ const ThumbnailPage: React.FC = () => {
   const [inputText3, setInputText3] = useState<string>("");
   const [generatedImage, setGeneratedImage] = useState<string>(mtn);
   const [uploaded_image, setuploaded_image] = useState<string>("");
-  const [image_uploaded_identifier, setimage_uploaded_identifier] =useState(false);
-  const [image_urls, setimage_urls] = useState<string[]>([])
-  const {image_coming_from_BE,image_to_show_in_modal_list}=useCounterStore();
- 
+  const [image_uploaded_identifier, setimage_uploaded_identifier] =
+    useState(false);
+  const [image_urls, setimage_urls] = useState<string[]>([]);
+  const { image_coming_from_BE, image_to_show_in_modal_list } =
+    useCounterStore();
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -35,13 +39,12 @@ const ThumbnailPage: React.FC = () => {
   };
 
   const handleAddModel = async () => {
-    if (newModelName.trim() && uploadedImages.length >=15) {
+    if (newModelName.trim() && uploadedImages.length >= 15) {
       const imageUrls = uploadedImages.map((file) => URL.createObjectURL(file));
-      
-      console.log(imageUrls,"imageURLs")
-      setimage_urls(imageUrls)
-      image_to_show_in_modal_list(imageUrls[0]);
 
+      console.log(imageUrls, "imageURLs");
+      setimage_urls(imageUrls);
+      image_to_show_in_modal_list(imageUrls[0]);
 
       setModels([...models, { name: newModelName, images: imageUrls }]);
       const zip = new JSZip();
@@ -68,12 +71,7 @@ const ThumbnailPage: React.FC = () => {
         console.error("Error uploading zip file:", error);
         alert("An error occurred while uploading the zip file.");
       }
-
-
-    } 
-    
-    
-    else {
+    } else {
       alert("Please provide a model name and upload at least 15 image.");
     }
     handleCloseModal();
@@ -95,28 +93,22 @@ const ThumbnailPage: React.FC = () => {
       const uploadedImg = URL.createObjectURL(event.target.files[0]);
       setuploaded_image(uploadedImg);
       // setimage_uploaded_identifier(true);
-      
     }
   };
 
   useEffect(() => {
     console.log(uploadedImages, "uploaded images Array");
-  
-  
+
     let timeoutId: ReturnType<typeof setTimeout>;
     if (image_uploaded_identifier) {
       timeoutId = setTimeout(() => {
         setimage_uploaded_identifier(true);
       }, 4000); // 4 seconds
-    } 
+    }
   }, [image_uploaded_identifier]);
 
-
-
-
-
   return (
-    <>
+    <div className="h-screen flex justify-center items-center">
       <div
         style={{
           display: "flex",
@@ -171,35 +163,33 @@ const ThumbnailPage: React.FC = () => {
                   maxWidth: "300px",
                 }}
               >
+                <SearchIcon
+                  style={{
+                    position: "absolute",
+                    left: "10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    color: "#888",
+                    pointerEvents: "none",
+                  }}
+                />
                 <input
                   type="text"
-                  placeholder="Text 1 "
+                  placeholder="Text 1"
                   value={inputText1}
                   onChange={(e) => setInputText1(e.target.value)}
                   style={{
                     width: "100%",
-                    padding: "10px 40px 10px 10px",
+                    padding: "10px 10px 10px 40px",
                     border: "1px solid #ccc",
                     borderRadius: "8px",
                     fontSize: "1rem",
                   }}
                 />
-                
               </div>
-              <button
-                onClick={handleGenerateImage}
-                style={{
-                  padding: "10px 20px",
-                  background: "rgb(102,51,153)",
-                  color: "#fff",
-                  fontSize: "1rem",
-                  borderRadius: "8px",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                Generate
-              </button>
+              <Button onClick={handleGenerateImage} className="bg-purple-600">
+                Generate AI Images
+              </Button>
             </div>
           </div>
 
@@ -214,8 +204,6 @@ const ThumbnailPage: React.FC = () => {
               alignItems: "center",
             }}
           >
-
-
             {image_uploaded_identifier ? (
               <Imageslider defaultImage={mtn} generatedImage={uploaded_image} />
             ) : (
@@ -229,8 +217,7 @@ const ThumbnailPage: React.FC = () => {
                 }}
               />
             )}
-            
-            
+
             <div
               // onClick={handleOpenModal}
               style={{
@@ -238,28 +225,18 @@ const ThumbnailPage: React.FC = () => {
                 // padding: "10px 20px",
                 // background: "rgb(102,51,153)",
                 color: "black",
-                
+
                 fontSize: "1rem",
                 borderRadius: "8px",
                 border: "none",
                 cursor: "pointer",
-                position:"absolute",
-                bottom:"-60px" ,
+                position: "absolute",
+                bottom: "-60px",
                 transform: "translateY(-50%)",
-
               }}
             >
-              
-
-
-             <Modalcontainer triggerFunction={handleOpenModal} />
+              <Modalcontainer triggerFunction={handleOpenModal} />
             </div>
-
-
-
-            
-            
-
 
             <div
               style={{
@@ -268,146 +245,139 @@ const ThumbnailPage: React.FC = () => {
                 flexWrap: "wrap",
                 gap: "10px",
               }}
-            >              
-            </div>
-
-
-
-
+            ></div>
           </div>
         </div>
-
       </div>
 
       {/* <Modalcontainer /> */}
 
       {isModalOpen && (
-  <div
-    style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      zIndex: 1000,
-    }}
-    onClick={handleCloseModal} // 🔴 This closes modal on clicking backdrop
-  >
-    <div
-      onClick={(e) => e.stopPropagation()} // 🟢 Prevents modal from closing on clicking inside
-      style={{
-        background: "#fff",
-        padding: "20px",
-        borderRadius: "12px",
-        width: "400px",
-        boxShadow: "0px 4px 10px rgba(46, 43, 43, 0.2)",
-        textAlign: "center",
-        position: "relative", // For positioning the close button relative to the modal
-      }}
-    >
-      {/* ❌ Close Button at Modal Corner */}
-      <button
-        onClick={handleCloseModal}
-        style={{
-          position: "absolute",
-          top: "-10px", // Slightly above the modal
-          right: "-10px", // Slightly outside the modal's right edge
-          background: "#fff",
-          border: "2px solid #FF4C4C",
-          borderRadius: "50%",
-          width: "28px",
-          height: "28px",
-          fontSize: "16px",
-          fontWeight: "bold",
-          cursor: "pointer",
-          color: "#FF4C4C",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-        }}
-      >
-        ❌
-      </button>
-
-      {/* 🔲 Dashed Border for Inputs and Create Button */}
-      <div
-        style={{
-          border: "2px dashed #ccc",
-          borderRadius: "12px",
-          padding: "20px",
-          textAlign: "center",
-          marginBottom: "15px",
-        }}
-      >
-        {/* 📋 Model Name Input */}
-        <input
-          type="text"
-          placeholder="Enter Model Name"
-          value={newModelName}
-          onChange={(e) => setNewModelName(e.target.value)}
+        <div
           style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "15px",
-            borderRadius: "8px",
-            border: "1px solid #ccc",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 1000,
           }}
-        />
-
-        {/* 📤 File Upload */}
-        <label
-          htmlFor="file-upload"
-          style={{
-            display: "inline-block",
-            padding: "10px 20px",
-            backgroundColor: "rgb(102,51,153)",
-            color: "#fff",
-            borderRadius: "50px",
-            cursor: "pointer",
-            margin: "10px 0",
-            fontSize: "1rem",
-          }}
+          onClick={handleCloseModal} // 🔴 This closes modal on clicking backdrop
         >
-          📤 Browse files
-        </label>
-        <input
-          id="file-upload"
-          type="file"
-          multiple
-          accept="image/*"
-          onChange={handleImageUpload}
-          style={{ display: "none" }}
-        />
-        <p style={{ fontSize: "0.9rem", color: "#666" }}>
-          {`${uploadedImages.length} file(s) selected`}
-        </p>
+          <div
+            onClick={(e) => e.stopPropagation()} // 🟢 Prevents modal from closing on clicking inside
+            style={{
+              background: "#fff",
+              padding: "20px",
+              borderRadius: "12px",
+              width: "400px",
+              boxShadow: "0px 4px 10px rgba(46, 43, 43, 0.2)",
+              textAlign: "center",
+              position: "relative", // For positioning the close button relative to the modal
+            }}
+          >
+            {/* ❌ Close Button at Modal Corner */}
+            <button
+              onClick={handleCloseModal}
+              style={{
+                position: "absolute",
+                top: "-10px", // Slightly above the modal
+                right: "-10px", // Slightly outside the modal's right edge
+                background: "#fff",
+                border: "2px solid #FF4C4C",
+                borderRadius: "50%",
+                width: "28px",
+                height: "28px",
+                fontSize: "16px",
+                fontWeight: "bold",
+                cursor: "pointer",
+                color: "#FF4C4C",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+              }}
+            >
+              ❌
+            </button>
 
-        {/* ✅ Create Button Inside Dashed Border */}
-        <button
-          onClick={handleAddModel}
-          style={{
-            padding: "10px 20px",
-            background: "green",
-            color: "#fff",
-            borderRadius: "50px",
-            border: "none",
-            cursor: "pointer",
-            marginTop: "15px",
-          }}
-        >
-          Create
-        </button>
-      </div>
+            {/* 🔲 Dashed Border for Inputs and Create Button */}
+            <div
+              style={{
+                border: "2px dashed #ccc",
+                borderRadius: "12px",
+                padding: "20px",
+                textAlign: "center",
+                marginBottom: "15px",
+              }}
+            >
+              {/* 📋 Model Name Input */}
+              <input
+                type="text"
+                placeholder="Enter Model Name"
+                value={newModelName}
+                onChange={(e) => setNewModelName(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  marginBottom: "15px",
+                  borderRadius: "8px",
+                  border: "1px solid #ccc",
+                }}
+              />
+
+              {/* 📤 File Upload */}
+              <label
+                htmlFor="file-upload"
+                style={{
+                  display: "inline-block",
+                  padding: "10px 20px",
+                  backgroundColor: "rgb(102,51,153)",
+                  color: "#fff",
+                  borderRadius: "50px",
+                  cursor: "pointer",
+                  margin: "10px 0",
+                  fontSize: "1rem",
+                }}
+              >
+                📤 Browse files
+              </label>
+              <input
+                id="file-upload"
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={handleImageUpload}
+                style={{ display: "none" }}
+              />
+              <p style={{ fontSize: "0.9rem", color: "#666" }}>
+                {`${uploadedImages.length} file(s) selected`}
+              </p>
+
+              {/* ✅ Create Button Inside Dashed Border */}
+              <button
+                onClick={handleAddModel}
+                style={{
+                  padding: "10px 20px",
+                  background: "green",
+                  color: "#fff",
+                  borderRadius: "50px",
+                  border: "none",
+                  cursor: "pointer",
+                  marginTop: "15px",
+                }}
+              >
+                Create
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
-  </div>
-)}
-
-    </>
   );
 };
 
