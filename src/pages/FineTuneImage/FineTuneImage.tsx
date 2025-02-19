@@ -148,21 +148,8 @@ const ThumbnailPage: React.FC = () => {
               generators available at your fingertips. Stand out with an image
               perfect for your project.
             </p>
-            <div
-              style={{
-                marginTop: "20px",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-              }}
-            >
-              <div
-                style={{
-                  position: "relative",
-                  width: "100%",
-                  maxWidth: "300px",
-                }}
-              >
+            <div className="mt-5 flex items-center justify-between gap-3 w-full">
+              <div className="relative w-3/4">
                 <SearchIcon
                   style={{
                     position: "absolute",
@@ -175,7 +162,7 @@ const ThumbnailPage: React.FC = () => {
                 />
                 <input
                   type="text"
-                  placeholder="Text 1"
+                  placeholder="Type in your idea here and see the magic"
                   value={inputText1}
                   onChange={(e) => setInputText1(e.target.value)}
                   style={{
@@ -187,7 +174,10 @@ const ThumbnailPage: React.FC = () => {
                   }}
                 />
               </div>
-              <Button onClick={handleGenerateImage} className="bg-purple-600">
+              <Button
+                onClick={handleGenerateImage}
+                className="bg-purple-600 w-1/4"
+              >
                 Generate AI Images
               </Button>
             </div>

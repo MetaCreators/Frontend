@@ -42,7 +42,7 @@ const Modalcontainer: React.FC<ButtonProps> = ({ triggerFunction }) => {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger
-            className="flex flex-col items-center justify-center text-gray-700 rounded-md transition border-2 border-stone-400 p-2"
+            className="flex flex-col items-center justify-center text-gray-700 rounded-md transition border-2 border-stone-300 p-2"
             onClick={triggerFunction}
           >
             <PlusIcon className="h-full w-full" />
