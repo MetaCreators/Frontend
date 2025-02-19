@@ -218,25 +218,7 @@ const ThumbnailPage: React.FC = () => {
               />
             )}
 
-            <div
-              // onClick={handleOpenModal}
-              style={{
-                marginTop: "20px",
-                // padding: "10px 20px",
-                // background: "rgb(102,51,153)",
-                color: "black",
-
-                fontSize: "1rem",
-                borderRadius: "8px",
-                border: "none",
-                cursor: "pointer",
-                position: "absolute",
-                bottom: "-60px",
-                transform: "translateY(-50%)",
-              }}
-            >
-              <Modalcontainer triggerFunction={handleOpenModal} />
-            </div>
+            <Modalcontainer triggerFunction={handleOpenModal} />
 
             <div
               style={{

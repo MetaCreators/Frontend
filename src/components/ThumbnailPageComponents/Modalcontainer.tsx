@@ -17,7 +17,7 @@ const Modalcontainer: React.FC<ButtonProps> = ({ triggerFunction }) => {
   const { image_coming_from_BE } = useCounterStore();
 
   return (
-    <div className="flex items-center gap-2 bg-gray-100 p-3 rounded-xl w-auto hover:bg-gray-200 border-stone-300 border">
+    <div className="flex items-center gap-2 bg-gray-100 p-3 space-x-2 rounded-xl w-auto hover:bg-gray-200 border-stone-300 border">
       {image_coming_from_BE &&
         image_coming_from_BE.map((img, index) => (
           <div
@@ -42,7 +42,7 @@ const Modalcontainer: React.FC<ButtonProps> = ({ triggerFunction }) => {
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger
-            className="flex flex-col items-center justify-center text-gray-700 rounded-md transition"
+            className="flex flex-col items-center justify-center text-gray-700 rounded-md transition border-2 border-stone-400 p-2"
             onClick={triggerFunction}
           >
             <PlusIcon className="h-full w-full" />
