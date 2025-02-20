@@ -130,7 +130,7 @@ const ThumbnailPage: React.FC = () => {
           }}
         >
           <div
-            className="border border-red-500"
+            className="border border-red-500 space-x-5"
             style={{
               display: "flex",
               flexDirection: "row",
