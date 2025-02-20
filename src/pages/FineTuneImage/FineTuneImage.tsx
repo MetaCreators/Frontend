@@ -7,6 +7,15 @@ import useCounterStore from "../../store/counterstore";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
 import Navbar from "@/components/common/Navbar";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Link } from "react-router-dom";
 
 interface Model {
   name: string;
@@ -129,8 +138,21 @@ const ThumbnailPage: React.FC = () => {
             fontFamily: "Montserrat, sans-serif",
           }}
         >
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink>
+                  <Link to="/">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>Image fine tune</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
           <div
-            className="space-x-9 border border-red-400"
+            className="space-x-9"
             style={{
               display: "flex",
               alignItems: "center",
@@ -139,7 +161,7 @@ const ThumbnailPage: React.FC = () => {
             }}
           >
             <div
-              className="flex flex-col justify-between border border-red-400 h-full w-full"
+              className="flex flex-col justify-between h-full w-full"
               style={{ flex: 1, textAlign: "left" }}
             >
               <h1
