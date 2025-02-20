@@ -263,29 +263,27 @@ const ThumbnailPage: React.FC = () => {
                 position: "relative", // For positioning the close button relative to the modal
               }}
             >
-              {/* ❌ Close Button at Modal Corner */}
               <button
+                className="border border-purple-600 text-purple-600"
                 onClick={handleCloseModal}
                 style={{
                   position: "absolute",
                   top: "-10px", // Slightly above the modal
                   right: "-10px", // Slightly outside the modal's right edge
                   background: "#fff",
-                  border: "2px solid #FF4C4C",
                   borderRadius: "50%",
                   width: "28px",
                   height: "28px",
                   fontSize: "16px",
                   fontWeight: "bold",
                   cursor: "pointer",
-                  color: "#FF4C4C",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
                 }}
               >
-                ❌
+                X
               </button>
               {/* 🔲 Dashed Border for Inputs and Create Button */}
               <input
@@ -357,9 +355,6 @@ const ThumbnailPage: React.FC = () => {
                   }}
                 >
                   or drag and drop files here
-                </p>
-                <p style={{ fontSize: "0.9rem", color: "#666" }}>
-                  {`${uploadedImages.length} file(s) selected`}
                 </p>
               </div>
               <Button onClick={handleAddModel} className="w-full bg-purple-600">
