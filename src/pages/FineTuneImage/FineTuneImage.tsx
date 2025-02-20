@@ -6,6 +6,7 @@ import Modalcontainer from "@/components/ThumbnailPageComponents/Modalcontainer"
 import useCounterStore from "../../store/counterstore";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
+import Navbar from "@/components/common/Navbar";
 
 interface Model {
   name: string;
@@ -119,251 +120,256 @@ const ThumbnailPage: React.FC = () => {
   }, [image_uploaded_identifier]);
 
   return (
-    <div className="h-screen flex justify-center items-center">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "40px",
-          gap: "20px",
-          maxWidth: "auto",
-          margin: "0 auto",
-          fontFamily: "Montserrat, sans-serif",
-        }}
-      >
+    <>
+      <Navbar />
+      <div className="h-screen flex justify-center items-center border-t border-red-500">
         <div
+          className="flex flex-col items-center justify-center px-10 pt-1 w-full"
           style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: "40px",
-            width: "100%",
+            fontFamily: "Montserrat, sans-serif",
           }}
         >
-          <div style={{ flex: 1, textAlign: "left" }}>
-            <h1
+          <div
+            className="border border-red-500"
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <div style={{ flex: 1, textAlign: "left" }}>
+              <h1
+                style={{
+                  fontSize: "4.0rem",
+                  fontWeight: "bold",
+                  marginBottom: "10px",
+                }}
+              >
+                Generate Thumbnail
+              </h1>
+              <p
+                style={{ fontSize: "1.2rem", color: "#555", lineHeight: "1.0" }}
+              >
+                Dream it up, then add it to your design. Watch your words and
+                phrases transform into beautiful images with the best AI image
+                generators available at your fingertips. Stand out with an image
+                perfect for your project.
+              </p>
+              <div className="mt-5 flex items-center justify-between gap-3 w-full">
+                <div className="relative w-3/4">
+                  <SearchIcon
+                    style={{
+                      position: "absolute",
+                      left: "10px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      color: "#888",
+                      pointerEvents: "none",
+                    }}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Type in your idea here and see the magic"
+                    value={inputText1}
+                    onChange={(e) => setInputText1(e.target.value)}
+                    style={{
+                      width: "100%",
+                      padding: "10px 10px 10px 40px",
+                      border: "1px solid #ccc",
+                      borderRadius: "8px",
+                      fontSize: "1rem",
+                    }}
+                  />
+                </div>
+                <Button
+                  onClick={handleGenerateImage}
+                  className="bg-purple-600 w-1/4"
+                >
+                  Generate AI Images
+                </Button>
+              </div>
+            </div>
+
+            {/* right side wala */}
+            <div
               style={{
-                fontSize: "4.0rem",
-                fontWeight: "bold",
-                marginBottom: "10px",
+                flex: 1,
+                position: "relative",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
-              Generate Thumbnail
-            </h1>
-            <p style={{ fontSize: "1.2rem", color: "#555", lineHeight: "1.0" }}>
-              Dream it up, then add it to your design. Watch your words and
-              phrases transform into beautiful images with the best AI image
-              generators available at your fingertips. Stand out with an image
-              perfect for your project.
-            </p>
-            <div className="mt-5 flex items-center justify-between gap-3 w-full">
-              <div className="relative w-3/4">
-                <SearchIcon
-                  style={{
-                    position: "absolute",
-                    left: "10px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    color: "#888",
-                    pointerEvents: "none",
-                  }}
+              {image_uploaded_identifier ? (
+                <Imageslider
+                  defaultImage={mtn}
+                  generatedImage={uploaded_image}
                 />
-                <input
-                  type="text"
-                  placeholder="Type in your idea here and see the magic"
-                  value={inputText1}
-                  onChange={(e) => setInputText1(e.target.value)}
+              ) : (
+                <img
+                  src={generatedImage}
+                  alt="Generated"
                   style={{
                     width: "100%",
-                    padding: "10px 10px 10px 40px",
-                    border: "1px solid #ccc",
-                    borderRadius: "8px",
-                    fontSize: "1rem",
+                    borderRadius: "12px",
+                    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
                   }}
                 />
-              </div>
-              <Button
-                onClick={handleGenerateImage}
-                className="bg-purple-600 w-1/4"
+              )}
+
+              <Modalcontainer triggerFunction={handleOpenModal} />
+
+              <div
+                style={{
+                  marginTop: "30px",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "10px",
+                }}
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        {/* <Modalcontainer /> */}
+
+        {isModalOpen && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 1000,
+            }}
+            onClick={handleCloseModal} // 🔴 This closes modal on clicking backdrop
+          >
+            <div
+              onClick={(e) => e.stopPropagation()} // 🟢 Prevents modal from closing on clicking inside
+              style={{
+                background: "#fff",
+                padding: "20px",
+                borderRadius: "12px",
+                width: "400px",
+                boxShadow: "0px 4px 10px rgba(46, 43, 43, 0.2)",
+                textAlign: "center",
+                position: "relative", // For positioning the close button relative to the modal
+              }}
+            >
+              {/* ❌ Close Button at Modal Corner */}
+              <button
+                onClick={handleCloseModal}
+                style={{
+                  position: "absolute",
+                  top: "-10px", // Slightly above the modal
+                  right: "-10px", // Slightly outside the modal's right edge
+                  background: "#fff",
+                  border: "2px solid #FF4C4C",
+                  borderRadius: "50%",
+                  width: "28px",
+                  height: "28px",
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  cursor: "pointer",
+                  color: "#FF4C4C",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+                }}
               >
-                Generate AI Images
+                ❌
+              </button>
+              {/* 🔲 Dashed Border for Inputs and Create Button */}
+              <input
+                type="text"
+                placeholder="What do you want to call this new model?"
+                value={newModelName}
+                onChange={(e) => setNewModelName(e.target.value)}
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  marginBottom: "15px",
+                  borderRadius: "8px",
+                  border: "1px solid #ccc",
+                }}
+              />
+              <div
+                style={{
+                  border: "2px dashed #ccc",
+                  borderRadius: "12px",
+                  padding: "20px",
+                  textAlign: "center",
+                  marginBottom: "15px",
+                }}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                  e.currentTarget.style.borderColor = "#9333ea";
+                }}
+                onDragLeave={(e) => {
+                  e.preventDefault();
+                  e.currentTarget.style.borderColor = "#ccc";
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  e.currentTarget.style.borderColor = "#ccc";
+                  const files = Array.from(e.dataTransfer.files);
+                  setUploadedImages(files);
+                }}
+              >
+                {/* 📤 File Upload */}
+                <label
+                  className="bg-fuchsia-700"
+                  htmlFor="file-upload"
+                  style={{
+                    display: "inline-block",
+                    padding: "10px 20px",
+                    color: "#fff",
+                    borderRadius: "50px",
+                    cursor: "pointer",
+                    margin: "10px 0",
+                    fontSize: "1rem",
+                  }}
+                >
+                  📤 Browse files
+                </label>
+
+                <input
+                  id="file-upload"
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  style={{ display: "none" }}
+                />
+                <p
+                  style={{
+                    fontSize: "0.9rem",
+                    color: "#666",
+                    marginTop: "10px",
+                  }}
+                >
+                  or drag and drop files here
+                </p>
+                <p style={{ fontSize: "0.9rem", color: "#666" }}>
+                  {`${uploadedImages.length} file(s) selected`}
+                </p>
+              </div>
+              <Button onClick={handleAddModel} className="w-full bg-purple-600">
+                Create
               </Button>
             </div>
           </div>
-
-          {/* right side wala */}
-          <div
-            style={{
-              flex: 1,
-              position: "relative",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            {image_uploaded_identifier ? (
-              <Imageslider defaultImage={mtn} generatedImage={uploaded_image} />
-            ) : (
-              <img
-                src={generatedImage}
-                alt="Generated"
-                style={{
-                  width: "100%",
-                  borderRadius: "12px",
-                  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-                }}
-              />
-            )}
-
-            <Modalcontainer triggerFunction={handleOpenModal} />
-
-            <div
-              style={{
-                marginTop: "30px",
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "10px",
-              }}
-            ></div>
-          </div>
-        </div>
+        )}
       </div>
-
-      {/* <Modalcontainer /> */}
-
-      {isModalOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 1000,
-          }}
-          onClick={handleCloseModal} // 🔴 This closes modal on clicking backdrop
-        >
-          <div
-            onClick={(e) => e.stopPropagation()} // 🟢 Prevents modal from closing on clicking inside
-            style={{
-              background: "#fff",
-              padding: "20px",
-              borderRadius: "12px",
-              width: "400px",
-              boxShadow: "0px 4px 10px rgba(46, 43, 43, 0.2)",
-              textAlign: "center",
-              position: "relative", // For positioning the close button relative to the modal
-            }}
-          >
-            {/* ❌ Close Button at Modal Corner */}
-            <button
-              onClick={handleCloseModal}
-              style={{
-                position: "absolute",
-                top: "-10px", // Slightly above the modal
-                right: "-10px", // Slightly outside the modal's right edge
-                background: "#fff",
-                border: "2px solid #FF4C4C",
-                borderRadius: "50%",
-                width: "28px",
-                height: "28px",
-                fontSize: "16px",
-                fontWeight: "bold",
-                cursor: "pointer",
-                color: "#FF4C4C",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
-              }}
-            >
-              ❌
-            </button>
-            {/* 🔲 Dashed Border for Inputs and Create Button */}
-            <input
-              type="text"
-              placeholder="What do you want to call this new model?"
-              value={newModelName}
-              onChange={(e) => setNewModelName(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "10px",
-                marginBottom: "15px",
-                borderRadius: "8px",
-                border: "1px solid #ccc",
-              }}
-            />
-            <div
-              style={{
-                border: "2px dashed #ccc",
-                borderRadius: "12px",
-                padding: "20px",
-                textAlign: "center",
-                marginBottom: "15px",
-              }}
-              onDragOver={(e) => {
-                e.preventDefault();
-                e.currentTarget.style.borderColor = "#9333ea";
-              }}
-              onDragLeave={(e) => {
-                e.preventDefault();
-                e.currentTarget.style.borderColor = "#ccc";
-              }}
-              onDrop={(e) => {
-                e.preventDefault();
-                e.currentTarget.style.borderColor = "#ccc";
-                const files = Array.from(e.dataTransfer.files);
-                setUploadedImages(files);
-              }}
-            >
-              {/* 📤 File Upload */}
-              <label
-                className="bg-fuchsia-700"
-                htmlFor="file-upload"
-                style={{
-                  display: "inline-block",
-                  padding: "10px 20px",
-                  color: "#fff",
-                  borderRadius: "50px",
-                  cursor: "pointer",
-                  margin: "10px 0",
-                  fontSize: "1rem",
-                }}
-              >
-                📤 Browse files
-              </label>
-
-              <input
-                id="file-upload"
-                type="file"
-                multiple
-                accept="image/*"
-                onChange={handleImageUpload}
-                style={{ display: "none" }}
-              />
-              <p
-                style={{ fontSize: "0.9rem", color: "#666", marginTop: "10px" }}
-              >
-                or drag and drop files here
-              </p>
-              <p style={{ fontSize: "0.9rem", color: "#666" }}>
-                {`${uploadedImages.length} file(s) selected`}
-              </p>
-            </div>
-            <Button onClick={handleAddModel} className="w-full bg-purple-600">
-              Create
-            </Button>
-          </div>
-        </div>
-      )}
-    </div>
+    </>
   );
 };
 
