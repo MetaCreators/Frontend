@@ -15,7 +15,9 @@ function Navbar() {
   };
   return (
     <div className="flex justify-between items-center px-10 py-4 sticky top-0 bg-white border border-b">
-      <div className="text-2xl font-bold text-[#1a237e]">Lithouse</div>
+      <div className="text-2xl font-bold text-[#1a237e]">
+        <img src="/logo.png" alt="logo" className="h-12 w-12" />
+      </div>
       <div className="flex items-center space-x-3 font-medium text-slate-500">
         <div>About</div>
         <div>Contact</div>
