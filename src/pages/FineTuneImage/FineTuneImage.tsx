@@ -122,7 +122,7 @@ const ThumbnailPage: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div className="h-screen flex justify-center items-center border-t border-red-500">
+      <div className="max-h-screen flex justify-center items-center py-14">
         <div
           className="flex flex-col items-center justify-center px-10 pt-1 w-full"
           style={{
@@ -130,7 +130,7 @@ const ThumbnailPage: React.FC = () => {
           }}
         >
           <div
-            className="border border-red-500 space-x-5"
+            className="space-x-5"
             style={{
               display: "flex",
               flexDirection: "row",
@@ -185,7 +185,7 @@ const ThumbnailPage: React.FC = () => {
                 </div>
                 <Button
                   onClick={handleGenerateImage}
-                  className="bg-purple-600 w-1/4"
+                  className="bg-purple-600 hover:bg-purple-800 w-1/4"
                 >
                   Generate AI Images
                 </Button>
@@ -357,7 +357,10 @@ const ThumbnailPage: React.FC = () => {
                   or drag and drop files here
                 </p>
               </div>
-              <Button onClick={handleAddModel} className="w-full bg-purple-600">
+              <Button
+                onClick={handleAddModel}
+                className="w-full bg-purple-600 hover:bg-purple-800"
+              >
                 Create
               </Button>
             </div>
