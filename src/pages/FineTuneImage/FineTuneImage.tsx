@@ -130,16 +130,18 @@ const ThumbnailPage: React.FC = () => {
           }}
         >
           <div
-            className="space-x-5"
+            className="space-x-9 border border-red-400"
             style={{
               display: "flex",
-              flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
               width: "100%",
             }}
           >
-            <div style={{ flex: 1, textAlign: "left" }}>
+            <div
+              className="flex flex-col justify-between border border-red-400 h-full w-full"
+              style={{ flex: 1, textAlign: "left" }}
+            >
               <h1
                 style={{
                   fontSize: "4.0rem",
