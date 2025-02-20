@@ -276,8 +276,20 @@ const ThumbnailPage: React.FC = () => {
             >
               ❌
             </button>
-
             {/* 🔲 Dashed Border for Inputs and Create Button */}
+            <input
+              type="text"
+              placeholder="What do you want to call this new model?"
+              value={newModelName}
+              onChange={(e) => setNewModelName(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "10px",
+                marginBottom: "15px",
+                borderRadius: "8px",
+                border: "1px solid #ccc",
+              }}
+            />
             <div
               style={{
                 border: "2px dashed #ccc",
@@ -287,28 +299,13 @@ const ThumbnailPage: React.FC = () => {
                 marginBottom: "15px",
               }}
             >
-              {/* 📋 Model Name Input */}
-              <input
-                type="text"
-                placeholder="Enter Model Name"
-                value={newModelName}
-                onChange={(e) => setNewModelName(e.target.value)}
-                style={{
-                  width: "100%",
-                  padding: "10px",
-                  marginBottom: "15px",
-                  borderRadius: "8px",
-                  border: "1px solid #ccc",
-                }}
-              />
-
               {/* 📤 File Upload */}
               <label
+                className="bg-fuchsia-700"
                 htmlFor="file-upload"
                 style={{
                   display: "inline-block",
                   padding: "10px 20px",
-                  backgroundColor: "rgb(102,51,153)",
                   color: "#fff",
                   borderRadius: "50px",
                   cursor: "pointer",
@@ -318,6 +315,7 @@ const ThumbnailPage: React.FC = () => {
               >
                 📤 Browse files
               </label>
+
               <input
                 id="file-upload"
                 type="file"
@@ -329,23 +327,10 @@ const ThumbnailPage: React.FC = () => {
               <p style={{ fontSize: "0.9rem", color: "#666" }}>
                 {`${uploadedImages.length} file(s) selected`}
               </p>
-
-              {/* ✅ Create Button Inside Dashed Border */}
-              <button
-                onClick={handleAddModel}
-                style={{
-                  padding: "10px 20px",
-                  background: "green",
-                  color: "#fff",
-                  borderRadius: "50px",
-                  border: "none",
-                  cursor: "pointer",
-                  marginTop: "15px",
-                }}
-              >
-                Create
-              </button>
             </div>
+            <Button onClick={handleAddModel} className="w-full bg-purple-600">
+              Create
+            </Button>
           </div>
         </div>
       )}
