@@ -57,10 +57,13 @@ const ThumbnailPage: React.FC = () => {
         const zipBlob = await zip.generateAsync({ type: "blob" });
         const formData = new FormData();
         formData.append("file", new File([zipBlob], "images.zip"));
-        const response = await fetch("http://localhost:5000/upload", {
-          method: "POST",
-          body: formData,
-        });
+        const response = await fetch(
+          import.meta.env.VITE_BACKEND_URL + "/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
 
         if (response.ok) {
           alert("Zip file uploaded successfully!");
@@ -86,13 +89,21 @@ const ThumbnailPage: React.FC = () => {
     }
   };
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const filesArray = Array.from(event.target.files);
-      setUploadedImages(filesArray);
-      const uploadedImg = URL.createObjectURL(event.target.files[0]);
+  const handleImageUpload = (
+    event: React.ChangeEvent<HTMLInputElement> | React.DragEvent<HTMLDivElement>
+  ) => {
+    let files: File[];
+    if ("dataTransfer" in event) {
+      files = Array.from(event.dataTransfer.files);
+    } else if (event.target.files) {
+      files = Array.from(event.target.files);
+    } else {
+      return;
+    }
+    setUploadedImages(files);
+    if (files.length > 0) {
+      const uploadedImg = URL.createObjectURL(files[0]);
       setuploaded_image(uploadedImg);
-      // setimage_uploaded_identifier(true);
     }
   };
 
@@ -117,7 +128,7 @@ const ThumbnailPage: React.FC = () => {
           justifyContent: "center",
           padding: "40px",
           gap: "20px",
-          maxWidth: "auto", //// did  "1200px" too "auto"
+          maxWidth: "auto",
           margin: "0 auto",
           fontFamily: "Montserrat, sans-serif",
         }}
@@ -184,7 +195,6 @@ const ThumbnailPage: React.FC = () => {
           </div>
 
           {/* right side wala */}
-
           <div
             style={{
               flex: 1,
@@ -298,6 +308,20 @@ const ThumbnailPage: React.FC = () => {
                 textAlign: "center",
                 marginBottom: "15px",
               }}
+              onDragOver={(e) => {
+                e.preventDefault();
+                e.currentTarget.style.borderColor = "#9333ea";
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                e.currentTarget.style.borderColor = "#ccc";
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                e.currentTarget.style.borderColor = "#ccc";
+                const files = Array.from(e.dataTransfer.files);
+                setUploadedImages(files);
+              }}
             >
               {/* 📤 File Upload */}
               <label
@@ -324,6 +348,11 @@ const ThumbnailPage: React.FC = () => {
                 onChange={handleImageUpload}
                 style={{ display: "none" }}
               />
+              <p
+                style={{ fontSize: "0.9rem", color: "#666", marginTop: "10px" }}
+              >
+                or drag and drop files here
+              </p>
               <p style={{ fontSize: "0.9rem", color: "#666" }}>
                 {`${uploadedImages.length} file(s) selected`}
               </p>
