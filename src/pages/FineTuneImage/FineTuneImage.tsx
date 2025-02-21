@@ -92,6 +92,14 @@ const ThumbnailPage: React.FC = () => {
   };
 
   const handleGenerateImage = () => {
+    //BACKEND URL => http://localhost:3000/api/genpersonimage
+    //REQUIRED:
+    // 1) AUTHORIZATION BEARER
+    // 2) {
+    // "userQuery":"Shikhar",
+    // "userId":"01f90e3d-171d-4313-8985-f25ccd5cd915"
+    // }
+
     if (inputText1 === "" || inputText2 === "" || inputText3 === "") {
       alert("Enter the input Fields");
     } else {
