@@ -91,6 +91,7 @@ const ThumbnailPage: React.FC = () => {
   };
 
   const handleGenerateImage = async () => {
+    //TODO: fix the before after slider here
     if (inputText1 === "") {
       alert("Enter the input Fields");
     } else {
