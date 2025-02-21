@@ -159,7 +159,7 @@ const ThumbnailPage: React.FC = () => {
     if (image_uploaded_identifier) {
       timeoutId = setTimeout(() => {
         setimage_uploaded_identifier(true);
-      }, 4000); // 4 seconds
+      }, 4000);
     }
   }, [image_uploaded_identifier]);
 
