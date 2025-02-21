@@ -16,6 +16,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
+import { supabase } from "@/lib/supabase";
 
 interface Model {
   name: string;
@@ -28,8 +29,6 @@ const ThumbnailPage: React.FC = () => {
   const [newModelName, setNewModelName] = useState("");
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
   const [inputText1, setInputText1] = useState<string>("");
-  const [inputText2, setInputText2] = useState<string>("");
-  const [inputText3, setInputText3] = useState<string>("");
   const [generatedImage, setGeneratedImage] = useState<string>(mtn);
   const [uploaded_image, setuploaded_image] = useState<string>("");
   const [image_uploaded_identifier, setimage_uploaded_identifier] =
@@ -91,11 +90,46 @@ const ThumbnailPage: React.FC = () => {
     setimage_uploaded_identifier(true);
   };
 
-  const handleGenerateImage = () => {
-    if (inputText1 === "" || inputText2 === "" || inputText3 === "") {
+  const handleGenerateImage = async () => {
+    if (inputText1 === "") {
       alert("Enter the input Fields");
     } else {
-      setGeneratedImage(mtn);
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        throw new Error("Not authenticated");
+      }
+      //
+      console.log("user session access token", session.access_token);
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/genpersonimage`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            userQuery: "Shikhar",
+            userId: "01f90e3d-171d-4313-8985-f25ccd5cd915",
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          "response not ok for script gen " + data.message ||
+            "Failed to generate script"
+        );
+      }
+      const url = data.urls[0];
+
+      setGeneratedImage(url);
     }
   };
 
