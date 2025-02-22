@@ -13,20 +13,20 @@ function HeroSection1() {
   return (
     <>
       <div className="flex flex-col justify-center items-center h-auto md:h-80 px-4">
+        <Breadcrumb className="w-full">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink>
+                <Link to="/dashboard">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>thumbnail</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
         <div className="text-wrap w-full md:w-1/2 text-center space-y-5">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink>
-                  <Link to="/dashboard">Home</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>thumbnail</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
           <div className="text-3xl md:text-5xl font-semibold leading-tight">
             Generate Stunning thumbnails for your videos
           </div>

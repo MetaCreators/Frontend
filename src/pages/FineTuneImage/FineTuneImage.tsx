@@ -173,7 +173,7 @@ const ThumbnailPage: React.FC = () => {
             fontFamily: "Montserrat, sans-serif",
           }}
         >
-          <Breadcrumb>
+          <Breadcrumb className="w-full">
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink>
