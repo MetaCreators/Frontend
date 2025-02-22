@@ -62,16 +62,21 @@ const ThumbnailPage: React.FC = () => {
       });
 
       // if(uploadedImages.length>=15)
+      //TODO : upload the zip file to Digital ocean bucket => hit the backend to get a presigned url for uploading and then directly push to that url
       try {
         const zipBlob = await zip.generateAsync({ type: "blob" });
         const formData = new FormData();
         formData.append("file", new File([zipBlob], "images.zip"));
         const response = await fetch(
           //todo: this should be /api/imagefinetune
-          import.meta.env.VITE_BACKEND_URL + "/upload",
+          import.meta.env.VITE_BACKEND_URL + "/api/imagefinetune",
           {
             method: "POST",
-            body: formData,
+            body: JSON.stringify({
+              //TODO: Make userid dynamic
+              userid: "234234244",
+              formData,
+            }),
           }
         );
 
