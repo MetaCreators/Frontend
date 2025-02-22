@@ -67,6 +67,7 @@ const ThumbnailPage: React.FC = () => {
         const formData = new FormData();
         formData.append("file", new File([zipBlob], "images.zip"));
         const response = await fetch(
+          //todo: this should be /api/imagefinetune
           import.meta.env.VITE_BACKEND_URL + "/upload",
           {
             method: "POST",
