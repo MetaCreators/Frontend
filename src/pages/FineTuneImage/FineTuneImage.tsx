@@ -7,7 +7,6 @@ import useCounterStore from "../../store/counterstore";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
 import Navbar from "@/components/common/Navbar";
-import { S3 } from "@aws-sdk/client-s3";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -64,7 +63,6 @@ const ThumbnailPage: React.FC = () => {
       });
 
       // if(uploadedImages.length>=15)
-      //TODO : upload the zip file to Digital ocean bucket => hit the backend to get a presigned url for uploading and then directly push to that url
       try {
         const zipBlob = await zip.generateAsync({ type: "blob" });
         const formData = new FormData();
@@ -95,8 +93,6 @@ const ThumbnailPage: React.FC = () => {
           },
         });
         console.log("Image saving to DO status", uploading);
-        //TODO: now using this presignedUrl, upload images directly to DO
-
         // if (response.ok) {
         //   alert("Zip file uploaded successfully!");
         // } else {
