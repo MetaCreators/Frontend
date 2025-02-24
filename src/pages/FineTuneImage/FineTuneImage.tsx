@@ -79,6 +79,7 @@ const ThumbnailPage: React.FC = () => {
         const data = await response.json();
 
         console.log("presigned url from backend is", data.presignedUrl);
+        //TODO: now using this presignedUrl, upload images directly to DO
 
         // if (response.ok) {
         //   alert("Zip file uploaded successfully!");
