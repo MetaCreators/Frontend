@@ -3,7 +3,7 @@ import mtn from "../../assets/mtn.jpg";
 import Imageslider from "../../components/ThumbnailPageComponents/ImageComparisonSlider";
 import JSZip from "jszip";
 import Modalcontainer from "@/components/ThumbnailPageComponents/Modalcontainer";
-import useCounterStore from "../../store/counterstore";
+// import useCounterStore from "../../store/counterstore";
 import { Button } from "@/components/ui/button";
 import { Loader2, SearchIcon } from "lucide-react";
 import Navbar from "@/components/common/Navbar";
@@ -34,9 +34,9 @@ const ThumbnailPage: React.FC = () => {
   const [uploaded_image, setuploaded_image] = useState<string>("");
   const [image_uploaded_identifier, setimage_uploaded_identifier] =
     useState(false);
-  const [image_urls, setimage_urls] = useState<string[]>([]);
-  const { image_coming_from_BE, image_to_show_in_modal_list } =
-    useCounterStore();
+  // const [image_urls, setimage_urls] = useState<string[]>([]);
+  // const { image_coming_from_BE, image_to_show_in_modal_list } =
+  //   useCounterStore();
   const [loading, setLoading] = useState(false);
 
   const handleOpenModal = () => {
@@ -54,8 +54,8 @@ const ThumbnailPage: React.FC = () => {
       const imageUrls = uploadedImages.map((file) => URL.createObjectURL(file));
 
       console.log(imageUrls, "imageURLs");
-      setimage_urls(imageUrls);
-      image_to_show_in_modal_list(imageUrls[0]);
+      // setimage_urls(imageUrls);
+      // image_to_show_in_modal_list(imageUrls[0]);
 
       setModels([...models, { name: newModelName, images: imageUrls }]);
       const zip = new JSZip();
