@@ -69,7 +69,6 @@ const ThumbnailPage: React.FC = () => {
         formData.append("file", new File([zipBlob], "images.zip"));
         const userId = "training1"; // TODO: Make this dynamic
         const response = await fetch(
-          //todo: this should be /api/imagefinetune
           import.meta.env.VITE_BACKEND_URL +
             `/api/get-presignedurl-upload?userId=${userId}`,
           {
@@ -87,7 +86,7 @@ const ThumbnailPage: React.FC = () => {
         console.log("presigned url from backend is", data.presignedUrl);
         const uploading = await fetch(data.presignedUrl, {
           method: "PUT",
-          body: zipBlob, //zip file to be put here
+          body: zipBlob,
           headers: {
             "Content-Type": s3Params.ContentType,
           },
@@ -121,7 +120,6 @@ const ThumbnailPage: React.FC = () => {
       if (!session) {
         throw new Error("Not authenticated");
       }
-      //
       console.log("user session access token", session.access_token);
 
       const response = await fetch(
