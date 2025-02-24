@@ -5,7 +5,7 @@ import JSZip from "jszip";
 import Modalcontainer from "@/components/ThumbnailPageComponents/Modalcontainer";
 import useCounterStore from "../../store/counterstore";
 import { Button } from "@/components/ui/button";
-import { SearchIcon } from "lucide-react";
+import { Loader2, SearchIcon } from "lucide-react";
 import Navbar from "@/components/common/Navbar";
 import {
   Breadcrumb,
@@ -37,6 +37,7 @@ const ThumbnailPage: React.FC = () => {
   const [image_urls, setimage_urls] = useState<string[]>([]);
   const { image_coming_from_BE, image_to_show_in_modal_list } =
     useCounterStore();
+  const [loading, setLoading] = useState(false);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -113,6 +114,7 @@ const ThumbnailPage: React.FC = () => {
     if (inputText1 === "") {
       alert("Enter the input Fields");
     } else {
+      setLoading(true);
       const {
         data: { session },
       } = await supabase.auth.getSession();
@@ -148,6 +150,7 @@ const ThumbnailPage: React.FC = () => {
       const url = data.urls[0];
 
       setGeneratedImage(url);
+      setLoading(false);
     }
   };
 
@@ -262,8 +265,16 @@ const ThumbnailPage: React.FC = () => {
                 <Button
                   onClick={handleGenerateImage}
                   className="bg-purple-600 hover:bg-purple-800 w-1/4"
+                  disabled={loading}
                 >
-                  Generate AI Images
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    "Generate AI Images"
+                  )}
                 </Button>
               </div>
             </div>
