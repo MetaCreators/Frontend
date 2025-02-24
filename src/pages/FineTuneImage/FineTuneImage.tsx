@@ -7,6 +7,7 @@ import useCounterStore from "../../store/counterstore";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
 import Navbar from "@/components/common/Navbar";
+import { S3 } from "@aws-sdk/client-s3";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -24,6 +25,7 @@ interface Model {
 }
 
 const ThumbnailPage: React.FC = () => {
+  const bucket = "lithouseuserimages";
   const [models, setModels] = useState<Model[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newModelName, setNewModelName] = useState("");
@@ -67,7 +69,7 @@ const ThumbnailPage: React.FC = () => {
         const zipBlob = await zip.generateAsync({ type: "blob" });
         const formData = new FormData();
         formData.append("file", new File([zipBlob], "images.zip"));
-        const userId = "234234244"; // TODO: Make this dynamic
+        const userId = "training1"; // TODO: Make this dynamic
         const response = await fetch(
           //todo: this should be /api/imagefinetune
           import.meta.env.VITE_BACKEND_URL +
@@ -76,9 +78,23 @@ const ThumbnailPage: React.FC = () => {
             method: "GET",
           }
         );
+        const key = `${userId}/generatedImages/${Date.now()}.zip`;
         const data = await response.json();
+        const s3Params = {
+          Bucket: bucket,
+          Key: key,
+          ContentType: "application/zip",
+        };
 
         console.log("presigned url from backend is", data.presignedUrl);
+        const uploading = await fetch(data.presignedUrl, {
+          method: "PUT",
+          body: zipBlob, //zip file to be put here
+          headers: {
+            "Content-Type": s3Params.ContentType,
+          },
+        });
+        console.log("Image saving to DO status", uploading);
         //TODO: now using this presignedUrl, upload images directly to DO
 
         // if (response.ok) {
