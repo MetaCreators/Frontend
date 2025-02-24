@@ -67,24 +67,24 @@ const ThumbnailPage: React.FC = () => {
         const zipBlob = await zip.generateAsync({ type: "blob" });
         const formData = new FormData();
         formData.append("file", new File([zipBlob], "images.zip"));
+        const userId = "234234244"; // TODO: Make this dynamic
         const response = await fetch(
           //todo: this should be /api/imagefinetune
-          import.meta.env.VITE_BACKEND_URL + "/api/imagefinetune",
+          import.meta.env.VITE_BACKEND_URL +
+            `/api/get-presignedurl-upload?userId=${userId}`,
           {
-            method: "POST",
-            body: JSON.stringify({
-              //TODO: Make userid dynamic
-              userid: "234234244",
-              formData,
-            }),
+            method: "GET",
           }
         );
+        const data = await response.json();
 
-        if (response.ok) {
-          alert("Zip file uploaded successfully!");
-        } else {
-          alert("Failed to upload the zip file.");
-        }
+        console.log("presigned url from backend is", data.presignedUrl);
+
+        // if (response.ok) {
+        //   alert("Zip file uploaded successfully!");
+        // } else {
+        //   alert("Failed to upload the zip file.");
+        // }
       } catch (error) {
         console.error("Error uploading zip file:", error);
         alert("An error occurred while uploading the zip file.");
