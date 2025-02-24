@@ -65,10 +65,19 @@ const ThumbnailPage: React.FC = () => {
 
       // if(uploadedImages.length>=15)
       try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (!session) {
+          throw new Error("Not authenticated");
+        }
+        console.log("user session access token", session.access_token);
+        console.log("user details", session.user.id);
         const zipBlob = await zip.generateAsync({ type: "blob" });
         const formData = new FormData();
         formData.append("file", new File([zipBlob], "images.zip"));
-        const userId = "training1"; // TODO: Make this dynamic => this should come from the DB
+        const userId = session.user.id; // TODO: Make this dynamic => this should come from the DB
         //b3916b8e-7381-4fd7-9b34-8d0ac9cb2b8e
         const response = await fetch(
           import.meta.env.VITE_BACKEND_URL +
