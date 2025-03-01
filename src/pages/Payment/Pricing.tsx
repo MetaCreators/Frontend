@@ -2,6 +2,15 @@ import PricingCard from "@/components/pricing/PricingCard";
 import { useState } from "react";
 import Navbar from "@/components/common/Navbar";
 import AnimatedButton from "@/components/AnimatedButton/AnimatedButton";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Link } from "react-router-dom";
 import PaymentModal from "@/components/pricing/PaymentModal";
 import { PlanDetails } from "@/components/pricing/PaymentModal";
 import BankDetailsModal from "@/components/pricing/BankDetailsModal";
@@ -117,6 +126,19 @@ const Pricing = () => {
       <Navbar />
       <div className="min-h-screen bg-background py-12 px-4">
         <div className="max-w-7xl mx-auto">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem>
+                <BreadcrumbLink>
+                  <Link to="/dashboard">Home</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem>
+                <BreadcrumbPage>payment</BreadcrumbPage>
+              </BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
           <h1 className="text-4xl font-bold text-center mb-4">
             Your <span className="text-purple-600">AI co-pilot</span> for video
             creation

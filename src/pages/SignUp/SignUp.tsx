@@ -46,6 +46,7 @@ export default function SignUp() {
         password,
         options: {
           emailRedirectTo: `${import.meta.env.VITE_FRONTEND_URL}/dashboard`,
+          //emailRedirectTo: "http://localhost:5173/dashboard",
         },
       });
 
@@ -76,7 +77,7 @@ export default function SignUp() {
         provider: "google",
         options: {
           redirectTo: `${import.meta.env.VITE_FRONTEND_URL}/dashboard`,
-          //redirectTo: "http://localhost:5174/dasboard",
+          //redirectTo: "http://localhost:5173/dashboard",
         },
       });
 
