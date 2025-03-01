@@ -88,6 +88,8 @@ const ThumbnailPage: React.FC = () => {
           }
         );
         const key = `${userId}/generatedImages/${Date.now()}.zip`;
+        const filename = key.split("/").pop();
+        console.log("filename is", filename);
         const data = await response.json();
         const s3Params = {
           Bucket: bucket,
@@ -104,6 +106,21 @@ const ThumbnailPage: React.FC = () => {
           },
         });
         console.log("Image saving to DO status", uploading);
+
+        //TODO: Here have to hit the /api/imagefinetune route
+        const finetune = await fetch(
+          import.meta.env.VITE_BACKEND_URL + "/api/imagefinetune",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              //userId: userId,
+              userId: "01f90e3d-171d-4313-8985-f25ccd5cd915",
+              filename: filename,
+            }),
+          }
+        );
+        console.log("Hitting /api/imagefinetune url status", finetune);
+
         // if (response.ok) {
         //   alert("Zip file uploaded successfully!");
         // } else {
