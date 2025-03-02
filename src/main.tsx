@@ -18,6 +18,7 @@ import FineTuneImage from "./pages/FineTuneImage/FineTuneImage.tsx";
 import AuthCallback from "./pages/SignUp/AuthCallback.tsx";
 import Home from "./pages/Landing/home.tsx";
 import Pricing from "./pages/Payment/Pricing.tsx";
+import ErrorPage from "./pages/Error/ErrorPage.tsx";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -44,22 +45,27 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/home",
     element: <Home />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/login",
     element: <Login />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/signup",
     element: <SignUp />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/email-confirmation",
     element: <EmailConfirmation />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/dashboard",
@@ -69,6 +75,7 @@ const router = createBrowserRouter([
       // </ProtectedRoute>
       <Dashboard />
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "/thumbnail",
@@ -77,6 +84,7 @@ const router = createBrowserRouter([
         <ThumbnailPage />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "/script",
@@ -85,6 +93,7 @@ const router = createBrowserRouter([
         <ScriptPage />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "/description",
@@ -93,6 +102,7 @@ const router = createBrowserRouter([
         <DescriptionPage />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "/imagefinetune",
@@ -101,6 +111,7 @@ const router = createBrowserRouter([
         <FineTuneImage />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "/payment",
@@ -109,10 +120,16 @@ const router = createBrowserRouter([
         <Pricing />
       </ProtectedRoute>
     ),
+    errorElement: <ErrorPage />,
   },
   {
     path: "/auth/callback",
     element: <AuthCallback />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

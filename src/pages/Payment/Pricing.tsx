@@ -11,16 +11,23 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Link } from "react-router-dom";
+import PaymentModal from "@/components/pricing/PaymentModal";
+import { PlanDetails } from "@/components/pricing/PaymentModal";
+import BankDetailsModal from "@/components/pricing/BankDetailsModal";
 
 const Pricing = () => {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(
     "monthly"
   );
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<PlanDetails | null>(null);
+  const [isBankDetailsModalOpen, setIsBankDetailsModalOpen] = useState(false);
+
   const pricingData = {
     plus: {
       tier: "Plus",
-      price: "35",
+      price: "16",
       buttonText: "Get Plus",
       addOns: "1x Boost, 60s Generative",
       features: [
@@ -35,7 +42,7 @@ const Pricing = () => {
     },
     max: {
       tier: "Max",
-      price: "60",
+      price: "27",
       buttonText: "Get Max",
       addOns: "1x Boost, 60s Generative",
       features: [
@@ -50,8 +57,8 @@ const Pricing = () => {
     },
     pro: {
       tier: "Pro",
-      price: "120",
-      buttonText: "Get Generative",
+      price: "35",
+      buttonText: "Get Pro",
       addOns: "1x Boost, 15m Generative",
       features: [
         { text: "200 mins/mo of AI generation", available: true },
@@ -64,6 +71,54 @@ const Pricing = () => {
       ],
       isBeta: true,
     },
+  };
+
+  const handlePlanSelect = (plan: PlanDetails) => {
+    setSelectedPlan(plan);
+    setIsModalOpen(true);
+  };
+
+  const handlePaymentClick = async (currency: string, amount: string) => {
+    try {
+      console.log(`Processing payment of ${amount} in ${currency}`);
+
+      // Add your payment processing logic here
+      //await processPayment(currency, amount);
+
+      // Redirect based on plan
+      if (selectedPlan && currency === "INR") {
+        switch (selectedPlan.tier.toLowerCase()) {
+          case "plus":
+            window.open(
+              "https://docs.google.com/forms/d/e/1FAIpQLSdsoI7L4J_be6p7ScqZ5qMcHbKmykqFSLP2zwqiYx95PuwnhA/viewform?usp=pp_url&entry.1282954660=1280",
+              "_blank"
+            );
+            break;
+          case "max":
+            window.open(
+              "https://docs.google.com/forms/d/e/1FAIpQLSdNJqSNfRmuL4OHVZrKgnNnCi69Sv86tzab52hlZkcUFojLGw/viewform?usp=pp_url&entry.1282954660=2160",
+              "_blank"
+            );
+            break;
+          case "pro":
+            window.open(
+              "https://docs.google.com/forms/d/e/1FAIpQLSehJkCdVclOygRyaxA7acSUcMHVdm9irxL4k3PQy7OULguB9w/viewform?usp=pp_url&entry.1282954660=2800",
+              "_blank"
+            );
+            break;
+          default:
+            console.error("Unknown plan tier");
+        }
+      } else if (selectedPlan && currency === "USD") {
+        setIsModalOpen(false);
+        setIsBankDetailsModalOpen(true);
+      }
+
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Payment failed:", error);
+      // Handle payment failure
+    }
   };
 
   return (
@@ -95,7 +150,7 @@ const Pricing = () => {
                 selected={billingPeriod === "monthly"}
                 onClick={() => setBillingPeriod("monthly")}
               >
-                Monthly
+                One-Time
               </AnimatedButton>
             </div>
           </div>
@@ -103,19 +158,29 @@ const Pricing = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <PricingCard
               {...pricingData.plus}
-              onButtonClick={() => console.log("Plus plan selected")}
+              onButtonClick={() => handlePlanSelect(pricingData.plus)}
             />
             <PricingCard
               {...pricingData.max}
-              onButtonClick={() => console.log("Max plan selected")}
+              onButtonClick={() => handlePlanSelect(pricingData.max)}
             />
             <PricingCard
               {...pricingData.pro}
-              onButtonClick={() => console.log("Pro plan selected")}
+              onButtonClick={() => handlePlanSelect(pricingData.pro)}
             />
           </div>
         </div>
       </div>
+      <PaymentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        planDetails={selectedPlan}
+        onPaymentClick={handlePaymentClick}
+      />
+      <BankDetailsModal
+        isOpen={isBankDetailsModalOpen}
+        onClose={() => setIsBankDetailsModalOpen(false)}
+      />
     </div>
   );
 };

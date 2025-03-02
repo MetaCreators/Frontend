@@ -31,7 +31,11 @@ const PricingCard = ({
   className,
 }: PricingCardProps) => (
   <Card
-    className={cn("relative", isBeta && "border-2 border-blue-600", className)}
+    className={cn(
+      "relative transition-transform transition-shadow duration-300 ease-in-out hover:-translate-y-[5px] hover:shadow-[0_10px_30px_rgba(100,95,95,0.8)] hover:cursor-pointer",
+      isBeta && "border-2 border-blue-600",
+      className
+    )}
   >
     {isBeta && (
       <Badge
@@ -60,18 +64,18 @@ const PricingCard = ({
 
       <Button
         className={cn(
-          "w-full",
+          "w-full bg-[#ef5350] rounded-full hover:bg-blue-500 text-white",
           tier === "Free" && "bg-black hover:bg-black/90"
         )}
         onClick={onButtonClick}
       >
         {buttonText}
       </Button>
-      {tier !== "Free" && (
+      {/* {tier !== "Free" && (
         <p className="text-xs text-muted-foreground text-center">
           *Billed monthly untill cancelled
         </p>
-      )}
+      )} */}
 
       <div className="space-y-3">
         {features.map((feature, index) => (
