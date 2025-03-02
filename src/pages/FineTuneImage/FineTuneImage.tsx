@@ -33,9 +33,8 @@ const ThumbnailPage: React.FC = () => {
   const [uploaded_image, setuploaded_image] = useState<string>("");
   const [image_uploaded_identifier, setimage_uploaded_identifier] =
     useState(false);
-  const [image_urls, setimage_urls] = useState<string[]>([]);
-  const { image_coming_from_BE, image_to_show_in_modal_list } =
-    useCounterStore();
+  const setimage_urls = useState<string[]>([])[1];
+  const { image_to_show_in_modal_list } = useCounterStore();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -155,12 +154,12 @@ const ThumbnailPage: React.FC = () => {
   useEffect(() => {
     console.log(uploadedImages, "uploaded images Array");
 
-    let timeoutId: ReturnType<typeof setTimeout>;
-    if (image_uploaded_identifier) {
-      timeoutId = setTimeout(() => {
-        setimage_uploaded_identifier(true);
-      }, 4000);
-    }
+    // let timeoutId: ReturnType<typeof setTimeout>;
+    // if (image_uploaded_identifier) {
+    //   timeoutId = setTimeout(() => {
+    //     setimage_uploaded_identifier(true);
+    //   }, 4000);
+    // }
   }, [image_uploaded_identifier]);
 
   return (
