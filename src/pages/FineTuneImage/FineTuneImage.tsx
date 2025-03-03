@@ -112,6 +112,7 @@ const ThumbnailPage: React.FC = () => {
           import.meta.env.VITE_BACKEND_URL + "/api/imagefinetune",
           {
             method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               //userId: userId,
               userId: "01f90e3d-171d-4313-8985-f25ccd5cd915",
