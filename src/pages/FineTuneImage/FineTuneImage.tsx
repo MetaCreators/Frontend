@@ -205,7 +205,7 @@ const ThumbnailPage: React.FC = () => {
   useEffect(() => {
     console.log(uploadedImages, "uploaded images Array");
 
-    let timeoutId: ReturnType<typeof setTimeout>;
+    let timeoutId;
     if (image_uploaded_identifier) {
       timeoutId = setTimeout(() => {
         setimage_uploaded_identifier(true);
