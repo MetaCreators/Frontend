@@ -100,7 +100,6 @@ const ThumbnailPage: React.FC = () => {
         });
         console.log("Image saving to DO status", uploading);
 
-        //TODO: Here have to hit the /api/imagefinetune route
         const finetune = await fetch(
           import.meta.env.VITE_BACKEND_URL + "/api/imagefinetune",
           {
