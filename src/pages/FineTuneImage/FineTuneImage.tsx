@@ -24,7 +24,6 @@ interface Model {
 }
 
 const ThumbnailPage: React.FC = () => {
-  const bucket = "lithouseuserimages";
   const [models, setModels] = useState<Model[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newModelName, setNewModelName] = useState("");
@@ -87,22 +86,16 @@ const ThumbnailPage: React.FC = () => {
             method: "GET",
           }
         );
-        const key = `${userId}/generatedImages/${Date.now()}.zip`;
-        const filename = key.split("/").pop();
-        console.log("filename is", filename);
         const data = await response.json();
-        const s3Params = {
-          Bucket: bucket,
-          Key: key,
-          ContentType: "application/zip",
-        };
+        const filename = data.filename.split("/").pop();
+        console.log("filename is", filename);
 
-        console.log("presigned url from backend is", data.presignedUrl);
+        console.log("upload presigned url from backend is", data.presignedUrl);
         const uploading = await fetch(data.presignedUrl, {
           method: "PUT",
           body: zipBlob,
           headers: {
-            "Content-Type": s3Params.ContentType,
+            "Content-Type": "application/zip",
           },
         });
         console.log("Image saving to DO status", uploading);
