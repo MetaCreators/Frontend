@@ -51,6 +51,7 @@ const ThumbnailPage: React.FC = () => {
   const handleAddModel = async () => {
     if (newModelName.trim() && uploadedImages.length >= 15) {
       const imageUrls = uploadedImages.map((file) => URL.createObjectURL(file));
+      setLoading(true);
 
       console.log(imageUrls, "imageURLs");
       // setimage_urls(imageUrls);
@@ -113,7 +114,7 @@ const ThumbnailPage: React.FC = () => {
           }
         );
         console.log("Hitting /api/imagefinetune url status", finetune);
-
+        setLoading(false);
         // if (response.ok) {
         //   alert("Zip file uploaded successfully!");
         // } else {
@@ -469,8 +470,16 @@ const ThumbnailPage: React.FC = () => {
               <Button
                 onClick={handleAddModel}
                 className="w-full bg-purple-600 hover:bg-purple-800"
+                disabled={loading}
               >
-                Create
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Creating Model...
+                  </>
+                ) : (
+                  "Create"
+                )}
               </Button>
             </div>
           </div>
