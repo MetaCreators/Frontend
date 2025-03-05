@@ -114,6 +114,8 @@ const ThumbnailPage: React.FC = () => {
           }
         );
         console.log("Hitting /api/imagefinetune url status", finetune);
+        //TODO: here instead of just setloading=false, we should display something like "come back after some time" to the user
+        //and add other aesthetics that indicate model creation
         setLoading(false);
         // if (response.ok) {
         //   alert("Zip file uploaded successfully!");
