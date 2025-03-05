@@ -3,9 +3,9 @@ import mtn from "../../assets/mtn.jpg";
 import Imageslider from "../../components/ThumbnailPageComponents/ImageComparisonSlider";
 import JSZip from "jszip";
 import Modalcontainer from "@/components/ThumbnailPageComponents/Modalcontainer";
-import useCounterStore from "../../store/counterstore";
+// import useCounterStore from "../../store/counterstore";
 import { Button } from "@/components/ui/button";
-import { SearchIcon } from "lucide-react";
+import { Loader2, SearchIcon } from "lucide-react";
 import Navbar from "@/components/common/Navbar";
 import {
   Breadcrumb,
@@ -33,9 +33,10 @@ const ThumbnailPage: React.FC = () => {
   const [uploaded_image, setuploaded_image] = useState<string>("");
   const [image_uploaded_identifier, setimage_uploaded_identifier] =
     useState(false);
-  const [image_urls, setimage_urls] = useState<string[]>([]);
-  const { image_coming_from_BE, image_to_show_in_modal_list } =
-    useCounterStore();
+  // const [image_urls, setimage_urls] = useState<string[]>([]);
+  // const { image_coming_from_BE, image_to_show_in_modal_list } =
+  //   useCounterStore();
+  const [loading, setLoading] = useState(false);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -50,10 +51,11 @@ const ThumbnailPage: React.FC = () => {
   const handleAddModel = async () => {
     if (newModelName.trim() && uploadedImages.length >= 15) {
       const imageUrls = uploadedImages.map((file) => URL.createObjectURL(file));
+      setLoading(true);
 
       console.log(imageUrls, "imageURLs");
-      setimage_urls(imageUrls);
-      image_to_show_in_modal_list(imageUrls[0]);
+      // setimage_urls(imageUrls);
+      // image_to_show_in_modal_list(imageUrls[0]);
 
       setModels([...models, { name: newModelName, images: imageUrls }]);
       const zip = new JSZip();
@@ -63,22 +65,63 @@ const ThumbnailPage: React.FC = () => {
 
       // if(uploadedImages.length>=15)
       try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+
+        if (!session) {
+          throw new Error("Not authenticated");
+        }
+        console.log("user session access token", session.access_token);
+        console.log("user details", session.user.id);
         const zipBlob = await zip.generateAsync({ type: "blob" });
         const formData = new FormData();
         formData.append("file", new File([zipBlob], "images.zip"));
+        const userId = "01f90e3d-171d-4313-8985-f25ccd5cd915";
+        //const userId = session.user.id; // TODO: Make this dynamic => this should come from the DB
+        //b3916b8e-7381-4fd7-9b34-8d0ac9cb2b8e
         const response = await fetch(
-          import.meta.env.VITE_BACKEND_URL + "/upload",
+          import.meta.env.VITE_BACKEND_URL +
+            `/api/get-presignedurl-upload?userId=${userId}`,
           {
-            method: "POST",
-            body: formData,
+            method: "GET",
           }
         );
+        const data = await response.json();
+        const filename = data.filename.split("/").pop();
+        console.log("filename is", filename);
 
-        if (response.ok) {
-          alert("Zip file uploaded successfully!");
-        } else {
-          alert("Failed to upload the zip file.");
-        }
+        console.log("upload presigned url from backend is", data.presignedUrl);
+        const uploading = await fetch(data.presignedUrl, {
+          method: "PUT",
+          body: zipBlob,
+          headers: {
+            "Content-Type": "application/zip",
+          },
+        });
+        console.log("Image saving to DO status", uploading);
+
+        const finetune = await fetch(
+          import.meta.env.VITE_BACKEND_URL + "/api/imagefinetune",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              //userId: userId,
+              userId: "01f90e3d-171d-4313-8985-f25ccd5cd915",
+              filename: filename,
+            }),
+          }
+        );
+        console.log("Hitting /api/imagefinetune url status", finetune);
+        //TODO: here instead of just setloading=false, we should display something like "come back after some time" to the user
+        //and add other aesthetics that indicate model creation
+        setLoading(false);
+        // if (response.ok) {
+        //   alert("Zip file uploaded successfully!");
+        // } else {
+        //   alert("Failed to upload the zip file.");
+        // }
       } catch (error) {
         console.error("Error uploading zip file:", error);
         alert("An error occurred while uploading the zip file.");
@@ -95,6 +138,7 @@ const ThumbnailPage: React.FC = () => {
     if (inputText1 === "") {
       alert("Enter the input Fields");
     } else {
+      setLoading(true);
       const {
         data: { session },
       } = await supabase.auth.getSession();
@@ -102,8 +146,8 @@ const ThumbnailPage: React.FC = () => {
       if (!session) {
         throw new Error("Not authenticated");
       }
-      //
       console.log("user session access token", session.access_token);
+      console.log("user details", session.user.id);
 
       const response = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/genpersonimage`,
@@ -131,6 +175,7 @@ const ThumbnailPage: React.FC = () => {
       const url = data.urls[0];
 
       setGeneratedImage(url);
+      setLoading(false);
     }
   };
 
@@ -155,7 +200,7 @@ const ThumbnailPage: React.FC = () => {
   useEffect(() => {
     console.log(uploadedImages, "uploaded images Array");
 
-    let timeoutId: ReturnType<typeof setTimeout>;
+    let timeoutId;
     if (image_uploaded_identifier) {
       timeoutId = setTimeout(() => {
         setimage_uploaded_identifier(true);
@@ -245,8 +290,16 @@ const ThumbnailPage: React.FC = () => {
                 <Button
                   onClick={handleGenerateImage}
                   className="bg-purple-600 hover:bg-purple-800 w-1/4"
+                  disabled={loading}
                 >
-                  Generate AI Images
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    "Generate AI Images"
+                  )}
                 </Button>
               </div>
             </div>
@@ -419,8 +472,16 @@ const ThumbnailPage: React.FC = () => {
               <Button
                 onClick={handleAddModel}
                 className="w-full bg-purple-600 hover:bg-purple-800"
+                disabled={loading}
               >
-                Create
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Creating Model...
+                  </>
+                ) : (
+                  "Create"
+                )}
               </Button>
             </div>
           </div>
