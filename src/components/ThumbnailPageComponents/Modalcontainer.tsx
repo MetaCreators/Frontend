@@ -14,7 +14,11 @@ interface ButtonProps {
 
 const Modalcontainer: React.FC<ButtonProps> = ({ triggerFunction }) => {
   const [selectedFilter, setSelectedFilter] = useState<number>(2);
-  const { image_coming_from_BE } = useCounterStore();
+  const { image_coming_from_BE , users_email_id} = useCounterStore();
+
+
+
+console.log(users_email_id,"this one email kok")
 
   return (
     <div className="flex items-center gap-2 bg-gray-100 p-3 space-x-2 rounded-xl w-auto hover:bg-gray-200 border-stone-300 border">
@@ -31,6 +35,8 @@ const Modalcontainer: React.FC<ButtonProps> = ({ triggerFunction }) => {
               }
               overflow-hidden`}
           >
+
+            
             <img
               src={img}
               className="w-14 h-14 rounded-md object-cover"
@@ -38,6 +44,9 @@ const Modalcontainer: React.FC<ButtonProps> = ({ triggerFunction }) => {
             />
           </div>
         ))}
+
+        
+        
 
       <TooltipProvider>
         <Tooltip>
