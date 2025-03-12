@@ -99,8 +99,9 @@ const ThumbnailPage: React.FC = () => {
             "Content-Type": "application/zip",
           },
         });
-        console.log("Image saving to DO status", uploading);
-
+        console.log("Image saving to DO status", uploading); // TODO: here we should show a progress bar to the user
+        // TODO: here we should also show a message to the user that the model is being created and it will be ready in some time
+        // TODO: send upload status to the backend
         const finetune = await fetch(
           import.meta.env.VITE_BACKEND_URL + "/api/imagefinetune",
           {
