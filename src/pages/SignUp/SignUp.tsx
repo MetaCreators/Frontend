@@ -56,8 +56,8 @@ export default function SignUp() {
         return;
       }
         console.log("reached here")
-      // Create user in your database
-      //TODO: NOT WORKING
+      // ADD USER TO DATABASE
+
       if (data?.user) {
         try {
           const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
@@ -76,11 +76,10 @@ export default function SignUp() {
           }
         } catch (dbError) {
           console.error('Database user creation error:', dbError);
-          // Optionally handle the error or show a message to the user
-          // You might want to delete the Supabase auth user here if DB creation fails
+          // TODO: handle the error or show a message to the user
+          // TODO: delete the Supabase auth user here if DB creation fails
         }
       }
-
       navigate("/email-confirmation", {
         state: { email },
       });
