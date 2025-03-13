@@ -46,7 +46,6 @@ export default function SignUp() {
         password,
         options: {
           emailRedirectTo: `${import.meta.env.VITE_FRONTEND_URL}/dashboard`,
-          //emailRedirectTo: "http://localhost:5173/dashboard",
         },
       });
 
@@ -55,6 +54,31 @@ export default function SignUp() {
       if (data?.user && data.user.identities?.length === 0) {
         setError("This email is already registered. Please log in instead.");
         return;
+      }
+        console.log("reached here")
+      // Create user in your database
+      //TODO: NOT WORKING
+      if (data?.user) {
+        try {
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              //userId: data.user.id,
+              email: data.user.email,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to create user in database');
+          }
+        } catch (dbError) {
+          console.error('Database user creation error:', dbError);
+          // Optionally handle the error or show a message to the user
+          // You might want to delete the Supabase auth user here if DB creation fails
+        }
       }
 
       navigate("/email-confirmation", {
@@ -77,7 +101,6 @@ export default function SignUp() {
         provider: "google",
         options: {
           redirectTo: `${import.meta.env.VITE_FRONTEND_URL}/dashboard`,
-          //redirectTo: "http://localhost:5173/dashboard",
         },
       });
 
