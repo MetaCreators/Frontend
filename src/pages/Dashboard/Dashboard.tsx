@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 // import { FileText, MessageSquare, Image } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { useEffect } from "react";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -39,6 +40,58 @@ export default function Dashboard() {
       path: "/imagefinetune",
     },
   ];
+
+  // Add auth state change listener
+  useEffect(() => {
+  let isSubscribed = true;
+
+  const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+    if (event === 'SIGNED_IN' && session?.user?.email && isSubscribed) {
+      const isGoogleUser = session.user.app_metadata.provider === 'google';
+      if (isGoogleUser) {
+        try {
+          const checkResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/check`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: session.user.email,
+            }),
+          });
+
+          if (!checkResponse.ok) {
+            throw new Error('Failed to check user existence');
+          }
+
+          const { user } = await checkResponse.json();
+
+          if (!user && isSubscribed) {
+            const createResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email: session.user.email,
+              }),
+            });
+
+            if (!createResponse.ok) {
+              throw new Error('Failed to create user in database');
+            }
+          }
+        } catch (dbError) {
+          console.error('Database operation error:', dbError);
+        }
+      }
+    }
+  });
+  return () => {
+    isSubscribed = false;
+    subscription.unsubscribe();
+  };
+}, []);
 
   return (
     <div className="h-screen overflow-hidden bg-gray-50">

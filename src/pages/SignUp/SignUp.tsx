@@ -34,7 +34,6 @@ export default function SignUp() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
   const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -90,7 +89,7 @@ export default function SignUp() {
     }
   };
 
-  // Google Signup
+  // Simplify handleGoogleSignUp to just handle the OAuth redirect
   const handleGoogleSignUp = async () => {
     setError("");
     setGoogleLoading(true);
@@ -108,7 +107,6 @@ export default function SignUp() {
       setError(
         err instanceof Error ? err.message : "Google authentication failed"
       );
-    } finally {
       setGoogleLoading(false);
     }
   };

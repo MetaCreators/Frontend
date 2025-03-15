@@ -1,4 +1,4 @@
-import { StrictMode, useEffect, ReactNode } from "react";
+import { useEffect, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 import { useAuth } from "./context/AuthContext.tsx";
@@ -134,10 +134,10 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+ 
     <AuthProvider>
       <RouterProvider router={router} />
       <Toaster visibleToasts={1} />
     </AuthProvider>
-  </StrictMode>
+
 );
