@@ -19,6 +19,7 @@ import AuthCallback from "./pages/SignUp/AuthCallback.tsx";
 import Home from "./pages/Landing/home.tsx";
 import Pricing from "./pages/Payment/Pricing.tsx";
 import ErrorPage from "./pages/Error/ErrorPage.tsx";
+import ImageGenerations from "./pages/UserImageGenerations/ImgGenerations.tsx";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -130,6 +131,16 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <ErrorPage />,
+  },
+
+  {
+    path: "/generations",
+    element: (
+      <ProtectedRoute>
+        <ImageGenerations />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorPage />,
   },
 ]);
 

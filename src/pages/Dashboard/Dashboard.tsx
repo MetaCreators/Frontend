@@ -39,6 +39,12 @@ export default function Dashboard() {
       icon: "🖼️",
       path: "/imagefinetune",
     },
+    {
+      title: "View your generations",
+      description: "your thumbnails",
+      icon: "🖼️",
+      path: "/generations",
+    }
   ];
 
   // Add auth state change listener
