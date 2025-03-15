@@ -34,7 +34,6 @@ export default function SignUp() {
   const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
   const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -46,7 +45,6 @@ export default function SignUp() {
         password,
         options: {
           emailRedirectTo: `${import.meta.env.VITE_FRONTEND_URL}/dashboard`,
-          //emailRedirectTo: "http://localhost:5173/dashboard",
         },
       });
 
@@ -56,7 +54,31 @@ export default function SignUp() {
         setError("This email is already registered. Please log in instead.");
         return;
       }
+        console.log("reached here")
+      // ADD USER TO DATABASE
 
+      if (data?.user) {
+        try {
+          const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              //userId: data.user.id,
+              email: data.user.email,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to create user in database');
+          }
+        } catch (dbError) {
+          console.error('Database user creation error:', dbError);
+          // TODO: handle the error or show a message to the user
+          // TODO: delete the Supabase auth user here if DB creation fails
+        }
+      }
       navigate("/email-confirmation", {
         state: { email },
       });
@@ -67,7 +89,7 @@ export default function SignUp() {
     }
   };
 
-  // Google Signup
+  // Simplify handleGoogleSignUp to just handle the OAuth redirect
   const handleGoogleSignUp = async () => {
     setError("");
     setGoogleLoading(true);
@@ -77,7 +99,6 @@ export default function SignUp() {
         provider: "google",
         options: {
           redirectTo: `${import.meta.env.VITE_FRONTEND_URL}/dashboard`,
-          //redirectTo: "http://localhost:5173/dashboard",
         },
       });
 
@@ -86,7 +107,6 @@ export default function SignUp() {
       setError(
         err instanceof Error ? err.message : "Google authentication failed"
       );
-    } finally {
       setGoogleLoading(false);
     }
   };
