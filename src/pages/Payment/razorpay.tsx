@@ -67,13 +67,13 @@ const RazorpayPayment: React.FC = () => {
 
       const options: RazorpayOptions = {
             key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-            amount: data.amount, // Use amount from backend
-            currency: data.currency, // Use currency from backend
+            amount: data.amount, 
+            currency: data.currency,
             name: "MetaCreators",
             description: "Image Generation Credits",
             image: "your-logo-url",
             order_id: data.orderId,
-            callback_url: import.meta.env.FRONTEND_URL+"/payment",
+            callback_url: `${import.meta.env.VITE_FRONTEND_URL}razorpay`,
             notes: {
                 address: "MetaCreators Office"
             },
@@ -86,9 +86,7 @@ const RazorpayPayment: React.FC = () => {
         paymentObject.open();
         
         paymentObject.on('payment.success', (response: any) => {
-            // Handle successful payment
             console.log('Payment successful:', response);
-            // You can redirect to a success page or show a success message
             alert('Payment successful!');
             setIsLoading(false);
         });
