@@ -15,6 +15,35 @@ import PaymentModal from "@/components/pricing/PaymentModal";
 import { PlanDetails } from "@/components/pricing/PaymentModal";
 import BankDetailsModal from "@/components/pricing/BankDetailsModal";
 
+// Define TypeScript interface for Razorpay options
+interface RazorpayOptions {
+  key: string;
+  amount: string;
+  currency: string;
+  name: string;
+  description: string;
+  image: string;
+  order_id: string;
+  callback_url: string;
+  notes: {
+    address: string;
+  };
+  theme: {
+    color: string;
+  };
+}
+
+// Define TypeScript interface for window with Razorpay
+declare global {
+  interface Window {
+    Razorpay: new (options: RazorpayOptions) => {
+      open: () => void;
+      close: () => void;
+      on: (event: string, handler: (response: any) => void) => void;
+    };
+  }
+}
+
 const Pricing = () => {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(
     "monthly"
@@ -23,6 +52,7 @@ const Pricing = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PlanDetails | null>(null);
   const [isBankDetailsModalOpen, setIsBankDetailsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const pricingData = {
     plus: {
@@ -73,42 +103,93 @@ const Pricing = () => {
     },
   };
 
+  const loadScript = (src: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const initiateRazorpayPayment = async (amount: string, planName: string) => {
+    try {
+      setIsLoading(true);
+      const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
+
+      if (!res) {
+        alert('Razorpay failed to load!');
+        return;
+      }
+
+      // Fetch order details from your backend
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/razorpay/create-order`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: parseInt(amount) * 100, // Convert to paise
+          plan: planName
+        }),
+      });
+
+      const data = await response.json();
+      console.log('Order data:', data);
+
+      const options: RazorpayOptions = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: "INR",
+        name: "MetaCreators",
+        description: `${planName} Plan Subscription`,
+        image: "your-logo-url",
+        order_id: data.orderId,
+        callback_url: `${import.meta.env.VITE_FRONTEND_URL}/razorpay`,
+        notes: {
+          address: "MetaCreators Office"
+        },
+        theme: {
+          color: "#3399cc"
+        }
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+
+      paymentObject.on('payment.success', (response: any) => {
+        console.log('Payment successful:', response);
+        alert('Payment successful!');
+        setIsLoading(false);
+      });
+
+      paymentObject.on('payment.failed', (response: any) => {
+        alert('Payment failed. Please try again.');
+        setIsLoading(false);
+      });
+
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handlePlanSelect = (plan: PlanDetails) => {
     setSelectedPlan(plan);
     setIsModalOpen(true);
   };
+  //BUG: AFTER PAYMENT, REDIRECT ISNT WORKING
 
   const handlePaymentClick = async (currency: string, amount: string) => {
     try {
       console.log(`Processing payment of ${amount} in ${currency}`);
 
-      // Add your payment processing logic here
-      //await processPayment(currency, amount);
-
-      // Redirect based on plan
       if (selectedPlan && currency === "INR") {
-        switch (selectedPlan.tier.toLowerCase()) {
-          case "plus":
-            window.open(
-              "https://docs.google.com/forms/d/e/1FAIpQLSdsoI7L4J_be6p7ScqZ5qMcHbKmykqFSLP2zwqiYx95PuwnhA/viewform?usp=pp_url&entry.1282954660=1280",
-              "_blank"
-            );
-            break;
-          case "max":
-            window.open(
-              "https://docs.google.com/forms/d/e/1FAIpQLSdNJqSNfRmuL4OHVZrKgnNnCi69Sv86tzab52hlZkcUFojLGw/viewform?usp=pp_url&entry.1282954660=2160",
-              "_blank"
-            );
-            break;
-          case "pro":
-            window.open(
-              "https://docs.google.com/forms/d/e/1FAIpQLSehJkCdVclOygRyaxA7acSUcMHVdm9irxL4k3PQy7OULguB9w/viewform?usp=pp_url&entry.1282954660=2800",
-              "_blank"
-            );
-            break;
-          default:
-            console.error("Unknown plan tier");
-        }
+        // Use Razorpay for INR payments
+        await initiateRazorpayPayment(amount, selectedPlan.tier);
       } else if (selectedPlan && currency === "USD") {
         setIsModalOpen(false);
         setIsBankDetailsModalOpen(true);
@@ -117,7 +198,6 @@ const Pricing = () => {
       setIsModalOpen(false);
     } catch (error) {
       console.error("Payment failed:", error);
-      // Handle payment failure
     }
   };
 
@@ -176,6 +256,7 @@ const Pricing = () => {
         onClose={() => setIsModalOpen(false)}
         planDetails={selectedPlan}
         onPaymentClick={handlePaymentClick}
+        isLoading={isLoading}
       />
       <BankDetailsModal
         isOpen={isBankDetailsModalOpen}

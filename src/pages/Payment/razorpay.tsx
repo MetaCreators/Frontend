@@ -73,7 +73,7 @@ const RazorpayPayment: React.FC = () => {
             description: "Image Generation Credits",
             image: "your-logo-url",
             order_id: data.orderId,
-            callback_url: `${import.meta.env.VITE_FRONTEND_URL}razorpay`,
+            callback_url: `${import.meta.env.VITE_FRONTEND_URL}/razorpay`,
             notes: {
                 address: "MetaCreators Office"
             },
