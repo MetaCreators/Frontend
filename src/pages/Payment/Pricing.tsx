@@ -24,7 +24,6 @@ interface RazorpayOptions {
   description: string;
   image: string;
   order_id: string;
-  callback_url: string;
   notes: {
     address: string;
   };
@@ -113,7 +112,7 @@ const Pricing = () => {
     });
   };
 
-  const initiateRazorpayPayment = async (amount: string, planName: string) => {
+  const initiateRazorpayPayment = async (amount: string, planName: string, currency:string) => {
     try {
       setIsLoading(true);
       const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
@@ -130,8 +129,9 @@ const Pricing = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          amount: parseInt(amount) * 100, // Convert to paise
-          plan: planName
+          amount: currency === "USD" ? parseInt(amount) : parseInt(amount) * 100, // Convert to paise
+          plan: planName,
+          currency: currency
         }),
       });
 
@@ -141,12 +141,11 @@ const Pricing = () => {
       const options: RazorpayOptions = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: data.amount,
-        currency: "INR",
+        currency: currency,
         name: "MetaCreators",
         description: `${planName} Plan Subscription`,
         image: "your-logo-url",
         order_id: data.orderId,
-        callback_url: `${import.meta.env.VITE_FRONTEND_URL}/razorpay`,
         notes: {
           address: "MetaCreators Office"
         },
@@ -187,13 +186,13 @@ const Pricing = () => {
     try {
       console.log(`Processing payment of ${amount} in ${currency}`);
 
-      if (selectedPlan && currency === "INR") {
+      //if (selectedPlan && currency === "INR") {
         // Use Razorpay for INR payments
-        await initiateRazorpayPayment(amount, selectedPlan.tier);
-      } else if (selectedPlan && currency === "USD") {
-        setIsModalOpen(false);
-        setIsBankDetailsModalOpen(true);
-      }
+        await initiateRazorpayPayment(amount, selectedPlan?.tier || "", currency);
+      // } else if (selectedPlan && currency === "USD") {
+      //   setIsModalOpen(false);
+      //   setIsBankDetailsModalOpen(true);
+      // }
 
       setIsModalOpen(false);
     } catch (error) {
