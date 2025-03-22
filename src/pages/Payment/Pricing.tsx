@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import PaymentModal from "@/components/pricing/PaymentModal";
 import { PlanDetails } from "@/components/pricing/PaymentModal";
 import BankDetailsModal from "@/components/pricing/BankDetailsModal";
+import { toast } from "sonner";
 
 // Define TypeScript interface for Razorpay options
 interface RazorpayOptions {
@@ -30,6 +31,12 @@ interface RazorpayOptions {
   theme: {
     color: string;
   };
+}
+
+interface UpdateUserCreditsResponse { 
+  success: boolean;
+  credits: number;
+  message: string;
 }
 
 // Define TypeScript interface for window with Razorpay
@@ -52,6 +59,7 @@ const Pricing = () => {
   const [selectedPlan, setSelectedPlan] = useState<PlanDetails | null>(null);
   const [isBankDetailsModalOpen, setIsBankDetailsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  //const [additionalCredits, setAdditionalCredits] = useState(0);
 
   const pricingData = {
     plus: {
@@ -167,6 +175,29 @@ const Pricing = () => {
         alert('Payment failed. Please try again.');
         setIsLoading(false);
       });
+      console.log("user id is ", data.userId); //this is wrong
+
+      const updateUserCreditsResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/addcredits`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: "7cba94fe-b329-4968-8c8b-a8f18e62943c",
+          creditAmount: 10,
+        })
+      });
+
+      const updateUserCredits: UpdateUserCreditsResponse = await updateUserCreditsResponse.json();
+
+      if (updateUserCreditsResponse.ok) {
+        console.log('Credits added successfully');
+        //setAdditionalCredits(updateUserCredits.credits);
+        toast.success(`Successfully added ${updateUserCredits.credits} credits to your account!`);
+      } else {
+        console.error('Failed to add credits');
+        toast.error('Failed to add credits. Please try again.');
+      }
 
     } catch (error) {
       console.error('Payment error:', error);
