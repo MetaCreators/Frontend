@@ -25,6 +25,7 @@ interface PaymentModalProps {
   onClose: () => void;
   planDetails: PlanDetails | null;
   onPaymentClick: (currency: string, amount: string) => void;
+  isLoading?: boolean;
 }
 
 const PaymentModal = ({
@@ -32,6 +33,7 @@ const PaymentModal = ({
   onClose,
   planDetails,
   onPaymentClick,
+  isLoading = false,
 }: PaymentModalProps) => {
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>("USD");
 
@@ -98,14 +100,15 @@ const PaymentModal = ({
           <Button
             variant="outline"
             onClick={onClose}
-            className="rounded-full py-3 px-6 text-lg" // Increased size via padding and larger text
+            className="rounded-full py-3 px-6 text-lg"
+            disabled={isLoading}
           >
             Cancel
           </Button>
           <Button
             onClick={handlePaymentClick}
             className="relative overflow-hidden rounded-full text-white bg-[#ef5350] transition-colors duration-500 py-3 px-6 text-lg hover:bg-[#ef5350]"
-            // Note: hover:bg-[#ef5350] ensures the background color stays the same on hover
+            disabled={isLoading}
           >
             {isAnimating && (
               <span
@@ -113,7 +116,9 @@ const PaymentModal = ({
                 style={{ pointerEvents: "none" }}
               ></span>
             )}
-            <span className="relative">Pay {getPrice()}</span>
+            <span className="relative">
+              {isLoading ? 'Processing...' : `Pay ${getPrice()}`}
+            </span>
           </Button>
         </div>
       </DialogContent>

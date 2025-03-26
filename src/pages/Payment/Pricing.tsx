@@ -14,6 +14,42 @@ import { Link } from "react-router-dom";
 import PaymentModal from "@/components/pricing/PaymentModal";
 import { PlanDetails } from "@/components/pricing/PaymentModal";
 import BankDetailsModal from "@/components/pricing/BankDetailsModal";
+import { toast } from "sonner";
+
+// Define TypeScript interface for Razorpay options
+interface RazorpayOptions {
+  key: string;
+  amount: string;
+  currency: string;
+  name: string;
+  description: string;
+  image: string;
+  order_id: string;
+  notes: {
+    address: string;
+  };
+  theme: {
+    color: string;
+  };
+  handler: (response:any) => void
+}
+
+interface UpdateUserCreditsResponse { 
+  success: boolean;
+  credits: number;
+  message: string;
+}
+
+// Define TypeScript interface for window with Razorpay
+declare global {
+  interface Window {
+    Razorpay: new (options: RazorpayOptions) => {
+      open: () => void;
+      close: () => void;
+      on: (event: string, handler: (response: any) => void) => void;
+    };
+  }
+}
 
 const Pricing = () => {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(
@@ -23,6 +59,8 @@ const Pricing = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<PlanDetails | null>(null);
   const [isBankDetailsModalOpen, setIsBankDetailsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  //const [additionalCredits, setAdditionalCredits] = useState(0);
 
   const pricingData = {
     plus: {
@@ -73,51 +111,120 @@ const Pricing = () => {
     },
   };
 
+  const loadScript = (src: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const initiateRazorpayPayment = async (amount: string, planName: string, currency:string) => {
+    try {
+      setIsLoading(true);
+      const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js');
+
+      if (!res) {
+        alert('Razorpay failed to load!');
+        return;
+      }
+
+      // Fetch order details from your backend
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/razorpay/create-order`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          amount: currency === "USD" ? parseInt(amount) : parseInt(amount) * 100, // Convert to paise
+          plan: planName,
+          currency: currency
+        }),
+      });
+
+      const data = await response.json();
+      console.log('Order data:', data);
+
+      const options: RazorpayOptions = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Lithouse",
+        description: `${planName} Plan Subscription`,
+        image: "your-logo-url",
+        order_id: data.orderId,
+        // callback_url: 'http://localhost:3000/payment-success',
+        notes: {
+          address: "Lithouse Office"
+        },
+        theme: {
+          color: "#3399cc"
+        },
+        handler: function (response) {
+          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verify-payment`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              userId: "7cba94fe-b329-4968-8c8b-a8f18e62943c",
+              creditAmount: 10,
+            })
+          }).then(res => res.json())
+            .then(data => {
+              if (data.status === 'ok') {
+                window.location.href = '/payment';
+              } else {
+                alert('Payment verification failed');
+              }
+            }).catch(error => {
+              console.error('Error:', error);
+              alert('Error verifying payment');
+            });
+        }
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+
+      paymentObject.on('payment.success', (response: any) => {
+        console.log('Payment successful:', response);
+       toast.success(`Successfully added 10 credits to your account!`);
+        setIsLoading(false);
+      });
+
+      paymentObject.on('payment.failed', (response: any) => {
+        toast.error('Failed to add credits. Please try again.');
+        setIsLoading(false);
+      });
+      console.log("user id is ", data.userId); //this is wrong
+    } catch (error) {
+      console.error('Payment error:', error);
+      alert('Something went wrong. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handlePlanSelect = (plan: PlanDetails) => {
     setSelectedPlan(plan);
     setIsModalOpen(true);
   };
+  //BUG: AFTER PAYMENT, REDIRECT ISNT WORKING
 
   const handlePaymentClick = async (currency: string, amount: string) => {
     try {
       console.log(`Processing payment of ${amount} in ${currency}`);
-
-      // Add your payment processing logic here
-      //await processPayment(currency, amount);
-
-      // Redirect based on plan
-      if (selectedPlan && currency === "INR") {
-        switch (selectedPlan.tier.toLowerCase()) {
-          case "plus":
-            window.open(
-              "https://docs.google.com/forms/d/e/1FAIpQLSdsoI7L4J_be6p7ScqZ5qMcHbKmykqFSLP2zwqiYx95PuwnhA/viewform?usp=pp_url&entry.1282954660=1280",
-              "_blank"
-            );
-            break;
-          case "max":
-            window.open(
-              "https://docs.google.com/forms/d/e/1FAIpQLSdNJqSNfRmuL4OHVZrKgnNnCi69Sv86tzab52hlZkcUFojLGw/viewform?usp=pp_url&entry.1282954660=2160",
-              "_blank"
-            );
-            break;
-          case "pro":
-            window.open(
-              "https://docs.google.com/forms/d/e/1FAIpQLSehJkCdVclOygRyaxA7acSUcMHVdm9irxL4k3PQy7OULguB9w/viewform?usp=pp_url&entry.1282954660=2800",
-              "_blank"
-            );
-            break;
-          default:
-            console.error("Unknown plan tier");
-        }
-      } else if (selectedPlan && currency === "USD") {
-        setIsModalOpen(false);
-        setIsBankDetailsModalOpen(true);
-      }
+      await initiateRazorpayPayment(amount, selectedPlan?.tier || "", currency);
 
       setIsModalOpen(false);
     } catch (error) {
       console.error("Payment failed:", error);
-      // Handle payment failure
     }
   };
 
@@ -176,6 +283,7 @@ const Pricing = () => {
         onClose={() => setIsModalOpen(false)}
         planDetails={selectedPlan}
         onPaymentClick={handlePaymentClick}
+        isLoading={isLoading}
       />
       <BankDetailsModal
         isOpen={isBankDetailsModalOpen}
