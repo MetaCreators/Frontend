@@ -5,14 +5,10 @@ import { Button } from "@/components/ui/button";
 // import { FileText, MessageSquare, Image } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { useEffect } from "react";
+import Navbar from "@/components/common/Navbar";
 
 export default function Dashboard() {
   const navigate = useNavigate();
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    navigate("/login");
-  };
 
   const options = [
     {
@@ -44,72 +40,81 @@ export default function Dashboard() {
       description: "your thumbnails",
       icon: "🖼️",
       path: "/generations",
-    }
+    },
   ];
 
   // Add auth state change listener
   useEffect(() => {
-  let isSubscribed = true;
+    let isSubscribed = true;
 
-  const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-    if (event === 'SIGNED_IN' && session?.user?.email && isSubscribed) {
-      const isGoogleUser = session.user.app_metadata.provider === 'google';
-      if (isGoogleUser) {
-        try {
-          const checkResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/check`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: session.user.email,
-            }),
-          });
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === "SIGNED_IN" && session?.user?.email && isSubscribed) {
+        const isGoogleUser = session.user.app_metadata.provider === "google";
+        if (isGoogleUser) {
+          try {
+            const checkResponse = await fetch(
+              `${import.meta.env.VITE_BACKEND_URL}/api/user/check`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  email: session.user.email,
+                }),
+              }
+            );
 
-          if (!checkResponse.ok) {
-            throw new Error('Failed to check user existence');
-          }
-
-          const { user } = await checkResponse.json();
-
-          if (!user && isSubscribed) {
-            const createResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                email: session.user.email,
-              }),
-            });
-
-            if (!createResponse.ok) {
-              throw new Error('Failed to create user in database');
+            if (!checkResponse.ok) {
+              throw new Error("Failed to check user existence");
             }
+
+            const { user } = await checkResponse.json();
+
+            if (!user && isSubscribed) {
+              const createResponse = await fetch(
+                `${import.meta.env.VITE_BACKEND_URL}/api/signup`,
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    email: session.user.email,
+                  }),
+                }
+              );
+
+              if (!createResponse.ok) {
+                throw new Error("Failed to create user in database");
+              }
+            }
+          } catch (dbError) {
+            console.error("Database operation error:", dbError);
           }
-        } catch (dbError) {
-          console.error('Database operation error:', dbError);
         }
       }
-    }
-  });
-  return () => {
-    isSubscribed = false;
-    subscription.unsubscribe();
-  };
-}, []);
+    });
+    return () => {
+      isSubscribed = false;
+      subscription.unsubscribe();
+    };
+  }, []);
 
   return (
-    <div className="h-screen overflow-hidden bg-gray-50">
+    <div className="h-screen bg-gray-50 space-y-4 overflow-auto scrollbar-hide">
       {/* Header */}
-      <header className="bg-white shadow">
+      {/* <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-[#1a237e]">LitHouse</h1>
           <Button variant="outline" onClick={handleSignOut}>
             Sign Out
           </Button>
         </div>
-      </header>
+      </header> */}
+      <Navbar />
 
       {/* Main Content */}
       <main className="flex items-center justify-center min-h-[calc(100vh-64px)]">

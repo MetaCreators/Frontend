@@ -57,11 +57,17 @@ export default {
           "0%": { transform: "translateX(-100%)" },
           "100%": { transform: "translateX(0)" },
         },
+        gradient: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
       },
       animation: {
         slide: "slide 0.5s forwards",
+        gradient: "gradient 8s linear infinite",
       },
     },
   },
-  plugins: [animate],
+  plugins: [animate, require("tailwind-scrollbar-hide")],
 };
