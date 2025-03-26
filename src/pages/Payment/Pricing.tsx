@@ -31,6 +31,7 @@ interface RazorpayOptions {
   theme: {
     color: string;
   };
+  handler: (response:any) => void
 }
 
 interface UpdateUserCreditsResponse { 
@@ -149,16 +150,42 @@ const Pricing = () => {
       const options: RazorpayOptions = {
         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
         amount: data.amount,
-        currency: currency,
-        name: "MetaCreators",
+        currency: data.currency,
+        name: "Lithouse",
         description: `${planName} Plan Subscription`,
         image: "your-logo-url",
         order_id: data.orderId,
+        // callback_url: 'http://localhost:3000/payment-success',
         notes: {
-          address: "MetaCreators Office"
+          address: "Lithouse Office"
         },
         theme: {
           color: "#3399cc"
+        },
+        handler: function (response) {
+          fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verify-payment`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              userId: "7cba94fe-b329-4968-8c8b-a8f18e62943c",
+              creditAmount: 10,
+            })
+          }).then(res => res.json())
+            .then(data => {
+              if (data.status === 'ok') {
+                window.location.href = '/payment';
+              } else {
+                alert('Payment verification failed');
+              }
+            }).catch(error => {
+              console.error('Error:', error);
+              alert('Error verifying payment');
+            });
         }
       };
 
@@ -167,38 +194,15 @@ const Pricing = () => {
 
       paymentObject.on('payment.success', (response: any) => {
         console.log('Payment successful:', response);
-        alert('Payment successful!');
+       toast.success(`Successfully added 10 credits to your account!`);
         setIsLoading(false);
       });
 
       paymentObject.on('payment.failed', (response: any) => {
-        alert('Payment failed. Please try again.');
+        toast.error('Failed to add credits. Please try again.');
         setIsLoading(false);
       });
       console.log("user id is ", data.userId); //this is wrong
-
-      const updateUserCreditsResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/user/addcredits`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          userId: "7cba94fe-b329-4968-8c8b-a8f18e62943c",
-          creditAmount: 10,
-        })
-      });
-
-      const updateUserCredits: UpdateUserCreditsResponse = await updateUserCreditsResponse.json();
-
-      if (updateUserCreditsResponse.ok) {
-        console.log('Credits added successfully');
-        //setAdditionalCredits(updateUserCredits.credits);
-        toast.success(`Successfully added ${updateUserCredits.credits} credits to your account!`);
-      } else {
-        console.error('Failed to add credits');
-        toast.error('Failed to add credits. Please try again.');
-      }
-
     } catch (error) {
       console.error('Payment error:', error);
       alert('Something went wrong. Please try again.');
@@ -216,14 +220,7 @@ const Pricing = () => {
   const handlePaymentClick = async (currency: string, amount: string) => {
     try {
       console.log(`Processing payment of ${amount} in ${currency}`);
-
-      //if (selectedPlan && currency === "INR") {
-        // Use Razorpay for INR payments
-        await initiateRazorpayPayment(amount, selectedPlan?.tier || "", currency);
-      // } else if (selectedPlan && currency === "USD") {
-      //   setIsModalOpen(false);
-      //   setIsBankDetailsModalOpen(true);
-      // }
+      await initiateRazorpayPayment(amount, selectedPlan?.tier || "", currency);
 
       setIsModalOpen(false);
     } catch (error) {
