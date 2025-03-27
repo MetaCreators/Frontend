@@ -78,7 +78,7 @@ const ThumbnailPage: React.FC = () => {
         const formData = new FormData();
         formData.append("file", new File([zipBlob], "images.zip"));
         const userId = "01f90e3d-171d-4313-8985-f25ccd5cd915";
-        //const userId = session.user.id; // TODO: Make this dynamic => this should come from the DB
+        //const userId = session.user.id; // TODO: Make this dynamic => this should come from the DB => store in the central zustand store
         //b3916b8e-7381-4fd7-9b34-8d0ac9cb2b8e
         const response = await fetch(
           import.meta.env.VITE_BACKEND_URL +
