@@ -22,6 +22,7 @@ import ErrorPage from "./pages/Error/ErrorPage.tsx";
 import ImageGenerations from "./pages/UserImageGenerations/ImgGenerations.tsx";
 import Razorpay from "./pages/Payment/razorpay.tsx";
 import NewLanding from "./pages/Landing/New.tsx";
+import Chat from "./pages/Chat/Chat.tsx";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -158,6 +159,15 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <NewLanding/>
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorPage />,
+  },
+    {
+    path: "/chat",
+    element: (
+      <ProtectedRoute>
+        <Chat/>
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
