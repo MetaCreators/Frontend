@@ -1,15 +1,19 @@
 import { useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import ProductPreview from '../components/ProductPreview';
-import FeatureTabs from '../components/FeatureTabs';
-import CreatorSection from '../components/CreatorSection';
-import PricingSection from '../components/PricingSection';
-import Footer from '../components/Footer';
+//import FeatureTabs from '../components/FeatureTabs';
+//import CreatorSection from '../components/CreatorSection';
+//import PricingSection from '../components/PricingSection';
+//import Footer from '../components/Footer';
 import NewNavbar from '@/components/common/NewNavBar';
 import HeroSection from '@/components/LandingPage/HeroSection';
+import ProductPreview from '@/components/LandingPage/ProductPreview';
+import FeatureTabs from '@/components/LandingPage/FeatureTabs';
+import Footer from '@/components/common/Footer';
+import CreatorSection from '@/components/LandingPage/CreatorSection';
+import PricingSection from '@/components/LandingPage/PricingSection';
 
-const Index = () => {
+const NewLanding = () => {
   const controls = useAnimation();
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -50,4 +54,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default NewLanding;

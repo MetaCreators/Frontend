@@ -21,6 +21,7 @@ import Pricing from "./pages/Payment/Pricing.tsx";
 import ErrorPage from "./pages/Error/ErrorPage.tsx";
 import ImageGenerations from "./pages/UserImageGenerations/ImgGenerations.tsx";
 import Razorpay from "./pages/Payment/razorpay.tsx";
+import NewLanding from "./pages/Landing/New.tsx";
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -148,6 +149,15 @@ const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <ImageGenerations />
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/newlanding",
+    element: (
+      <ProtectedRoute>
+        <NewLanding/>
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
