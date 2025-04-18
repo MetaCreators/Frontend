@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ChatTextBox from "./ChatTextBox";
 import { Send } from "lucide-react";
 
@@ -47,7 +47,8 @@ const ChatMessages = () => {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Chat header */}
+          {/* Chat header */}
+          {/* //change this to blinking online status  */}
       <div className="bg-chatbg text-white p-4 flex items-center">
         <div className="w-10 h-10 rounded-full bg-gray-300 mr-3"></div>
         <div>
@@ -105,7 +106,8 @@ const ChatMessages = () => {
             <Send size={20} />
           </button>
         </div>
-      </div>
+          </div>
+          <ChatTextBox/>
     </div>
   );
 };
