@@ -9,7 +9,12 @@ export function Orbiting() {
         <Icons.openai />
         <Icons.googleDrive />
         <Icons.whatsapp />
-      </OrbitingCircles>
+          </OrbitingCircles>
+          <img
+                src="/lito.png"
+                alt="lito"
+                className="w-20 h-20"
+              />
       <OrbitingCircles iconSize={30} radius={100} reverse speed={2}>
         <Icons.whatsapp />
         <Icons.notion />
