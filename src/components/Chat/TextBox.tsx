@@ -30,7 +30,7 @@ const TextBox = ({ onSend }: TextBoxProps) => {
           className="p-2 hover:bg-gray-800 rounded-full transition-colors"
           aria-label="Add content"
         >
-          <Plus className="w-6 h-6 text-[#1EAEDB]" />
+          <Plus className="w-6 h-6 text-[#1EAEDB] fill-white" />
         </button>
         
         <input
@@ -39,7 +39,7 @@ const TextBox = ({ onSend }: TextBoxProps) => {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Type your message..."
-          className="flex-1 bg-transparent text-white placeholder-gray-400 outline-none px-4"
+          className="flex-1 bg-transparent text-white placeholder-white placeholder:font-poppins font-poppins outline-none px-4"
         />
         
         <button
