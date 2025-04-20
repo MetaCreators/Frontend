@@ -6,7 +6,8 @@ const InitialChatUI = () => {
   return (
     <div>
         <div className="flex justify-center items-center text-4xl text-chatbg font-medium font-inclusive">
-              Hi User, let's create something
+        Hi User, let's create something
+        {/* https://v3.magicui.design/docs/components/morphing-text */}
           </div>
       <div className="flex-grow">
         <Orbiting/>
