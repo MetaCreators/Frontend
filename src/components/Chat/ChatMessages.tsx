@@ -49,13 +49,19 @@ const ChatMessages = () => {
     <div className="flex flex-col h-full">
           {/* Chat header */}
           {/* //change this to blinking online status  */}
-      <div className="bg-chatbg text-white p-4 flex items-center">
-        <div className="w-10 h-10 rounded-full bg-gray-300 mr-3"></div>
+      <div className="text-black p-4 flex items-center justify-center">
+       <div className="flex borer border-2 px-4 py-1 rounded-md justify-center items-center space-x-4">
         <div>
-          <h3 className="font-medium">AI Assistant</h3>
-          <p className="text-xs text-gray-300">Online</p>
+          Lito is online
         </div>
+        <span className="relative flex h-3 w-3">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+        </span>
       </div>
+      </div>
+      
+      
       
       {/* Messages container */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
