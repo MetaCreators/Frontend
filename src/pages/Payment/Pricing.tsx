@@ -15,41 +15,8 @@ import PaymentModal from "@/components/pricing/PaymentModal";
 import { PlanDetails } from "@/components/pricing/PaymentModal";
 import BankDetailsModal from "@/components/pricing/BankDetailsModal";
 import { toast } from "sonner";
+import { RazorpayOptions } from '../../types/razorpay';
 
-// Define TypeScript interface for Razorpay options
-interface RazorpayOptions {
-  key: string;
-  amount: string;
-  currency: string;
-  name: string;
-  description: string;
-  image: string;
-  order_id: string;
-  notes: {
-    address: string;
-  };
-  theme: {
-    color: string;
-  };
-  handler: (response:any) => void
-}
-
-interface UpdateUserCreditsResponse { 
-  success: boolean;
-  credits: number;
-  message: string;
-}
-
-// Define TypeScript interface for window with Razorpay
-declare global {
-  interface Window {
-    Razorpay: new (options: RazorpayOptions) => {
-      open: () => void;
-      close: () => void;
-      on: (event: string, handler: (response: any) => void) => void;
-    };
-  }
-}
 
 const Pricing = () => {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "yearly">(
@@ -198,7 +165,7 @@ const Pricing = () => {
         setIsLoading(false);
       });
 
-      paymentObject.on('payment.failed', (response: any) => {
+      paymentObject.on('payment.failed', () => {
         toast.error('Failed to add credits. Please try again.');
         setIsLoading(false);
       });

@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { StartCreatingAnimation } from './StartCreatingAnimation';
 
 const emojis = [
   { id: 1, emoji: '😃', top: '10%', left: '15%', delay: 0 },
@@ -51,6 +52,7 @@ const HeroSection = () => {
             <ArrowRight size={18} className="ml-2" />
           </motion.button>
         </motion.div>
+        <StartCreatingAnimation/>
       </div>
 
       {/* Floating Emojis */}
