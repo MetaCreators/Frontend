@@ -29,7 +29,9 @@ const NewLanding = () => {
   return (
     <div className="min-h-screen bg-white font-sans">
       <NewNavbar />
-      <HeroSection />
+      <motion.div ref={ref}>
+        <HeroSection />
+      </motion.div>
       <ProductPreview />
       <FeatureTabs />
       <CreatorSection />

@@ -1,33 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/common/Navbar";
+import { RazorpayOptions, RazorpayInstance } from '../../types/razorpay';
 
-// Define TypeScript interface for Razorpay options
-interface RazorpayOptions {
-  key: string;
-  amount: string;
-  currency: string;
-  name: string;
-  description: string;
-  image: string;
-  order_id: string;
-  callback_url: string;
-  notes: {
-    address: string;
-  };
-  theme: {
-    color: string;
-  };
-}
-
-// Define TypeScript interface for window with Razorpay
+// Remove the local RazorpayOptions interface
 declare global {
   interface Window {
-    Razorpay: new (options: RazorpayOptions) => {
-      open: () => void;
-      close: () => void;
-      on: (event: string, handler: (response: any) => void) => void;
-    };
+    Razorpay: new (options: RazorpayOptions) => RazorpayInstance;
   }
 }
 
@@ -74,6 +53,9 @@ const RazorpayPayment: React.FC = () => {
             image: "your-logo-url",
             order_id: data.orderId,
             callback_url: `${import.meta.env.VITE_FRONTEND_URL}/razorpay`,
+            handler: (response) => {
+              console.log('Payment response:', response);
+            },
             notes: {
                 address: "MetaCreators Office"
             },
@@ -91,7 +73,7 @@ const RazorpayPayment: React.FC = () => {
             setIsLoading(false);
         });
 
-        paymentObject.on('payment.failed', (response: any) => {
+        paymentObject.on('payment.failed', () => {
             alert('Payment failed. Please try again.');
             setIsLoading(false);
         });

@@ -1,9 +1,7 @@
 import React, { forwardRef, useRef } from "react";
 
 import { cn } from "@/lib/utils";
-//import { AnimatedBeam } from "@/registry/magicui/animated-beam";
 import { AnimatedBeam } from "@/components/magicui/animated-beam";
-import { RectangleHorizontal } from "lucide-react";
 import { Button } from "../ui/button";
 const Circle = forwardRef<
   HTMLDivElement,

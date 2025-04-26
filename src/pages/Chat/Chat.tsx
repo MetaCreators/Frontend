@@ -1,7 +1,6 @@
 import ChatBody from "@/components/Chat/ChatBody";
 import ChatMessages from "@/components/Chat/ChatMessages";
 import ChatNavbar from "@/components/Chat/ChatNavbar";
-import InitialChatUI from "@/components/Chat/InitialChatUI";
 
 const Chat = () => {
  
