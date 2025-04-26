@@ -1,6 +1,15 @@
 import { useState } from "react";
 import ChatTextBox from "./ChatTextBox";
 import { Send } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 
 interface Message {
   id: string;
@@ -47,8 +56,8 @@ const ChatMessages = () => {
 
   return (
     <div className="flex flex-col h-full">
-          {/* Chat header */}
-          {/* //change this to blinking online status  */}
+
+      <div className="flex space-x-3 items-center justify-center">
       <div className="text-black p-4 flex items-center justify-center">
        <div className="flex borer border-2 px-4 py-1 rounded-md justify-center items-center space-x-4">
         <div>
@@ -60,6 +69,19 @@ const ChatMessages = () => {
         </span>
       </div>
       </div>
+
+      <DropdownMenu>
+        <DropdownMenuTrigger>Tools</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>Thumbnail</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Script generator</DropdownMenuItem>
+          <DropdownMenuItem>Description generator</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      </div>
+      
+
       
       
       
