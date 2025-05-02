@@ -88,10 +88,6 @@ const ChatMessages = () => {
         </div>
       </div>
       
-
-      
-      
-      
       {/* Messages container */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
@@ -100,10 +96,10 @@ const ChatMessages = () => {
             className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
           >
             <div
-              className={`max-w-[70%] rounded-lg p-3 ${
+              className={`max-w-[70%] rounded-2xl p-3 border border-black shadow-xl ${
                 message.sender === "user"
-                  ? "bg-blue-500 text-white rounded-tr-none"
-                  : "bg-gray-200 text-gray-800 rounded-tl-none"
+                  ? "bg-usermsg text-gray-800 rounded-tr-none"
+                  : "bg-botmsg text-gray-800 rounded-tl-none"
               }`}
             >
               <p>{message.text}</p>
