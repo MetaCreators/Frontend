@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ChatTextBox from "./ChatTextBox";
-import { Send } from "lucide-react";
+import { ChevronDown, Send } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -71,7 +71,11 @@ const ChatMessages = () => {
       </div>
 
       <DropdownMenu>
-        <DropdownMenuTrigger>Tools</DropdownMenuTrigger>
+          <DropdownMenuTrigger className="flex space-x-4 bg-toolsbg p-1 rounded-md border-2 border-black shadow-2xl">
+            <div>
+            Tools
+            </div>
+            <ChevronDown /></DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Thumbnail</DropdownMenuLabel>
           <DropdownMenuSeparator />
