@@ -20,6 +20,9 @@ export default {
 			colors: {
 				chatbg: '#1E1E1F',
 				chatOverlay: '#FFFAEB',
+				toolsbg: '#F97C7F',
+				usermsg: '#C77CF4',
+				botmsg: '#A6DD92',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				card: {

@@ -1,6 +1,13 @@
 import { useState } from "react";
 import ChatTextBox from "./ChatTextBox";
-import { Send } from "lucide-react";
+import { ChevronDown, Send, User2Icon } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 
 interface Message {
   id: string;
@@ -47,21 +54,36 @@ const ChatMessages = () => {
 
   return (
     <div className="flex flex-col h-full">
-          {/* Chat header */}
-          {/* //change this to blinking online status  */}
-      <div className="text-black p-4 flex items-center justify-center">
-       <div className="flex borer border-2 px-4 py-1 rounded-md justify-center items-center space-x-4">
-        <div>
-          Lito is online
+
+      <div className="flex space-x-3 items-center justify-between w-full border px-4">
+        <DropdownMenu>
+          <DropdownMenuTrigger className="flex space-x-4 bg-toolsbg p-1 rounded-md border-2 border-black shadow-2xl">
+            <div>
+            Tools
+            </div>
+            <ChevronDown />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-toolsbg">
+             <DropdownMenuItem>Thumbnail</DropdownMenuItem>
+            <DropdownMenuItem>Script generator</DropdownMenuItem>
+            <DropdownMenuItem>Description generator</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <div className="text-black p-4 flex items-center justify-center w-1/2">
+          <div className="flex borer border-2 px-4 py-1 rounded-md justify-center items-center space-x-4">
+            <div>
+              Lito is online
+            </div>
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+            </span>
+          </div>
         </div>
-        <span className="relative flex h-3 w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
-        </span>
+        <div>
+
+        </div>
       </div>
-      </div>
-      
-      
       
       {/* Messages container */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -70,11 +92,16 @@ const ChatMessages = () => {
             key={message.id}
             className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
           >
+           { message.sender === "ai" && <img
+                src="/lito_head.png"
+                alt="lito"
+                className="w-12 h-12"
+              />}
             <div
-              className={`max-w-[70%] rounded-lg p-3 ${
+              className={`max-w-[70%] rounded-2xl p-3 border border-black shadow-xl ${
                 message.sender === "user"
-                  ? "bg-blue-500 text-white rounded-br-none"
-                  : "bg-gray-200 text-gray-800 rounded-bl-none"
+                  ? "bg-usermsg text-gray-800 rounded-tr-none"
+                  : "bg-botmsg text-gray-800 rounded-tl-none"
               }`}
             >
               <p>{message.text}</p>
@@ -82,6 +109,7 @@ const ChatMessages = () => {
                 {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </p>
             </div>
+             { message.sender === "user" && <User2Icon  className="w-6 h-6"/>}
           </div>
         ))}
       </div>
