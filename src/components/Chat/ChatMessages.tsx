@@ -57,32 +57,35 @@ const ChatMessages = () => {
   return (
     <div className="flex flex-col h-full">
 
-      <div className="flex space-x-3 items-center justify-center">
-      <div className="text-black p-4 flex items-center justify-center">
-       <div className="flex borer border-2 px-4 py-1 rounded-md justify-center items-center space-x-4">
-        <div>
-          Lito is online
-        </div>
-        <span className="relative flex h-3 w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
-        </span>
-      </div>
-      </div>
-
-      <DropdownMenu>
+      <div className="flex space-x-3 items-center justify-between w-full border px-4">
+        <DropdownMenu>
           <DropdownMenuTrigger className="flex space-x-4 bg-toolsbg p-1 rounded-md border-2 border-black shadow-2xl">
             <div>
             Tools
             </div>
-            <ChevronDown /></DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>Thumbnail</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Script generator</DropdownMenuItem>
-          <DropdownMenuItem>Description generator</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+            <ChevronDown />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Thumbnail</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Script generator</DropdownMenuItem>
+            <DropdownMenuItem>Description generator</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <div className="text-black p-4 flex items-center justify-center w-1/2">
+          <div className="flex borer border-2 px-4 py-1 rounded-md justify-center items-center space-x-4">
+            <div>
+              Lito is online
+            </div>
+            <span className="relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+            </span>
+          </div>
+        </div>
+        <div>
+
+        </div>
       </div>
       
 
@@ -99,8 +102,8 @@ const ChatMessages = () => {
             <div
               className={`max-w-[70%] rounded-lg p-3 ${
                 message.sender === "user"
-                  ? "bg-blue-500 text-white rounded-br-none"
-                  : "bg-gray-200 text-gray-800 rounded-bl-none"
+                  ? "bg-blue-500 text-white rounded-tr-none"
+                  : "bg-gray-200 text-gray-800 rounded-tl-none"
               }`}
             >
               <p>{message.text}</p>
