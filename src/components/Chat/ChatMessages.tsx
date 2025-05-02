@@ -1,12 +1,10 @@
 import { useState } from "react";
 import ChatTextBox from "./ChatTextBox";
-import { ChevronDown, Send } from "lucide-react";
+import { ChevronDown, Send, User2Icon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
@@ -65,9 +63,8 @@ const ChatMessages = () => {
             </div>
             <ChevronDown />
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Thumbnail</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+          <DropdownMenuContent className="bg-toolsbg">
+             <DropdownMenuItem>Thumbnail</DropdownMenuItem>
             <DropdownMenuItem>Script generator</DropdownMenuItem>
             <DropdownMenuItem>Description generator</DropdownMenuItem>
           </DropdownMenuContent>
@@ -95,6 +92,11 @@ const ChatMessages = () => {
             key={message.id}
             className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
           >
+           { message.sender === "ai" && <img
+                src="/lito_head.png"
+                alt="lito"
+                className="w-12 h-12"
+              />}
             <div
               className={`max-w-[70%] rounded-2xl p-3 border border-black shadow-xl ${
                 message.sender === "user"
@@ -107,6 +109,7 @@ const ChatMessages = () => {
                 {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               </p>
             </div>
+             { message.sender === "user" && <User2Icon  className="w-6 h-6"/>}
           </div>
         ))}
       </div>
