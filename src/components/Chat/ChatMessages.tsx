@@ -1,6 +1,5 @@
 import { useState } from "react";
-import ChatTextBox from "./ChatTextBox";
-import { ChevronDown, Send, User2Icon } from "lucide-react";
+import { ChevronDown, Plus, Send, User2Icon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -53,7 +52,7 @@ const ChatMessages = () => {
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col min-h-screen">
 
       <div className="flex space-x-3 items-center justify-between w-full border px-4">
         <DropdownMenu>
@@ -115,12 +114,19 @@ const ChatMessages = () => {
       </div>
       
       {/* Input area */}
-      <div className="sticky bottom-0 w-full bg-chatOverlay/80 backdrop-blur-sm p-4 border-t border-gray-200">
-        <div className="flex items-center">
+      <div className="w-full max-w-4xl mx-auto px-4 sticky bottom-2 mb-2">
+        <div className="relative flex items-center bg-black rounded-lg p-2">
+          <button
+            className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+            aria-label="Add content"
+          >
+            <Plus className="w-6 h-6 text-[#1EAEDB] fill-white" />
+          </button>
+
           <input
             type="text"
-            placeholder="Type a message..."
-            className="flex-1 p-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Type your message..."
+            className="flex-1 bg-transparent text-white placeholder-white placeholder:font-poppins font-poppins outline-none px-4"
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 const input = e.target as HTMLInputElement;
@@ -129,19 +135,20 @@ const ChatMessages = () => {
               }
             }}
           />
+
           <button
-            className="ml-2 p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors"
             onClick={() => {
               const input = document.querySelector('input') as HTMLInputElement;
               handleSendMessage(input.value);
               input.value = "";
             }}
+            className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+            aria-label="Send message"
           >
-            <Send size={20} />
+            <Send className="w-6 h-6 text-[#1EAEDB]" />
           </button>
         </div>
-          </div>
-          <ChatTextBox/>
+      </div>
     </div>
   );
 };
