@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { Home, Menu, X } from "lucide-react";
 
 const NewNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
   return (
     <motion.nav
       className="sticky top-0 z-50 py-4 bg-white/80 backdrop-blur-sm"
@@ -11,7 +12,7 @@ const NewNavbar = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between">
+      <div className="container mx-auto px-4 flex items-center justify-between pb-2">
         <div className="flex items-center space-x-2">
           <Home className="text-orange-500" size={24} />
           <span className="font-poppins font-bold text-xl">LitHouse</span>
@@ -78,6 +79,13 @@ const NewNavbar = () => {
           </button>
         </div>
       </div>
+      <motion.div
+        id="scroll-indicator"
+        className="sticky left-0 right-0 h-[5px] origin-left bg-[var(--hue-1)] top-[10px]"
+        style={{
+          scaleX: scrollYProgress,
+        }}
+      />
 
       {/* Mobile Menu */}
       {isMenuOpen && (
@@ -135,13 +143,6 @@ const NewNavbar = () => {
           </div>
         </motion.div>
       )}
-      {/* <motion.div
-        id="scroll-indicator"
-        className="fixed left-0 right-0 h-[10px] origin-left bg-[var(--hue-1)] top-[100px] z-50"
-        style={{
-          scaleX: scrollYProgress,
-        }}
-      /> */}
     </motion.nav>
   );
 };

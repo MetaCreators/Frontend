@@ -28,7 +28,7 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem
+    --radius: 0.5rem;
   }
 
   .dark {
@@ -55,12 +55,66 @@
     --chart-2: 160 60% 45%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%
+    --chart-5: 340 75% 55%;
   }
 
   .theme {
-    --animate-orbit: orbit calc(var(--duration)*1s) linear infinite
+    --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
   }
+}
+
+body {
+  --white: #fff;
+  --white-feint: #898d8e;
+  --black: #0b1012;
+  --black-2: #111517;
+  --yellow: #fff312;
+  --blue: #83e6f7;
+  --green: #8df0cc;
+  --hue-0: var(--yellow);
+  --hue-1: #bd25d1;
+  --hue-2: #dd00ee;
+  --hue-3: #9911ff;
+  --hue-4: #1e75f7;
+  --hue-5: #0cdcf7;
+  --hue-6: var(--green);
+
+  --hue-0-transparent: #fff31244;
+  --hue-1-transparent: #ff008844;
+  --hue-2-transparent: #dd00ee44;
+  --hue-3-transparent: #9911ff44;
+  --hue-4-transparent: #8ac0ff44;
+  --hue-5-transparent: #0cdcf744;
+  --hue-6-transparent: #8df0cc44;
+
+  --text: var(--white);
+  --accent: var(--blue);
+  --accent-transparent: #83e6f71d;
+  --primary-control-color: var(--white);
+  --layer: #0b1011;
+  --border: #1d2628;
+  --secondary-control-color: #8ac0ff0d;
+  --background: var(--black);
+
+  --layer-transparent: #14171caa;
+  --divider: #1a1e26;
+  --feint-text: #586d8c;
+
+  --font-mono: "Azeret Mono", monospace;
+  background: var(--black);
+  color: var(--color);
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100svh;
+
+  --dot-size: 1px;
+  --gap-size: 20px;
+  --offset: calc(var(--gap-size) / 2);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex-wrap: nowrap;
 }
 
 @layer base {
@@ -75,10 +129,13 @@
 
 @keyframes orbit {
   0% {
-    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));
+    transform: rotate(calc(var(--angle) * 1deg))
+      translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));
   }
 
   100% {
-    transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));
+    transform: rotate(calc(var(--angle) * 1deg + 360deg))
+      translateY(calc(var(--radius) * 1px))
+      rotate(calc((var(--angle) * -1deg) - 360deg));
   }
 }
