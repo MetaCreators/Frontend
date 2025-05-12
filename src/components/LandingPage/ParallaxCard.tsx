@@ -30,7 +30,7 @@ const tabs: Tab[] = [
 
 export default function ParallaxCard() {
     return (
-        <div>
+        <div className="h-[300vh] relative">
             {tabs.map((tab, index) => {
                 return <FeatureCard key={index} {...tab} />
             })}

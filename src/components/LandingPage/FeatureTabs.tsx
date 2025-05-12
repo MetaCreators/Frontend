@@ -35,9 +35,9 @@ const FeatureTabs = () => {
   const [activeTab, setActiveTab] = useState(3);
   
   return (
-    <section className="py-16 px-4">
+    <section className="py-16 px-4 mt-[50vh]">
       <div className="container mx-auto max-w-5xl">
-        <div className="relative mt-20">
+        {/* <div className="relative mt-20">
           {tabs.map((tab, index) => (
             <motion.div
               key={tab.id}
@@ -64,10 +64,10 @@ const FeatureTabs = () => {
           ))}
           
           {/* Spacer for content position */}
-          <div className="h-32"></div>
+          {/* <div className="h-32"></div>
           
           {/* Active tab content (visible) */}
-          <motion.div
+          {/* <motion.div
             className="rounded-lg p-6 shadow-md bg-lithouse-pink mt-48 relative z-20"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -76,8 +76,8 @@ const FeatureTabs = () => {
             <h3 className="text-xl font-bold mb-2">{tabs[2].title}</h3>
             <p className="text-gray-800">{tabs[2].description}</p>
           </motion.div>
-        </div>
-      </div>
+        </div>*/}
+      </div> 
       <ParallaxCard/>
     </section>
   );
