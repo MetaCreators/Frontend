@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import ParallaxCard from './ParallaxCard';
 
 type Tab = {
   id: number;
@@ -77,6 +78,7 @@ const FeatureTabs = () => {
           </motion.div>
         </div>
       </div>
+      <ParallaxCard/>
     </section>
   );
 };
