@@ -35,7 +35,7 @@ const FeatureTabs = () => {
   const [activeTab, setActiveTab] = useState(3);
   
   return (
-    <section className="py-16 px-4 mt-[50vh]">
+    <section className="py-16 px-4 mt-[5vh]">
       <div className="container mx-auto max-w-5xl">
         {/* <div className="relative mt-20">
           {tabs.map((tab, index) => (
