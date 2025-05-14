@@ -26,11 +26,20 @@ const tabs: Tab[] = [
     title: 'Stunning Thumbnails in Seconds',
     description: 'Generate eye-catching thumbnails that boost clicks — no design skills needed.',
   },
+  {
+    id: 4,
+    color: 'bg-slate-500',
+    title: 'Stunning Thumbnails in Seconds',
+    description: 'Generate eye-catching thumbnails that boost clicks — no design skills needed.',
+  }
 ];
 
 export default function ParallaxCard() {
+    // Calculate required height: 100vh per card + extra space for offsets
+    const containerHeight = `${tabs.length * 100 + 50}vh`;
+    
     return (
-        <div className="h-[300vh] relative">
+        <div className={`relative`} style={{ height: containerHeight }}>
             {tabs.map((tab, index) => {
                 return <FeatureCard key={index} {...tab} />
             })}
