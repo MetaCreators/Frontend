@@ -12,7 +12,7 @@ const NewNavbar = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between pb-2">
+      <div className="container mx-auto px-4 flex items-center justify-between pb-1">
         <div className="flex items-center space-x-2">
           <Home className="text-orange-500" size={24} />
           <span className="font-poppins font-bold text-xl">LitHouse</span>

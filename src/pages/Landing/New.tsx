@@ -29,7 +29,7 @@ const NewLanding = () => {
   return (
     <div className="bg-[#FFFAEB] min-h-screen w-full pt-5 pb-8">
       <div
-        className="bg-white font-sans max-w-7xl mx-auto 
+        className="bg-white font-sans max-w-[88rem] mx-auto 
       pt-5 pb-8 px-4
       sm:px-6
       md:px-10
