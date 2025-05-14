@@ -1,4 +1,6 @@
+import { useRef } from "react";
 import FeatureCard from "./FeatureCard";
+import { useScroll } from "framer-motion";
 
 type Tab = {
   id: number;
@@ -36,13 +38,21 @@ const tabs: Tab[] = [
 
 export default function ParallaxCard() {
     // Calculate required height: 100vh per card + extra space for offsets
-    const containerHeight = `${tabs.length * 100 + 50}vh`;
+  const containerHeight = `${tabs.length * 100 + 50}vh`;
+  const container = useRef(null);
+  const { scrollYProgress} = useScroll({
+    target: container,
+    offset: ['start start','end end']
+  })
+
+
     
     return (
-        <div className={`relative`} style={{ height: containerHeight }}>
-            {tabs.map((tab, index) => {
-                return <FeatureCard key={index} {...tab} />
-            })}
+        <div ref={container} className={`relative`} style={{ height: containerHeight }}>
+        {tabs.map((tab, index) => {
+            const targetScale = 1 - ((tabs.length - index) * 0.05);
+            return <FeatureCard key={index} {...tab} range={[index * 0.25, 1]} targetScale={targetScale} progress={scrollYProgress} />;
+        })}
         </div>
     )
 }
