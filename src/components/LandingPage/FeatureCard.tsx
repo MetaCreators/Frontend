@@ -20,7 +20,7 @@ export default function FeatureCard({ id, color, description, title,progress,ran
         <div 
             ref={container} 
             className="h-screen flex items-center justify-center sticky"
-            style={{ top: `calc(10% + ${(id) * 2}%)` }}
+            style={{ top: `calc(${id * 6}vh)` }}
         >
             <motion.div style={{ scale: cardScale }} className={`p-6 rounded-lg ${color} text-black w-[1000px] h-[80vh]`}>
                 <h3 className="text-xl font-bold mb-2">{title}</h3>

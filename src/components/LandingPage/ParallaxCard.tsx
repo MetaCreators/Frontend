@@ -37,22 +37,19 @@ const tabs: Tab[] = [
 ];
 
 export default function ParallaxCard() {
-    // Calculate required height: 100vh per card + extra space for offsets
-  const containerHeight = `${tabs.length * 100 + 50}vh`;
-  const container = useRef(null);
-  const { scrollYProgress} = useScroll({
-    target: container,
-    offset: ['start start','end end']
-  })
-
-
+    const containerHeight = `${tabs.length * 100 + (tabs.length * 10)}vh`;
+    const container = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: container,
+        offset: ['start start', 'end end']
+    });
     
     return (
         <div ref={container} className={`relative`} style={{ height: containerHeight }}>
-        {tabs.map((tab, index) => {
-            const targetScale = 1 - ((tabs.length - index) * 0.05);
-            return <FeatureCard key={index} {...tab} range={[index * 0.25, 1]} targetScale={targetScale} progress={scrollYProgress} />;
-        })}
+            {tabs.map((tab, index) => {
+                const targetScale = 1 - ((tabs.length - index) * 0.05);
+                return <FeatureCard key={index} {...tab} range={[index * 0.25, 1]} targetScale={targetScale} progress={scrollYProgress} />;
+            })}
         </div>
-    )
+    );
 }
