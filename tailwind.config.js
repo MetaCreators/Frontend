@@ -23,6 +23,11 @@ export default {
 				toolsbg: '#F97C7F',
 				usermsg: '#C77CF4',
 				botmsg: '#A6DD92',
+				'lithouse': {
+					'green': '#4CAF50',
+					'purple': '#9C27B0',
+					'pink': '#E91E63'
+				},
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				card: {
