@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { motion, useScroll } from "framer-motion";
 import { Home, Menu, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const NewNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
+  const navigate = useNavigate();
+
   return (
     <motion.nav
       className="sticky top-0 z-50 py-4 bg-white/80 backdrop-blur-sm"
@@ -19,7 +22,7 @@ const NewNavbar = () => {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden md:flex items-center justify-between flex-1 ml-8">
           <div className="flex items-center space-x-6">
             <a
               href="#features"
@@ -45,30 +48,30 @@ const NewNavbar = () => {
             >
               Discord
             </a>
-            <a
-              href="#login"
+            <button
+              onClick={() => navigate("/login")}
               className="font-medium hover:text-lithouse-blue transition-colors"
             >
               Login
-            </a>
+            </button>
           </div>
           <div className="flex items-center space-x-3">
-            <motion.a
-              href="#signup"
+            <motion.button
+              onClick={() => navigate("/signup")}
               className="px-6 py-2 border border-gray-300 rounded-full font-medium text-sm hover:border-lithouse-blue"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Sign up
-            </motion.a>
-            <motion.a
-              href="#try"
+            </motion.button>
+            <motion.button
+              onClick={() => navigate("/chat")}
               className="px-6 py-2 bg-lithouse-blue text-black rounded-full font-medium text-sm shadow-md hover:bg-opacity-90"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               Try for free
-            </motion.a>
+            </motion.button>
           </div>
         </div>
 
@@ -120,25 +123,25 @@ const NewNavbar = () => {
             >
               Discord
             </a>
-            <a
-              href="#login"
-              className="font-medium hover:text-lithouse-blue transition-colors"
+            <button
+              onClick={() => navigate("/login")}
+              className="font-medium hover:text-lithouse-blue transition-colors text-left"
             >
               Login
-            </a>
-            <div className="flex flex-col space-y-2 pt-2">
-              <a
-                href="#signup"
+            </button>
+            <div className="flex flex-col space-y-2">
+              <button
+                onClick={() => navigate("/signup")}
                 className="px-6 py-2 border border-gray-300 rounded-full font-medium text-sm text-center hover:border-lithouse-blue"
               >
                 Sign up
-              </a>
-              <a
-                href="#try"
+              </button>
+              <button
+                onClick={() => navigate("/chat")}
                 className="px-6 py-2 bg-lithouse-blue text-white rounded-full font-medium text-sm text-center shadow-md"
               >
                 Try for free
-              </a>
+              </button>
             </div>
           </div>
         </motion.div>

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { StartCreatingAnimation } from "./StartCreatingAnimation";
+import { useNavigate } from "react-router-dom";
 
 const emojis = [
   { id: 1, emoji: "😃", top: "10%", left: "15%", delay: 0 },
@@ -11,6 +12,8 @@ const emojis = [
 ];
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="py-20 px-4 relative overflow-hidden">
       <div className="container mx-auto max-w-4xl text-center relative z-10">
@@ -48,12 +51,11 @@ const HeroSection = () => {
             className="bg-green-500 hover:bg-green-600 text-white font-medium rounded-full px-8 py-3 flex items-center justify-center mx-auto shadow-md"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => navigate("/chat")}
           >
             <div className="flex items-center justify-between">
-              <img />
               <span>Start Creating</span>
             </div>
-
             <ArrowRight size={18} className="ml-2" />
           </motion.button>
         </motion.div>
