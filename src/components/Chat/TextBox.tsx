@@ -1,17 +1,22 @@
-
 import { Plus, Send } from "lucide-react";
 import { useState, KeyboardEvent } from "react";
 
 interface TextBoxProps {
   onSend: (message: string) => void;
+  onFirstMessageSent?: () => void;
 }
 
-const TextBox = ({ onSend }: TextBoxProps) => {
+const TextBox = ({ onSend, onFirstMessageSent }: TextBoxProps) => {
   const [message, setMessage] = useState("");
+  const [isFirstMessage, setIsFirstMessage] = useState(true);
 
   const handleSend = () => {
     if (message.trim()) {
       onSend(message);
+      if (isFirstMessage && onFirstMessageSent) {
+        onFirstMessageSent();
+        setIsFirstMessage(false);
+      }
       setMessage("");
     }
   };

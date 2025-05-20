@@ -173,15 +173,6 @@ const router = createBrowserRouter([
     ),
     errorElement: <ErrorPage />,
   },
-    {
-    path: "/message",
-    element: (
-      <ProtectedRoute>
-        <ChatMessages/>
-      </ProtectedRoute>
-    ),
-    errorElement: <ErrorPage />,
-  },
 ]);
 
 createRoot(document.getElementById("root")!).render(

@@ -1,7 +1,11 @@
 import { Orbiting } from "./Orbitting";
 import ChatTextBox from "./ChatTextBox";
 
-const InitialChatUI = () => {
+interface InitialChatUIProps {
+  handleSendMessage: (message: string) => Promise<void>;
+}
+
+const InitialChatUI = ({ handleSendMessage }: InitialChatUIProps) => {
  
   return (
     <div>
@@ -13,7 +17,7 @@ const InitialChatUI = () => {
         <Orbiting/>
       </div>
       <div className="sticky bottom-0 w-full bg-chatOverlay/80 backdrop-blur-sm py-4">
-        <ChatTextBox/>
+        <ChatTextBox onSend={handleSendMessage} />
       </div>
     </div>
   );
