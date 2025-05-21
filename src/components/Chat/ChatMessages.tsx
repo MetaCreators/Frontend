@@ -1,12 +1,6 @@
 import { useState } from "react";
-import { ChevronDown, Plus, Send, User2Icon } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
+import { Plus, Send, User2Icon } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface Message {
   id: string;
@@ -15,59 +9,32 @@ interface Message {
   timestamp: Date;
 }
 
-const ChatMessages = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "1",
-      text: "Hello! How can I help you today?",
-      sender: "ai",
-      timestamp: new Date(),
-    },
-  ]);
+interface ChatMessagesProps {
+  messages: Message[];
+  handleSendMessage: (message: string) => Promise<void>;
+}
 
-  const handleSendMessage = (message: string) => {
-    if (!message.trim()) return;
-    
-    // Add user message
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      text: message,
-      sender: "user",
-      timestamp: new Date(),
-    };
-    
-    setMessages((prev) => [...prev, userMessage]);
-    
-    // Simulate AI response after a short delay
-    setTimeout(() => {
-      const aiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: "I'm processing your request. This is a simulated response.",
-        sender: "ai",
-        timestamp: new Date(),
-      };
-      
-      setMessages((prev) => [...prev, aiMessage]);
-    }, 1000);
-  };
+type Tool = "thumbnail" | "script" | "description";
+
+const ChatMessages = ({ messages, handleSendMessage }: ChatMessagesProps) => {
+  const [selectedTool, setSelectedTool] = useState<Tool>(null as any);
 
   return (
     <div className="flex flex-col min-h-screen">
-
       <div className="flex space-x-3 items-center justify-between w-full border px-4">
-        <DropdownMenu>
-          <DropdownMenuTrigger className="flex space-x-4 bg-toolsbg p-1 rounded-md border-2 border-black shadow-2xl">
-            <div>
-            Tools
-            </div>
-            <ChevronDown />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-toolsbg">
-             <DropdownMenuItem>Thumbnail</DropdownMenuItem>
-            <DropdownMenuItem>Script generator</DropdownMenuItem>
-            <DropdownMenuItem>Description generator</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Tabs defaultValue="thumbnail" className="w-[400px]" onValueChange={(value) => setSelectedTool(value as Tool)}>
+          <TabsList className="grid w-full grid-cols-3 bg-black p-1 rounded-md">
+            <TabsTrigger value="thumbnail" className="data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=inactive]:text-muted-foreground rounded-sm px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm">
+              Thumbnail
+            </TabsTrigger>
+            <TabsTrigger value="script" className="data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=inactive]:text-muted-foreground rounded-sm px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm">
+              Script Generator
+            </TabsTrigger>
+            <TabsTrigger value="description" className="data-[state=active]:bg-card data-[state=active]:text-foreground data-[state=inactive]:text-muted-foreground rounded-sm px-3 py-1.5 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:shadow-sm">
+              Description Generator
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
         <div className="text-black p-4 flex items-center justify-center w-1/2">
           <div className="flex borer border-2 px-4 py-1 rounded-md justify-center items-center space-x-4">
             <div>
@@ -80,7 +47,6 @@ const ChatMessages = () => {
           </div>
         </div>
         <div>
-
         </div>
       </div>
       
@@ -114,7 +80,7 @@ const ChatMessages = () => {
       </div>
       
       {/* Input area */}
-      <div className="w-full max-w-4xl mx-auto px-4 sticky bottom-2 mb-2">
+      <div className="sticky bottom-0 p-4 bg-chatOverlay">
         <div className="relative flex items-center bg-black rounded-lg p-2">
           <button
             className="p-2 hover:bg-gray-800 rounded-full transition-colors"
