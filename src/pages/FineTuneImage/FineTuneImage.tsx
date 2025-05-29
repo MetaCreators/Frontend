@@ -211,7 +211,7 @@ const ThumbnailPage: React.FC = () => {
   return (
     <>
       <Navbar />
-      <div className="max-h-screen flex justify-center items-center py-14">
+      <div className="max-h-screen flex justify-center items-center py-14 bg-white">
         <div
           className="flex flex-col items-center justify-center px-10 pt-1 w-full"
           style={{
